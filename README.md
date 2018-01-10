@@ -1,4 +1,4 @@
-# {{ name }}
+# Irregular Apocalypse
 
 ## CLI Commands
 
@@ -14,6 +14,15 @@ npm run build
 
 # test the production build locally
 npm run serve
+
+# test the application
+npm test
+
+# lint sources
+npm run lint
+
+# format sources
+npm run format
 ```
 
 For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).

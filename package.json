@@ -10,7 +10,6 @@
     "dev": "preact watch",
     "lint": "tslint src",
     "format": "prettier-standard 'src/**/*.{js,ts,tsx,json,css,md}'",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "test": "jest"
   },
   "lint-staged": {
