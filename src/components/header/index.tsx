@@ -9,14 +9,20 @@ interface HeaderState {}
 export class Header extends Component<HeaderProps, HeaderState> {
   render () {
     return (
-			<header class={style.header}>
-				<h1>Preact App</h1>
-				<nav>
-					<Link activeClassName={style.active} href='/'>Home</Link>
-					<Link activeClassName={style.active} href='/profile'>Me</Link>
-					<Link activeClassName={style.active} href='/profile/john'>John</Link>
-				</nav>
-			</header>
+      <header class={style.header}>
+        <h1>Preact App</h1>
+        <nav>
+          <Link activeClassName={style.active} href='/'>
+            Home
+          </Link>
+          <Link activeClassName={style.active} href='/profile'>
+            Me
+          </Link>
+          <Link activeClassName={style.active} href='/profile/john'>
+            John
+          </Link>
+        </nav>
+      </header>
     )
   }
 }

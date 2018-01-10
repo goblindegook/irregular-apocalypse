@@ -20,14 +20,14 @@ export class App extends Component<AppProps, AppState> {
 
   render () {
     return (
-			<div id='app'>
-				<Header />
-				<Router onChange={this.handleRoute}>
-					<Home path='/' />
-					<Profile path='/profile/' user='me' />
-					<Profile path='/profile/:user' />
-				</Router>
-			</div>
+      <div id='app'>
+        <Header />
+        <Router onChange={this.handleRoute}>
+          <Home path='/' />
+          <Profile path='/profile/' user='me' />
+          <Profile path='/profile/:user' />
+        </Router>
+      </div>
     )
   }
 }
