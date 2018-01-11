@@ -14,7 +14,10 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.{js,ts,tsx,json,css,md}": ["prettier-standard", "git add"]
+      "src/**/*.{js,ts,tsx,json,css,md}": [
+        "prettier-standard",
+        "git add"
+      ]
     }
   },
   "jest": {
@@ -22,19 +25,26 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
     "husky": "^0.14.3",
     "if-env": "^1.0.0",
-    "jest": "^22.0.1",
+    "jest": "^22.0.6",
     "lint-staged": "^6.0.0",
     "preact-cli": "^2.0.1",
     "preact-cli-plugin-typescript": "^0.2.2",
     "prettier-standard": "^8.0.0",
     "ts-jest": "^22.0.0",
-    "tslint": "^5.8.0",
+    "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
     "tslint-config-standard": "^7.0.0",
     "tslint-react": "^3.3.3"
