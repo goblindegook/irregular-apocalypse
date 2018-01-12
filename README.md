@@ -1,5 +1,7 @@
 # Irregular Apocalypse
 
+[![Build Status](https://travis-ci.org/goblindegook/irregular-apocalypse.svg?branch=master)](https://travis-ci.org/goblindegook/irregular-apocalypse)
+
 ## CLI Commands
 
 ```bash
