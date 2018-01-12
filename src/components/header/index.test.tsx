@@ -1,6 +1,6 @@
 import { h } from 'preact'
 import { shallow } from 'preact-render-spy'
-import { Header } from './index'
+import { Header } from './'
 
 describe('Header', () => {
   it('renders title', () => {
