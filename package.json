@@ -25,6 +25,10 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/file.js",
+      "\\.(css)$": "identity-obj-proxy"
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -37,11 +41,13 @@
   "devDependencies": {
     "@types/jest": "^22.0.1",
     "husky": "^0.14.3",
+    "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^22.0.6",
     "lint-staged": "^6.0.0",
     "preact-cli": "^2.0.1",
     "preact-cli-plugin-typescript": "^0.2.2",
+    "preact-render-spy": "^1.2.1",
     "prettier-standard": "^8.0.0",
     "ts-jest": "^22.0.0",
     "tslint": "^5.9.1",

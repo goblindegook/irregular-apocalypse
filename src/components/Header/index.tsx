@@ -10,7 +10,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
   render () {
     return (
       <header class={style.header}>
-        <h1>Preact App</h1>
+        <h1>Irregular Apocalypse</h1>
         <nav>
           <Link activeClassName={style.active} href='/'>
             Home

@@ -1,4 +1,4 @@
 .awcache/
 node_modules/
-/build
+/build/
 /*.log
