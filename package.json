@@ -48,7 +48,7 @@
     "lint-staged": "^6.0.0",
     "preact-cli": "^2.0.1",
     "preact-cli-plugin-typescript": "^0.2.2",
-    "preact-render-spy": "^1.2.1",
+    "preact-testing-library": "^0.0.1-semantically-released",
     "prettier-standard": "^8.0.0",
     "ts-jest": "^22.0.0",
     "tslint": "^5.9.1",

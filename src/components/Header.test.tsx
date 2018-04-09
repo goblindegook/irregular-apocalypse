@@ -1,10 +1,10 @@
 import { h } from 'preact'
-import { shallow } from 'preact-render-spy'
+import { render } from 'preact-testing-library'
 import { Header } from './Header'
 
 describe('Header', () => {
   it('renders title', () => {
-    const context = shallow(<Header />)
-    expect(context.find('h1').text()).toBe('Irregular Apocalypse')
+    const { getByText } = render(<Header />)
+    expect(getByText('Irregular Apocalypse').tagName).toBe('H1')
   })
 })
