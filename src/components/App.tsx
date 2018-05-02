@@ -12,7 +12,7 @@ interface AppProps {}
 interface AppState {}
 
 export class App extends Component<AppProps, AppState> {
-  currentUrl: string
+  currentUrl = ''
 
   handleRoute = (e: RouterOnChangeArgs) => {
     this.currentUrl = e.url

@@ -1,7 +1,9 @@
 import { h, Component } from 'preact'
 import style from './style.css'
 
-interface HomeProps {}
+interface HomeProps {
+  readonly path: string
+}
 
 interface HomeState {}
 

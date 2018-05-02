@@ -2,16 +2,17 @@ import { h, Component } from 'preact'
 import style from './style.css'
 
 interface ProfileProps {
-  user?: string
+  readonly path: string
+  readonly user?: string
 }
 
 interface ProfileState {
-  count: number
-  time: number
+  readonly count: number
+  readonly time: number
 }
 
 export class Profile extends Component<ProfileProps, ProfileState> {
-  timer: NodeJS.Timer
+  timerId: NodeJS.Timer
 
   state: ProfileState = {
     count: 10,
@@ -21,12 +22,12 @@ export class Profile extends Component<ProfileProps, ProfileState> {
   // gets called when this route is navigated to
   componentDidMount () {
     // start a timer for the clock:
-    this.timer = setInterval(this.updateTime, 1000)
+    this.timerId = setInterval(this.updateTime, 1000)
   }
 
   // gets called just before navigating away from the route
   componentWillUnmount () {
-    clearInterval(this.timer)
+    clearInterval(this.timerId)
   }
 
   // update the current time
