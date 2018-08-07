@@ -1,6 +1,7 @@
 import { h } from 'preact'
 import { Profile } from './index'
-const { cleanup, render, debounceRenderingOff, renderIntoDocument, fireEvent } = require('preact-testing-library')
+import { render } from 'preact-testing-library'
+const { cleanup, debounceRenderingOff, renderIntoDocument, fireEvent } = require('preact-testing-library')
 
 describe('Profile', () => {
   afterEach(cleanup)
