@@ -1,8 +1,10 @@
 import { h } from 'preact'
-import { render, debounceRenderingOff, renderIntoDocument, fireEvent } from 'preact-testing-library'
 import { Profile } from './index'
+const { cleanup, render, debounceRenderingOff, renderIntoDocument, fireEvent } = require('preact-testing-library')
 
 describe('Profile', () => {
+  afterEach(cleanup)
+
   it('renders user name in title', () => {
     const { getByText } = render(<Profile path='/foo' user='foo' />)
     expect(getByText('Profile: foo').tagName).toBe('H1')
@@ -20,7 +22,7 @@ describe('Profile', () => {
 
   it('renders an increment button', () => {
     debounceRenderingOff()
-    const { getByLabelText, getByText } = renderIntoDocument(<Profile path='/' user='' />)
+    const { getByText } = renderIntoDocument(<Profile path='/' user='' />)
     fireEvent.click(getByText('Click Me'))
     expect(getByText('Clicked').textContent).toMatch('Clicked 11 times.')
   })
