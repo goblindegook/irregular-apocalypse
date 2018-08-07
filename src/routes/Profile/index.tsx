@@ -12,7 +12,7 @@ interface ProfileState {
 }
 
 export class Profile extends Component<ProfileProps, ProfileState> {
-  timerId?: NodeJS.Timer
+  timerId?: number
 
   state: ProfileState = {
     count: 10,
@@ -22,14 +22,12 @@ export class Profile extends Component<ProfileProps, ProfileState> {
   // gets called when this route is navigated to
   componentDidMount () {
     // start a timer for the clock:
-    this.timerId = setInterval(this.updateTime, 1000)
+    this.timerId = window.setInterval(this.updateTime, 1000)
   }
 
   // gets called just before navigating away from the route
   componentWillUnmount () {
-    if (this.timerId) {
-      clearInterval(this.timerId)
-    }
+    window.clearInterval(this.timerId)
   }
 
   // update the current time
