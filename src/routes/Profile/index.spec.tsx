@@ -6,7 +6,7 @@ describe('Profile', () => {
   afterEach(cleanup)
 
   it('renders user name in title', () => {
-    const { getByText } = render(<Profile path='/foo' user='foo' />)
+    const { getByText } = render(<Profile path='/' user='foo' />)
     expect(getByText('Profile: foo').tagName).toBe('H1')
   })
 
