@@ -1,7 +1,6 @@
 import { h } from 'preact'
 import { Profile } from './index'
-import { render } from 'preact-testing-library'
-const { cleanup, debounceRenderingOff, renderIntoDocument, fireEvent } = require('preact-testing-library')
+import { cleanup, debounceRenderingOff, render, fireEvent } from 'preact-testing-library'
 
 describe('Profile', () => {
   afterEach(cleanup)
@@ -23,7 +22,7 @@ describe('Profile', () => {
 
   it('renders an increment button', () => {
     debounceRenderingOff()
-    const { getByText } = renderIntoDocument(<Profile path='/' user='' />)
+    const { getByText } = render(<Profile path='/' user='' />)
     fireEvent.click(getByText('Click Me'))
     expect(getByText('Clicked').textContent).toMatch('Clicked 11 times.')
   })
