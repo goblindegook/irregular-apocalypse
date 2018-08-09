@@ -12,18 +12,18 @@ describe('Profile', () => {
 
   it('renders the current time', () => {
     const { getByText } = render(<Profile path='/' user='' />)
-    expect(getByText('Current time').textContent).toBe(`Current time: ${new Date().toLocaleString()}`)
+    expect(getByText(/Current time/).textContent).toBe(`Current time: ${new Date().toLocaleString()}`)
   })
 
   it('renders a counter starting at 10', () => {
     const { getByText } = render(<Profile path='/' user='' />)
-    expect(getByText('Clicked').textContent).toMatch('Clicked 10 times.')
+    expect(getByText(/Clicked/).textContent).toMatch('Clicked 10 times.')
   })
 
   it('renders an increment button', () => {
     debounceRenderingOff()
     const { getByText } = render(<Profile path='/' user='' />)
     fireEvent.click(getByText('Click Me'))
-    expect(getByText('Clicked').textContent).toMatch('Clicked 11 times.')
+    expect(getByText(/Clicked/).textContent).toMatch('Clicked 11 times.')
   })
 })
