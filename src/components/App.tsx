@@ -1,8 +1,7 @@
 import { h, Component } from 'preact'
 import { Router, RouterOnChangeArgs } from 'preact-router'
-import style from './App.style.css'
 import { Header } from './Header'
-import { Month } from './Month'
+import { Month } from '../routes/Month'
 
 interface AppProps {}
 
@@ -23,12 +22,10 @@ export class App extends Component<AppProps, AppState> {
     return (
       <div id='app'>
         <Header />
-        <div class={style.main}>
-          <Router onChange={this.handleRoute}>
-            <Month path='/' month={month} year={year} />
-            <Month path='/:year/:month' month={month} year={year} />
-          </Router>
-        </div>
+        <Router onChange={this.handleRoute}>
+          <Month path='/' month={month} year={year} />
+          <Month path='/:year/:month' month={month} year={year} />
+        </Router>
       </div>
     )
   }
