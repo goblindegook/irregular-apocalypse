@@ -10,18 +10,7 @@ export class Header extends Component<HeaderProps, HeaderState> {
   render () {
     return (
       <header class={style.header}>
-        <h1>Irregular Apocalypse</h1>
-        <nav>
-          <Link activeClassName={style.active} href='/'>
-            Home
-          </Link>
-          <Link activeClassName={style.active} href='/profile'>
-            Me
-          </Link>
-          <Link activeClassName={style.active} href='/profile/john'>
-            John
-          </Link>
-        </nav>
+        <h1><Link activeClassName={style.active} href='/'>Irregular Apocalypse</Link></h1>
       </header>
     )
   }

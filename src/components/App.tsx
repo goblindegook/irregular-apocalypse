@@ -1,9 +1,8 @@
 import { h, Component } from 'preact'
 import { Router, RouterOnChangeArgs } from 'preact-router'
-
+import style from './App.style.css'
 import { Header } from './Header'
-import { Home } from '../routes/Home'
-import { Profile } from '../routes/Profile'
+import { Month } from './Month'
 
 interface AppProps {}
 
@@ -17,14 +16,19 @@ export class App extends Component<AppProps, AppState> {
   }
 
   render () {
+    const date = new Date()
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+
     return (
       <div id='app'>
         <Header />
-        <Router onChange={this.handleRoute}>
-          <Home path='/' />
-          <Profile path='/profile/' user='me' />
-          <Profile path='/profile/:user' />
-        </Router>
+        <div class={style.main}>
+          <Router onChange={this.handleRoute}>
+            <Month path='/' month={month} year={year} />
+            <Month path='/:year/:month' month={month} year={year} />
+          </Router>
+        </div>
       </div>
     )
   }
