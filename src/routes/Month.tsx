@@ -22,14 +22,14 @@ class Period extends Component<PeriodProps, PeriodState> {
     }
   }
 
-  onClick = (e: MouseEvent) => {
+  handleClick = (e: MouseEvent) => {
     this.setState({ checked: !this.state.checked })
   }
 
   render ({ signature, text }: PeriodProps, { checked }: PeriodState) {
     return (
       <label>
-        <input type='checkbox' checked={checked} onClick={this.onClick} />
+        <input type='checkbox' checked={checked} onClick={this.handleClick} />
         {checked && <span>{signature}</span>}
         {text}
       </label>
