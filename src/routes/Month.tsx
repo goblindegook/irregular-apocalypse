@@ -4,7 +4,7 @@ import { range } from 'ramda'
 import style from './Month.style.css'
 
 interface PeriodProps {
-  readonly checked: boolean
+  readonly defaultChecked: boolean
   readonly signature: string
   readonly text: string
 }
@@ -18,7 +18,7 @@ class Period extends Component<PeriodProps, PeriodState> {
     super(props)
 
     this.state = {
-      checked: props.checked
+      checked: props.defaultChecked
     }
   }
 
@@ -41,14 +41,14 @@ interface MonthProps {
   readonly path?: string
   readonly month: number
   readonly year: number
+  readonly signature: string
 }
 
 interface MonthState {}
 
 export class Month extends Component<MonthProps, MonthState> {
-  render ({ month, year }: MonthProps) {
+  render ({ signature, month, year }: MonthProps) {
     const date = new Date(year, month - 1)
-    const signature = 'Signature'
 
     return (
       <div class={style.main}>
@@ -56,8 +56,8 @@ export class Month extends Component<MonthProps, MonthState> {
         {range(1, getDaysInMonth(date) + 1)
           .map(day => (
             <div key={`day-${day}`}>
-              <Period signature={signature} text={`Day ${day} (morning)`} checked={true} />
-              <Period signature={signature} text={`Day ${day} (afternoon)`} checked={true} />
+              <Period signature={signature} text={`Day ${day} (morning)`} defaultChecked={true} />
+              <Period signature={signature} text={`Day ${day} (afternoon)`} defaultChecked={true} />
             </div>
           ))
         }

@@ -19,8 +19,8 @@ export class App extends Component {
       <div id='app'>
         <Header />
         <Router onChange={this.handleRoute}>
-          <Month path='/' month={month} year={year} />
-          <Month path='/:year/:month' month={month} year={year} />
+          <Month signature='Irregular Apocalypse' path='/' month={month} year={year} />
+          <Month signature='Irregular Apocalypse' path='/:year/:month' month={month} year={year} />
         </Router>
       </div>
     )
