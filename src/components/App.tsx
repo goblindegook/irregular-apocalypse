@@ -3,11 +3,7 @@ import { Router, RouterOnChangeArgs } from 'preact-router'
 import { Header } from './Header'
 import { Month } from '../routes/Month'
 
-interface AppProps {}
-
-interface AppState {}
-
-export class App extends Component<AppProps, AppState> {
+export class App extends Component {
   currentUrl = ''
 
   handleRoute = (e: RouterOnChangeArgs) => {
