@@ -18,13 +18,12 @@ export class App extends Component<{}, AppState> {
     }
   }
 
-  handleRoute = (e: RouterOnChangeArgs) => {
+  handleRouteChange = (e: RouterOnChangeArgs) => {
     this.currentUrl = e.url
   }
 
-  handleInput = (e: any) => {
-    console.log(e, e.target)
-    this.setState({ name: e.target.value })
+  handleNameChange = (name: string) => {
+    this.setState({ name })
   }
 
   render ({}, { name }: AppState) {
@@ -34,9 +33,8 @@ export class App extends Component<{}, AppState> {
 
     return (
       <div id='app'>
-        <Header />
-        <input placeholder='Your name' value={name} onInput={this.handleInput} />
-        <Router onChange={this.handleRoute}>
+        <Header name={name} onNameChange={this.handleNameChange} />
+        <Router onChange={this.handleRouteChange}>
           <Month signature={name} path='/' month={month} year={year} />
           <Month signature={name} path='/:year/:month' month={month} year={year} />
         </Router>
