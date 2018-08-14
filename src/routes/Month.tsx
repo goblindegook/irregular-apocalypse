@@ -28,10 +28,10 @@ class Period extends Component<PeriodProps, PeriodState> {
 
   render ({ signature, text }: PeriodProps, { checked }: PeriodState) {
     return (
-      <label>
-        <input type='checkbox' checked={checked} onClick={this.handleClick} />
-        {checked && <span>{signature}</span>}
-        {text}
+      <label class={style.period}>
+        <input class={style.checkbox} type='checkbox' checked={checked} onClick={this.handleClick} />
+        {checked && <span class={style.signature}>{signature}</span>}
+        <span class={style.periodName}>{text}</span>
       </label>
     )
   }
@@ -55,7 +55,7 @@ export class Month extends Component<MonthProps, MonthState> {
         <h1>{format(date, 'MMMM YYYY')}</h1>
         {range(1, getDaysInMonth(date) + 1)
           .map(day => (
-            <div key={`day-${day}`}>
+            <div class={style.day} key={`day-${day}`}>
               <Period signature={signature} text={`Day ${day} (morning)`} defaultChecked={true} />
               <Period signature={signature} text={`Day ${day} (afternoon)`} defaultChecked={true} />
             </div>

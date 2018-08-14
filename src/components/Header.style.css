@@ -40,3 +40,11 @@
 
 .header a.active {
 }
+
+.input {
+  float: right;
+  height: 26px;
+  margin: 1rem;
+  font-size: 1rem;
+  padding: .25rem;
+}
