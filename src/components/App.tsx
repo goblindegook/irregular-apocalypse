@@ -35,8 +35,8 @@ export class App extends Component<{}, AppState> {
       <div id='app'>
         <Header name={name} onNameChange={this.handleNameChange} />
         <Router onChange={this.handleRouteChange}>
-          <Month signature={name} path='/' month={month} year={year} />
-          <Month signature={name} path='/:year/:month' month={month} year={year} />
+          <Month name={name} path='/' month={month} year={year} />
+          <Month name={name} path='/:year/:month' month={month} year={year} />
         </Router>
       </div>
     )
