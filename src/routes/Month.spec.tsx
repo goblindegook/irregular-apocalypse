@@ -54,6 +54,24 @@ describe('Month', () => {
     })
   })
 
+  it('checks working days by default', () => {
+    const { getByLabelText } = render(<Month signature='' month={8} year={2018} />)
+    const checkbox = getByLabelText(/day 17/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(true)
+  })
+
+  it('does not check Saturdays by default', () => {
+    const { getByLabelText } = render(<Month signature='' month={8} year={2018} />)
+    const checkbox = getByLabelText(/day 18/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(false)
+  })
+
+  it('does not check Sundays by default', () => {
+    const { getByLabelText } = render(<Month signature='' month={8} year={2018} />)
+    const checkbox = getByLabelText(/day 19/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(false)
+  })
+
   it('clears signature when checkbox is unchecked', () => {
     debounceRenderingOff()
     const { getByLabelText } = render(<Month signature={SIGNATURE} month={8} year={2018} />)
