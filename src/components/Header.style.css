@@ -41,10 +41,14 @@
 .header a.active {
 }
 
-.input {
+.nameField {
   float: right;
   height: 26px;
   margin: 1rem;
   font-size: 1rem;
   padding: .25rem;
+}
+
+.signatureField {
+
 }

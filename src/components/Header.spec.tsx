@@ -26,4 +26,14 @@ describe('Header', () => {
     fireEvent.input(field)
     expect(fn).toHaveBeenCalledWith(name)
   })
+
+  xit('handles signature field changes', () => {
+    // FIXME: How to test file inputs?
+    const fn = jest.fn()
+    const { getByLabelText } = render(<Header onSignatureChange={fn} />)
+    const field = getByLabelText(/signature/i) as HTMLInputElement
+    const value = new File([], 'signature.png')
+    fireEvent.change(field, { target: { value } })
+    expect(fn).toHaveBeenCalled()
+  })
 })

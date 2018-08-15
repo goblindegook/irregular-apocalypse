@@ -20,13 +20,24 @@ describe('App', () => {
     expect(getByText('May 2018')).toBeTruthy()
   })
 
-  it('sets the signature to the provided name', () => {
+  it('sets the name', () => {
     debounceRenderingOff()
-    const { getAllByText, getByPlaceholderText } = render(<App />)
+    const { getAllByAltText, getByPlaceholderText } = render(<App />)
     const field = getByPlaceholderText(/your name/i) as HTMLInputElement
     const name = 'Test Name'
     field.value = name
     fireEvent.input(field)
-    expect(getAllByText(name).length).toBeGreaterThan(1)
+    expect(getAllByAltText(name).length).toBeGreaterThan(1)
+  })
+
+  xit('sets the signature', () => {
+    // FIXME: How to test file inputs?
+    debounceRenderingOff()
+    const fn = jest.fn()
+    const { container, getByLabelText } = render(<App />)
+    const field = getByLabelText(/signature/i) as HTMLInputElement
+    const value = new File([], 'signature.png')
+    fireEvent.change(field, { target: { value } })
+    expect(container.querySelectorAll('img').length).toBeGreaterThan(0)
   })
 })

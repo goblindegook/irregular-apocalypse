@@ -5,6 +5,7 @@ import { Month } from '../routes/Month'
 
 interface AppState {
   name: string
+  signature?: string
 }
 
 export class App extends Component<{}, AppState> {
@@ -26,17 +27,21 @@ export class App extends Component<{}, AppState> {
     this.setState({ name })
   }
 
-  render ({}, { name }: AppState) {
+  handleSignatureChange = (signature: string) => {
+    this.setState({ signature })
+  }
+
+  render ({}, { name, signature }: AppState) {
     const date = new Date()
     const month = date.getMonth() + 1
     const year = date.getFullYear()
 
     return (
       <div id='app'>
-        <Header name={name} onNameChange={this.handleNameChange} />
+        <Header name={name} onNameChange={this.handleNameChange} onSignatureChange={this.handleSignatureChange} />
         <Router onChange={this.handleRouteChange}>
-          <Month name={name} path='/' month={month} year={year} />
-          <Month name={name} path='/:year/:month' month={month} year={year} />
+          <Month name={name} signature={signature} path='/' month={month} year={year} />
+          <Month name={name} signature={signature} path='/:year/:month' month={month} year={year} />
         </Router>
       </div>
     )

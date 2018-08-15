@@ -6,6 +6,7 @@ import style from './Month.style.css'
 interface PeriodProps {
   readonly defaultChecked: boolean
   readonly name: string
+  readonly signature?: string
   readonly text: string
 }
 
@@ -26,11 +27,11 @@ class Period extends Component<PeriodProps, PeriodState> {
     this.setState({ checked: !this.state.checked })
   }
 
-  render ({ name, text }: PeriodProps, { checked }: PeriodState) {
+  render ({ name, signature, text }: PeriodProps, { checked }: PeriodState) {
     return (
       <label class={style.period}>
         <input class={style.checkbox} type='checkbox' checked={checked} onClick={this.handleClick} />
-        {checked && <span class={style.signature}>{name}</span>}
+        {checked && <img class={style.signature} alt={name} src={signature} />}
         <span class={style.periodName}>{text}</span>
       </label>
     )
@@ -42,12 +43,13 @@ interface MonthProps {
   readonly month: number
   readonly year: number
   readonly name: string
+  readonly signature?: string
 }
 
 interface MonthState {}
 
 export class Month extends Component<MonthProps, MonthState> {
-  render ({ name, month, year }: MonthProps) {
+  render ({ name, signature, month, year }: MonthProps) {
     const monthDate = new Date(year, month - 1)
 
     return (
@@ -60,8 +62,8 @@ export class Month extends Component<MonthProps, MonthState> {
             const weekday = format(date, 'dddd')
             return (
               <div class={style.day} key={`day-${day}`}>
-                <Period name={name} text={`${weekday} ${day} (morning)`} defaultChecked={checked} />
-                <Period name={name} text={`${weekday} ${day} (afternoon)`} defaultChecked={checked} />
+                <Period name={name} signature={signature} text={`${weekday} ${day} (morning)`} defaultChecked={checked} />
+                <Period name={name} signature={signature} text={`${weekday} ${day} (afternoon)`} defaultChecked={checked} />
               </div>
             )
           })
