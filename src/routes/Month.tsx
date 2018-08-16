@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { h, Component, FunctionalComponent } from 'preact'
 import { format, getDaysInMonth, isWeekend } from 'date-fns'
 import { range } from 'ramda'
 import style from './Month.style.css'
@@ -52,43 +52,39 @@ interface MonthProps {
   readonly signature?: string
 }
 
-interface MonthState {}
+export const Month: FunctionalComponent<MonthProps> = ({ name, signature, month, year }) => {
+  const monthDate = new Date(year, month - 1)
 
-export class Month extends Component<MonthProps, MonthState> {
-  render ({ name, signature, month, year }: MonthProps) {
-    const monthDate = new Date(year, month - 1)
-
-    return (
-      <div class={style.main}>
-        <h1>{format(monthDate, 'MMMM YYYY')}</h1>
-        {range(1, getDaysInMonth(monthDate) + 1)
-          .map(day => {
-            const date = new Date(year, month - 1, day)
-            const checked = !isWeekend(date)
-            const weekday = format(date, 'ddd')
-            return (
-              <div class={style.day} key={`day-${day}`}>
-                <Period
-                  checked={checked}
-                  day={day}
-                  name={name}
-                  signature={signature}
-                  text='9:00–13:00'
-                  weekday={weekday}
-                />
-                <Period
-                  checked={checked}
-                  day={day}
-                  name={name}
-                  signature={signature}
-                  text='14:00–17:30'
-                  weekday={weekday}
-                />
-              </div>
-            )
-          })
-        }
-      </div>
-    )
-  }
+  return (
+    <div class={style.main}>
+      <h1>{format(monthDate, 'MMMM YYYY')}</h1>
+      {range(1, getDaysInMonth(monthDate) + 1)
+        .map(day => {
+          const date = new Date(year, month - 1, day)
+          const checked = !isWeekend(date)
+          const weekday = format(date, 'ddd')
+          return (
+            <div class={style.day} key={`day-${day}`}>
+              <Period
+                checked={checked}
+                day={day}
+                name={name}
+                signature={signature}
+                text='9:00–13:00'
+                weekday={weekday}
+              />
+              <Period
+                checked={checked}
+                day={day}
+                name={name}
+                signature={signature}
+                text='14:00–17:30'
+                weekday={weekday}
+              />
+            </div>
+          )
+        })
+      }
+    </div>
+  )
 }
