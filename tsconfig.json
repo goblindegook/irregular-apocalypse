@@ -13,8 +13,12 @@
     "jsx": "react",
     "jsxFactory": "h",
     "allowJs": false,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true
   },
+  "exclude": [
+    "./cypress/**"
+  ],
   "awesomeTypescriptLoaderOptions": {
     "useBabel": false,
     "useCache": true
