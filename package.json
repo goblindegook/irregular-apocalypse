@@ -10,7 +10,8 @@
     "dev": "preact watch",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "format": "prettier-standard 'src/**/*.{js,ts,tsx,json,css,md}'",
-    "test": "jest"
+    "test": "jest",
+    "cypress:open": "cypress open"
   },
   "lint-staged": {
     "linters": {
@@ -42,6 +43,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/ramda": "^0.25.36",
+    "cypress": "^3.1.0",
     "dom-testing-library": "^3.1.0",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
@@ -61,7 +63,7 @@
   },
   "dependencies": {
     "date-fns": "^1.29.0",
-    "linkstate": "^1.1.1",
+    "localforage": "^1.7.2",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7",
