@@ -12,7 +12,7 @@
 .period {
   display: grid;
   grid-template-columns: 2rem auto;
-  grid-template-rows: 3rem 1rem;
+  grid-template-rows: 4rem 1rem;
   padding: 1rem;
   border: 1px solid #eee;
 }
@@ -20,14 +20,12 @@
 .checkbox {
   grid-row: 1;
   grid-column: 1 / span 2;
-  margin: 1rem 0;
 }
 
 .signature {
   grid-row: 1;
   grid-column: 2;
-  height: 2rem;
-  font-size: 2rem;
+  height: 4rem;
 }
 
 .periodName {

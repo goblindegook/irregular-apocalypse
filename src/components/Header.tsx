@@ -39,14 +39,14 @@ export class Header extends Component<HeaderProps> {
           value={name}
           onInput={this.handleNameInput}
         />
-        <label for='signature'>Signature</label>
-        <input
-          accept='image/png, image/jpeg'
-          class={style.signatureField}
-          id='signature'
-          type='file'
-          onChange={this.handleSignatureChange}
-        />
+        <label class={style.signatureField}>
+          <span>Set Signature</span>
+          <input
+            accept='image/png, image/jpeg'
+            type='file'
+            onChange={this.handleSignatureChange}
+          />
+        </label>
       </header>
     )
   }
