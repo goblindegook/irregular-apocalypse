@@ -4,8 +4,12 @@ import { range } from 'ramda'
 import style from './Month.style.css'
 
 interface PeriodProps {
-  readonly defaultChecked: boolean
+  readonly checked: boolean
   readonly name: string
+  readonly weekday: string
+  readonly day: number
+  readonly starts?: string
+  readonly ends?: string
   readonly signature?: string
   readonly text: string
 }
@@ -19,7 +23,7 @@ class Period extends Component<PeriodProps, PeriodState> {
     super(props)
 
     this.state = {
-      checked: props.defaultChecked
+      checked: props.checked
     }
   }
 
@@ -27,12 +31,14 @@ class Period extends Component<PeriodProps, PeriodState> {
     this.setState({ checked: !this.state.checked })
   }
 
-  render ({ name, signature, text }: PeriodProps, { checked }: PeriodState) {
+  render ({ name, signature, text, weekday, day }: PeriodProps, { checked }: PeriodState) {
     return (
       <label class={style.period}>
         <input class={style.checkbox} type='checkbox' checked={checked} onClick={this.handleClick} />
         {checked && <img class={style.signature} alt={name} src={signature} />}
-        <span class={style.periodName}>{text}</span>
+        <span class={style.weekday}>{weekday}</span>
+        <span class={style.monthday}>{day}</span>
+        <span class={style.times}>{text}</span>
       </label>
     )
   }
@@ -59,11 +65,25 @@ export class Month extends Component<MonthProps, MonthState> {
           .map(day => {
             const date = new Date(year, month - 1, day)
             const checked = !isWeekend(date)
-            const weekday = format(date, 'dddd')
+            const weekday = format(date, 'ddd')
             return (
               <div class={style.day} key={`day-${day}`}>
-                <Period name={name} signature={signature} text={`${weekday} ${day} (morning)`} defaultChecked={checked} />
-                <Period name={name} signature={signature} text={`${weekday} ${day} (afternoon)`} defaultChecked={checked} />
+                <Period
+                  checked={checked}
+                  day={day}
+                  name={name}
+                  signature={signature}
+                  text='9:00–13:00'
+                  weekday={weekday}
+                />
+                <Period
+                  checked={checked}
+                  day={day}
+                  name={name}
+                  signature={signature}
+                  text='14:00–17:30'
+                  weekday={weekday}
+                />
               </div>
             )
           })
