@@ -4,11 +4,11 @@ node_js:
   - '8'
   - '10'
 before_script:
-  - 'npm install'
+  - 'yarn'
 cache:
   directories:
     - ~/.cache
     - ~/.npm
     - node_modules
 install:
-  - npm ci
+  - yarn ci
