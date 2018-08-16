@@ -10,5 +10,3 @@ cache:
     - ~/.cache
     - ~/.npm
     - node_modules
-install:
-  - yarn ci
