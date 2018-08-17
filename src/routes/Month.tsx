@@ -52,33 +52,59 @@ interface MonthProps {
   readonly signature?: string
 }
 
+interface Period {
+  text: string
+  checked: boolean
+}
+
+interface MonthData {
+  [day: string]: {
+    am: Period
+    pm: Period
+  }
+}
+
 export const Month: FunctionalComponent<MonthProps> = ({ name, signature, month, year }) => {
   const monthDate = new Date(year, month - 1)
+
+  const data = range(1, getDaysInMonth(monthDate) + 1)
+    .reduce<MonthData>((acc, day) => {
+      const date = new Date(year, month - 1, day)
+      const checked = !isWeekend(date)
+
+      return {
+        ...acc,
+        [day]: {
+          am: { text: '9:00–13:00', checked },
+          pm: { text: '14:00–17:30', checked }
+        }
+      }
+    }, {})
 
   return (
     <div class={style.main}>
       <h1>{format(monthDate, 'MMMM YYYY')}</h1>
-      {range(1, getDaysInMonth(monthDate) + 1)
-        .map(day => {
+      {Object.entries(data)
+        .map(([key, periods]) => {
+          const day = parseInt(key, 10)
           const date = new Date(year, month - 1, day)
-          const checked = !isWeekend(date)
           const weekday = format(date, 'ddd')
           return (
-            <div class={style.day} key={`day-${day}`}>
+            <div class={style.day} key={`day-${key}`}>
               <Period
-                checked={checked}
+                checked={periods.am.checked}
                 day={day}
                 name={name}
                 signature={signature}
-                text='9:00–13:00'
+                text={periods.am.text}
                 weekday={weekday}
               />
               <Period
-                checked={checked}
+                checked={periods.pm.checked}
                 day={day}
                 name={name}
                 signature={signature}
-                text='14:00–17:30'
+                text={periods.pm.text}
                 weekday={weekday}
               />
             </div>
