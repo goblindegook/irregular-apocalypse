@@ -1,7 +1,8 @@
 import { h, Component, FunctionalComponent } from 'preact'
 import { format } from 'date-fns'
 import style from './Month.style.css'
-import { defaultMonthData } from '../calendar';
+import { mergeDeepRight } from 'ramda'
+import { defaultMonthData, Period, Periods } from '../calendar'
 
 interface PeriodProps {
   readonly checked: boolean
@@ -9,32 +10,27 @@ interface PeriodProps {
   readonly starts: Date
   readonly ends: Date
   readonly signature?: string
+  readonly onChange: (period: Period) => Promise<void>
 }
 
-interface PeriodState {
-  readonly checked: boolean
-}
+class PeriodComponent extends Component<PeriodProps> {
 
-class Period extends Component<PeriodProps, PeriodState> {
-  constructor (props: PeriodProps) {
-    super(props)
-
-    this.state = {
-      checked: props.checked
-    }
+  handleClick = async (e: MouseEvent) => {
+    await this.props.onChange({
+      starts: this.props.starts,
+      ends: this.props.ends,
+      checked: !this.props.checked
+    })
   }
 
-  handleClick = (e: MouseEvent) => {
-    this.setState({ checked: !this.state.checked })
-  }
-
-  render ({ name, signature, starts, ends }: PeriodProps, { checked }: PeriodState) {
+  render ({ name, signature, starts, ends, checked, onChange }: PeriodProps) {
+    // FIXME: Only display times for checked periods.
     return (
       <label class={style.period}>
         <input class={style.checkbox} type='checkbox' checked={checked} onClick={this.handleClick} />
-        {checked && <img class={style.signature} alt={name} src={signature} />}
-        <span class={style.weekday}>{format(starts, 'ddd')}</span>
         <span class={style.monthday}>{format(starts, 'D')}</span>
+        <span class={style.weekday}>{format(starts, 'ddd')}</span>
+        {checked && <img class={style.signature} alt={name} src={signature} />}
         <span class={style.times}>{format(starts, 'H:mm')}–{format(ends, 'H:mm')}</span>
       </label>
     )
@@ -45,31 +41,34 @@ interface MonthProps {
   readonly path?: string
   readonly month: number
   readonly year: number
+  readonly periods: Periods
   readonly name: string
   readonly signature?: string
+  readonly onPeriodChange: (period: Period) => Promise<void>
 }
 
-export const Month: FunctionalComponent<MonthProps> = ({ name, signature, month, year }) => {
+export const Month: FunctionalComponent<MonthProps> = ({ periods, name, signature, month, year, onPeriodChange }) => {
   const monthDate = new Date(year, month - 1)
-
-  // TODO: Receive from App.
-  const data = defaultMonthData(year, month)
+  const key = format(monthDate, `YYYY-MM`)
+  const periodData = mergeDeepRight(defaultMonthData(year, month), periods[key] || {})
 
   return (
     <div class={style.main}>
       <h1>{format(monthDate, 'MMMM YYYY')}</h1>
-      {Object.entries(data)
-        .map(([key, periods]) => (
+      {Object.entries(periodData)
+        .map(([key, day]) => (
           <div class={style.day} key={`day-${key}`}>
-            <Period
-              {...periods.am}
+            <PeriodComponent
+              {...day.am}
               name={name}
               signature={signature}
+              onChange={onPeriodChange}
             />
-            <Period
-              {...periods.pm}
+            <PeriodComponent
+              {...day.pm}
               name={name}
               signature={signature}
+              onChange={onPeriodChange}
             />
           </div>
         ))

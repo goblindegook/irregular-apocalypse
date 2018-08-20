@@ -96,4 +96,22 @@ describe('App', () => {
     const checkbox = getByLabelText(/sun/i) as HTMLInputElement
     expect(checkbox.checked).toBe(false)
   })
+
+  it('clears signature when period is unchecked', () => {
+    debounceRenderingOff()
+    const { getByLabelText } = render(<App />)
+    const checkbox = getByLabelText(/mon/i)
+    fireEvent.click(checkbox)
+    const img = checkbox.parentElement!.querySelector('img')
+    expect(img).toBeNull()
+  })
+
+  it('adds signature when period is checked', () => {
+    debounceRenderingOff()
+    const { getByLabelText } = render(<App />)
+    const checkbox = getByLabelText(/sun/i)
+    fireEvent.click(checkbox)
+    const img = checkbox.parentElement!.querySelector('img')
+    expect(img).not.toBeNull()
+  })
 })

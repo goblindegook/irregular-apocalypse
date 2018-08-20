@@ -1,7 +1,7 @@
 import { getDaysInMonth, isWeekend } from 'date-fns'
 import { range } from 'ramda'
 
-type Period = {
+export type Period = {
   readonly starts: Date
   readonly ends: Date
   readonly checked: boolean
@@ -16,11 +16,15 @@ type Month = {
   readonly [day: string]: Day
 }
 
+export type Periods = {
+  [yearAndMonth: string]: Month
+}
+
 function monthData (year: number, month: number): Day[] {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
 
   return range(1, daysInMonth + 1)
-    .map((day) => {
+    .map(day => {
       const date = new Date(year, month - 1, day)
       const checked = !isWeekend(date)
       return {

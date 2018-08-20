@@ -1,12 +1,16 @@
 import { h, Component } from 'preact'
 import { Router, RouterOnChangeArgs } from 'preact-router'
 import * as localforage from 'localforage'
+import { mergeDeepRight } from 'ramda'
+import { format } from 'date-fns'
 import { Header } from './Header'
 import { Month } from '../routes/Month'
+import { Period, Periods } from '../calendar'
 
 interface AppState {
   name: string
-  signature?: string
+  signature: string
+  periods: Periods
 }
 
 export class App extends Component<{}, AppState> {
@@ -18,7 +22,9 @@ export class App extends Component<{}, AppState> {
     super()
 
     this.state = {
-      name: ''
+      name: '',
+      periods: {},
+      signature: ''
     }
 
     this.store = localforage.createInstance({
@@ -42,10 +48,25 @@ export class App extends Component<{}, AppState> {
     await this.store.setItem('signature', signature)
   }
 
+  handlePeriodChange = async (period: Period) => {
+    const update = {
+      [format(period.starts, 'YYYY-MM')]: {
+        [format(period.starts, 'D')]: {
+          [format(period.starts, 'a')]: period
+        }
+      }
+    }
+
+    this.setState(({ periods }: Partial<AppState>) => ({ periods: mergeDeepRight(periods, update) }))
+
+    await this.store.setItem('periods', mergeDeepRight(this.state.periods, update))
+  }
+
   async componentDidMount () {
     const name = await this.store.getItem('name') || ''
     const signature = await this.store.getItem('signature') || ''
-    this.setState(() => ({ name, signature }))
+    const periods = await this.store.getItem('periods') || ''
+    this.setState(() => ({ name, periods, signature }))
   }
 
   render ({}, { name, signature }: AppState) {
@@ -62,18 +83,22 @@ export class App extends Component<{}, AppState> {
         />
         <Router onChange={this.handleRouteChange}>
           <Month
-            name={name}
-            signature={signature}
-            path='/'
             month={defaultMonth}
+            name={name}
+            path='/'
+            periods={this.state.periods}
+            signature={signature}
             year={defaultYear}
+            onPeriodChange={this.handlePeriodChange}
           />
           <Month
-            name={name}
-            signature={signature}
-            path='/:year/:month'
             month={defaultMonth}
+            name={name}
+            path='/:year/:month'
+            periods={this.state.periods}
+            signature={signature}
             year={defaultYear}
+            onPeriodChange={this.handlePeriodChange}
           />
         </Router>
       </div>
