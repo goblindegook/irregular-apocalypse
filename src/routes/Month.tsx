@@ -41,13 +41,13 @@ interface MonthProps {
   readonly path?: string
   readonly month: number
   readonly year: number
-  readonly periods: Periods
+  readonly periods?: RecursivePartial<Periods>
   readonly name: string
   readonly signature?: string
   readonly onPeriodChange: (period: Period) => Promise<void>
 }
 
-export const Month: FunctionalComponent<MonthProps> = ({ periods, name, signature, month, year, onPeriodChange }) => {
+export const Month: FunctionalComponent<MonthProps> = ({ periods = {}, name, signature, month, year, onPeriodChange }) => {
   const monthDate = new Date(year, month - 1)
   const key = format(monthDate, `YYYY-MM`)
   const periodData = mergeDeepRight(defaultMonthData(year, month), periods[key] || {})
