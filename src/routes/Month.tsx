@@ -22,8 +22,8 @@ const PeriodWrapper = styled('label')`
   border: 1px solid #eee;
 
   @media print {
-    grid-template-rows: 2rem .5rem;
-    grid-template-columns: 0 4rem auto;
+    grid-template-rows: 1rem;
+    grid-template-columns: 2rem 4rem 6rem auto;
     padding: .25rem;
   }
 `
@@ -41,35 +41,44 @@ const Checkbox = withProps({
 `)
 
 const MonthDay = styled('span')`
-  align-self: center;
-  justify-self: center;
   grid-column: 2;
   grid-row: 1;
+  align-self: center;
+  justify-self: center;
   font-size: 2rem;
 
   @media print {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: right;
   }
 `
 
 const WeekDay = styled('span')`
-  justify-self: center;
   font-size: .8rem;
+  align-self: center;
+  justify-self: center;
   grid-column: 2;
   grid-row: 2;
 
   @media print {
     font-size: .6rem;
+    grid-column: 2;
+    grid-row: 1;
   }
 `
 
 const Signature = styled('img')`
   grid-row: 1;
   grid-column: 3;
+  align-self: center;
   height: 4rem;
 
   @media print {
-    height: 2rem;
+    height: 1.5rem;
+    grid-column: 4;
+    grid-row: 1;
   }
 `
 
@@ -80,6 +89,11 @@ const Times = styled('span')`
 
   @media print {
     font-size: .6rem;
+    grid-column: 3;
+    grid-row: 1;
+    align-self: center;
+    justify-self: center;
+    padding: 1rem;
   }
 `
 
