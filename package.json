@@ -70,9 +70,11 @@
   },
   "dependencies": {
     "date-fns": "^1.29.0",
+    "emotion": "^9.2.6",
     "localforage": "^1.7.2",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
+    "preact-emotion": "^9.2.6",
     "preact-router": "^2.5.7",
     "ramda": "^0.25.0"
   }
