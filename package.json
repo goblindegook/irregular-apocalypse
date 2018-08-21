@@ -66,8 +66,7 @@
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
     "tslint-config-standard": "^7.0.0",
-    "tslint-react": "^3.3.3",
-    "typescript": "^3.0.1"
+    "tslint-react": "^3.3.3"
   },
   "dependencies": {
     "date-fns": "^1.29.0",
