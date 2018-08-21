@@ -15,6 +15,56 @@ describe('Month', () => {
     expect(getByText('December 2012')).toBeTruthy()
   })
 
+  describe('renders two checkboxes (morning and afternoon) for every day in the month', () => {
+    it('renders 62 checkboxes for August 2018', () => {
+      const { container } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+      expect(container.querySelectorAll('input[type=checkbox]').length).toBe(62)
+    })
+
+    it('renders 60 checkboxes for September 2018', () => {
+      const { container } = render(<Month name={NAME} signature={SIGNATURE} month={9} year={2018} onPeriodChange={ON_CHANGE} />)
+      expect(container.querySelectorAll('input[type=checkbox]').length).toBe(60)
+    })
+
+    it('renders 56 checkboxes for February 2019', () => {
+      const { container } = render(<Month name={NAME} signature={SIGNATURE} month={2} year={2019} onPeriodChange={ON_CHANGE} />)
+      expect(container.querySelectorAll('input[type=checkbox]').length).toBe(56)
+    })
+
+    it('renders 58 checkboxes for February 2020', () => {
+      const { container } = render(<Month name={NAME} signature={SIGNATURE} month={2} year={2020} onPeriodChange={ON_CHANGE} />)
+      expect(container.querySelectorAll('input[type=checkbox]').length).toBe(58)
+    })
+
+    it('renders 31 morning labels for August 2018', () => {
+      const { getAllByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+      expect(getAllByLabelText(/9\:00–13\:00/i).length).toBe(31)
+    })
+
+    it('renders 31 afternoon labels for August 2018', () => {
+      const { getAllByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+      expect(getAllByLabelText(/14\:00–17\:30/i).length).toBe(31)
+    })
+  })
+
+  it('checks working days by default', () => {
+    const { getByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const checkbox = getByLabelText(/fri/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(true)
+  })
+
+  it('does not check Saturdays by default', () => {
+    const { getByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const checkbox = getByLabelText(/sat/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(false)
+  })
+
+  it('does not check Sundays by default', () => {
+    const { getByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    expect(checkbox.checked).toBe(false)
+  })
+
   it('renders signature when checkbox is checked', () => {
     const { getByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
     const checkbox = getByLabelText(/mon/i)
@@ -46,19 +96,11 @@ describe('Month', () => {
     expect(checkbox.checked).toBeFalsy()
   })
 
-  it('invokes callback when checkbox is unchecked', () => {
+  it('invokes callback when checkbox is toggled', () => {
     const fn = jest.fn()
     const { getByLabelText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const input = getByLabelText(/mon/i)
-    fireEvent.click(input)
-    expect(fn.mock.calls[0][0]).toMatchObject({ checked: false })
-  })
-
-  it('invokes callback when checkbox is checked', () => {
-    const fn = jest.fn()
-    const { getByLabelText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const input = getByLabelText(/sun/i)
-    fireEvent.click(input)
-    expect(fn.mock.calls[0][0]).toMatchObject({ checked: true })
+    const checbox = getByLabelText(/mon/i) as HTMLInputElement
+    fireEvent.click(checbox)
+    expect(fn.mock.calls[0][0]).toMatchObject({ checked: !checbox.value })
   })
 })

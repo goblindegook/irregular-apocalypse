@@ -1,8 +1,9 @@
 import { h, Component, FunctionalComponent } from 'preact'
-import { format } from 'date-fns'
 import styled from 'preact-emotion'
+import { format } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
 import { defaultMonthData, Period, Periods } from '../calendar'
+import { withProps } from '../components/HOC'
 
 interface PeriodProps {
   readonly checked: boolean
@@ -21,11 +22,13 @@ const PeriodWrapper = styled('label')`
   border: 1px solid #eee;
 `
 
-const Checkbox = styled('input')`
+const Checkbox = withProps({
+  type: 'checkbox'
+})(styled('input')`
   align-self: center;
   grid-row: 1;
   grid-column: 1 / span 2;
-`
+`)
 
 const MonthDay = styled('span')`
   align-self: center;
@@ -54,7 +57,7 @@ const Times = styled('span')`
   grid-column: 3;
 `
 
-class PeriodComponent extends Component<PeriodProps> {
+class DayPeriod extends Component<PeriodProps> {
 
   handleClick = async (e: MouseEvent) => {
     await this.props.onChange({
@@ -68,7 +71,7 @@ class PeriodComponent extends Component<PeriodProps> {
     // FIXME: Only display times for checked periods.
     return (
       <PeriodWrapper>
-        <Checkbox type='checkbox' checked={checked} onClick={this.handleClick} />
+        <Checkbox checked={checked} onClick={this.handleClick} />
         <MonthDay>{format(starts, 'D')}</MonthDay>
         <WeekDay>{format(starts, 'ddd')}</WeekDay>
         {checked && <Signature alt={name} src={signature} />}
@@ -110,18 +113,8 @@ export const Month: FunctionalComponent<MonthProps> = ({ periods = {}, name, sig
       {Object.entries(periodData)
         .map(([key, day]) => (
           <Day key={`day-${key}`}>
-            <PeriodComponent
-              {...day.am}
-              name={name}
-              signature={signature}
-              onChange={onPeriodChange}
-            />
-            <PeriodComponent
-              {...day.pm}
-              name={name}
-              signature={signature}
-              onChange={onPeriodChange}
-            />
+            <DayPeriod {...day.am} name={name} signature={signature} onChange={onPeriodChange} />
+            <DayPeriod {...day.pm} name={name} signature={signature} onChange={onPeriodChange} />
           </Day>
         ))
       }

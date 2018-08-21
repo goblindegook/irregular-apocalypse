@@ -1,14 +1,27 @@
 import { h, Component } from 'preact'
 import { Link } from 'preact-router/match'
-import { css } from 'preact-emotion'
+import styled, { css } from 'preact-emotion'
+import { withProps } from './HOC'
 
-interface HeaderProps {
-  name?: string
-  onNameChange?: (name: string) => void
-  onSignatureChange?: (dataUrl: string) => void
-}
+const homeLink = css`
+  display: inline-block;
+  height: 56px;
+  line-height: 56px;
+  padding: 0 15px;
+  min-width: 50px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0);
+  text-decoration: none;
+  color: #fff;
+  will-change: background-color;
 
-const header = css`
+  &:hover,
+  &:active {
+    background: rgba(0, 0, 0, 0.2);
+  }
+`
+
+const HeaderBar = styled('header')`
   position: fixed;
   left: 0;
   top: 0;
@@ -19,49 +32,33 @@ const header = css`
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   z-index: 50;
 
-  h1 {
-    float: left;
-    margin: 0;
-    padding: 0;
-    font-size: 24px;
-    line-height: 56px;
-    font-weight: 400;
-    color: #fff;
-  }
-
-  a {
-    display: inline-block;
-    height: 56px;
-    line-height: 56px;
-    padding: 0 15px;
-    min-width: 50px;
-    text-align: center;
-    background: rgba(255, 255, 255, 0);
-    text-decoration: none;
-    color: #fff;
-    will-change: background-color;
-  }
-
-  a:hover,
-  a:active {
-    background: rgba(0, 0, 0, 0.2);
-  }
-
   @media print {
     display: none;
   }
 `
 
-const nameField = css`
+const Title = styled('h1')`
+  float: left;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 56px;
+  font-weight: 400;
+  color: #fff;
+`
+
+const NameInput = withProps({
+  type: 'text'
+})(styled('input')`
   float: right;
   height: 26px;
   margin: 1rem;
   font-size: 1rem;
   padding: .25rem;
   font-size: .9rem;
-`
+`)
 
-const signatureField = css`
+const SignatureLabel = styled('label')`
   color: #fff;
   border: 1px solid #fff;
   display: block;
@@ -78,11 +75,20 @@ const signatureField = css`
     background-color: #fff;
     color: #673ab7;
   }
-
-  input[type='file'] {
-    display: none;
-  }
 `
+
+const SignatureInput = withProps({
+  accept: 'image/png, image/jpeg',
+  type: 'file'
+})(styled('input')`
+  display: none;
+`)
+
+interface HeaderProps {
+  name: string
+  onNameChange: (name: string) => void
+  onSignatureChange: (dataUrl: string) => void
+}
 
 export class Header extends Component<HeaderProps> {
   handleNameInput = (event: any) => {
@@ -93,10 +99,8 @@ export class Header extends Component<HeaderProps> {
     const file = event.target.files[0]
     const reader = new FileReader()
 
-    console.log(file)
-
     reader.onloadend = () => {
-      this.props.onSignatureChange && this.props.onSignatureChange(reader.result as string)
+      this.props.onSignatureChange(reader.result as string)
     }
     
     if (file) {
@@ -106,24 +110,16 @@ export class Header extends Component<HeaderProps> {
 
   render ({ name }: HeaderProps) {
     return (
-      <header class={header}>
-        <h1><Link activeClassName='' href='/'>Irregular Apocalypse</Link></h1>
-        <input
-          class={nameField}
-          placeholder='Your name'
-          type='text'
-          value={name}
-          onInput={this.handleNameInput}
-        />
-        <label class={signatureField}>
-          <span>Set Signature</span>
-          <input
-            accept='image/png, image/jpeg'
-            type='file'
-            onChange={this.handleSignatureChange}
-          />
-        </label>
-      </header>
+      <HeaderBar>
+        <Title>
+          <Link activeClassName='' className={homeLink} href='/'>Irregular Apocalypse</Link>
+        </Title>
+        <NameInput placeholder='Your name' value={name} onInput={this.handleNameInput} />
+        <SignatureLabel>
+          Set Signature
+          <SignatureInput onChange={this.handleSignatureChange} />
+        </SignatureLabel>
+      </HeaderBar>
     )
   }
 }
