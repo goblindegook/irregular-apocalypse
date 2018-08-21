@@ -20,6 +20,12 @@ const PeriodWrapper = styled('label')`
   grid-template-columns: 1rem 4rem auto;
   padding: 1rem;
   border: 1px solid #eee;
+
+  @media print {
+    grid-template-rows: 2rem .5rem;
+    grid-template-columns: 0 4rem auto;
+    padding: .25rem;
+  }
 `
 
 const Checkbox = withProps({
@@ -28,6 +34,10 @@ const Checkbox = withProps({
   align-self: center;
   grid-row: 1;
   grid-column: 1 / span 2;
+
+  @media print {
+    display: none;
+  }
 `)
 
 const MonthDay = styled('span')`
@@ -36,6 +46,10 @@ const MonthDay = styled('span')`
   grid-column: 2;
   grid-row: 1;
   font-size: 2rem;
+
+  @media print {
+    font-size: 1.5rem;
+  }
 `
 
 const WeekDay = styled('span')`
@@ -43,18 +57,30 @@ const WeekDay = styled('span')`
   font-size: .8rem;
   grid-column: 2;
   grid-row: 2;
+
+  @media print {
+    font-size: .6rem;
+  }
 `
 
 const Signature = styled('img')`
   grid-row: 1;
   grid-column: 3;
   height: 4rem;
+
+  @media print {
+    height: 2rem;
+  }
 `
 
 const Times = styled('span')`
   font-size: .8rem;
   grid-row: 2;
   grid-column: 3;
+
+  @media print {
+    font-size: .6rem;
+  }
 `
 
 class DayPeriod extends Component<PeriodProps> {
@@ -94,6 +120,10 @@ interface MonthProps {
 const Main = styled('main')`
   margin-top: 56px;
   padding: 15px;
+
+  @media print {
+    margin-top: 0;
+  }
 `
 
 const Day = styled('div')`
