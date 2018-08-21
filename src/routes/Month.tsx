@@ -21,7 +21,7 @@ const PeriodWrapper = styled('label')`
   border: 1px solid #eee;
 `
 
-const Checkbox = styled('input', )`
+const Checkbox = styled('input')`
   align-self: center;
   grid-row: 1;
   grid-column: 1 / span 2;

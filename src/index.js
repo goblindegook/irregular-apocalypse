@@ -1,5 +1,5 @@
 import { App } from './components/App'
-import { injectGlobal } from 'emotion-preact'
+import { injectGlobal } from 'preact-emotion'
 
 injectGlobal`
   html,
