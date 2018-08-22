@@ -1,4 +1,4 @@
-import { h, Component, FunctionalComponent } from 'preact'
+import { h, Component } from 'preact'
 import styled from 'preact-emotion'
 import { format } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
@@ -145,7 +145,7 @@ const Day = styled('div')`
   grid-template-rows: auto;
 `
 
-export const Month: FunctionalComponent<MonthProps> = ({ periods = {}, name, signature, month, year, onPeriodChange }) => {
+export const Month = ({ periods = {}, name, signature, month, year, onPeriodChange }: MonthProps) => {
   const currentDate = new Date()
   const displayYear = year || currentDate.getFullYear()
   const displayMonthIndex = month - 1 || currentDate.getMonth()

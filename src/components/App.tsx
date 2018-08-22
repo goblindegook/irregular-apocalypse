@@ -85,11 +85,11 @@ export class App extends Component<{}, AppState> {
                 onSignatureChange={this.handleSignatureChange}
               />
               <Month
+                name={name}
+                signature={signature}
                 month={parseInt(month, 10)}
                 year={parseInt(year, 10)}
-                name={name}
                 periods={this.state.periods}
-                signature={signature}
                 onPeriodChange={this.handlePeriodChange}
               />
               <Footer />

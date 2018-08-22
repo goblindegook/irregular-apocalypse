@@ -1,4 +1,4 @@
-import { h, ComponentFactory, ComponentConstructor, Component, FunctionalComponent, VNode } from "preact"
+import { h, ComponentFactory, ComponentConstructor, Component, VNode } from "preact"
 import { RoutableProps } from "preact-router"
 
 type RouteParams = {

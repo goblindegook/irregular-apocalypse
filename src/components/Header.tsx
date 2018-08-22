@@ -94,7 +94,7 @@ interface HeaderProps {
 
 export class Header extends Component<HeaderProps> {
   handleNameInput = (event: any) => {
-    this.props.onNameChange && this.props.onNameChange(event.target.value)
+    this.props.onNameChange(event.target.value)
   }
 
   handleSignatureChange = (event: any) => {
