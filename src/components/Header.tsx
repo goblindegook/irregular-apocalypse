@@ -1,5 +1,4 @@
 import { h, Component } from 'preact'
-import { Link } from 'preact-router/match'
 import styled, { css } from 'preact-emotion'
 import { withProps } from './HOC'
 
@@ -112,7 +111,7 @@ export class Header extends Component<HeaderProps> {
     return (
       <HeaderBar>
         <Title>
-          <Link activeClassName='' className={homeLink} href='/'>Irregular Apocalypse</Link>
+          <a className={homeLink} href='/'>Irregular Apocalypse</a>
         </Title>
         <NameInput placeholder='Your name' value={name} onInput={this.handleNameInput} />
         <SignatureLabel>

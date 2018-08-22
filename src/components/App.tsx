@@ -4,8 +4,9 @@ import * as localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'
 import { format } from 'date-fns'
 import { Header } from './Header'
-import { Month } from '../routes/Month'
+import { Month } from './Month'
 import { Period, Periods } from '../calendar'
+import { Route } from './HOC'
 
 interface AppState {
   name: string
@@ -70,38 +71,28 @@ export class App extends Component<{}, AppState> {
   }
 
   render ({}, { name, signature }: AppState) {
-    const defaultDate = new Date()
-    const defaultMonth = defaultDate.getMonth() + 1
-    const defaultYear = defaultDate.getFullYear()
-
     return (
-      <div id='app'>
-        <Header
-          name={name}
-          onNameChange={this.handleNameChange}
-          onSignatureChange={this.handleSignatureChange}
-        />
-        <Router onChange={this.handleRouteChange}>
-          <Month
-            month={defaultMonth}
-            name={name}
-            path='/'
-            periods={this.state.periods}
-            signature={signature}
-            year={defaultYear}
-            onPeriodChange={this.handlePeriodChange}
-          />
-          <Month
-            month={defaultMonth}
-            name={name}
-            path='/:year/:month'
-            periods={this.state.periods}
-            signature={signature}
-            year={defaultYear}
-            onPeriodChange={this.handlePeriodChange}
-          />
-        </Router>
-      </div>
+      <Router onChange={this.handleRouteChange}>
+        <Route path='/:year?/:month?'>
+          {[({ month, year }) => (
+            <div>
+              <Header
+                name={name}
+                onNameChange={this.handleNameChange}
+                onSignatureChange={this.handleSignatureChange}
+              />
+              <Month
+                month={parseInt(month, 10)}
+                year={parseInt(year, 10)}
+                name={name}
+                periods={this.state.periods}
+                signature={signature}
+                onPeriodChange={this.handlePeriodChange}
+              />
+            </div>
+          )]}
+        </Route>
+      </Router>
     )
   }
 }

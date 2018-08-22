@@ -3,7 +3,7 @@ import styled from 'preact-emotion'
 import { format } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
 import { defaultMonthData, Period, Periods } from '../calendar'
-import { withProps } from '../components/HOC'
+import { withProps } from './HOC'
 
 interface PeriodProps {
   readonly checked: boolean
@@ -123,8 +123,8 @@ class DayPeriod extends Component<PeriodProps> {
 
 interface MonthProps {
   readonly path?: string
-  readonly month: number
-  readonly year: number
+  readonly month?: number
+  readonly year?: number
   readonly periods?: RecursivePartial<Periods>
   readonly name: string
   readonly signature: string
@@ -147,13 +147,16 @@ const Day = styled('div')`
 `
 
 export const Month: FunctionalComponent<MonthProps> = ({ periods = {}, name, signature, month, year, onPeriodChange }) => {
-  const monthDate = new Date(year, month - 1)
-  const monthKey = format(monthDate, `YYYY-MM`)
-  const periodData = mergeDeepRight(defaultMonthData(year, month), periods[monthKey] || {})
+  const defaultDate = new Date()
+  const defaultMonth = defaultDate.getMonth() + 1
+  const defaultYear = defaultDate.getFullYear()
+  const displayDate = new Date(year || defaultYear, (month || defaultMonth) - 1)
+  const periodKey = format(displayDate, `YYYY-MM`)
+  const periodData = mergeDeepRight(defaultMonthData(year || defaultYear, month || defaultMonth), periods[periodKey] || {})
 
   return (
     <Main>
-      <h1>{format(monthDate, 'MMMM YYYY')}</h1>
+      <h1>{format(displayDate, 'MMMM YYYY')}</h1>
       {Object.entries(periodData)
         .map(([key, day]) => (
           <Day key={`day-${key}`}>
