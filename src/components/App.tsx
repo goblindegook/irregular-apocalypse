@@ -3,9 +3,10 @@ import { Router, RouterOnChangeArgs } from 'preact-router'
 import * as localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'
 import { format } from 'date-fns'
-import { Header } from './Header'
-import { Month } from './Month'
 import { Period, Periods } from '../calendar'
+import { Header } from './Header'
+import { Footer } from './Footer'
+import { Month } from './Month'
 import { Route } from './HOC'
 
 interface AppState {
@@ -78,6 +79,8 @@ export class App extends Component<{}, AppState> {
             <div>
               <Header
                 name={name}
+                month={parseInt(month, 10)}
+                year={parseInt(year, 10)}
                 onNameChange={this.handleNameChange}
                 onSignatureChange={this.handleSignatureChange}
               />
@@ -89,6 +92,7 @@ export class App extends Component<{}, AppState> {
                 signature={signature}
                 onPeriodChange={this.handlePeriodChange}
               />
+              <Footer />
             </div>
           )]}
         </Route>

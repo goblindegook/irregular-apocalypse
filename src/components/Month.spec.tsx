@@ -10,11 +10,6 @@ describe('Month', () => {
 
   afterEach(cleanup)
 
-  it('renders month name and year', () => {
-    const { getByText } = render(<Month name='' signature='' month={12} year={2012} onPeriodChange={ON_CHANGE} />)
-    expect(getByText('December 2012')).toBeTruthy()
-  })
-
   describe('renders two checkboxes (morning and afternoon) for every day in the month', () => {
     it('renders 62 checkboxes for August 2018', () => {
       const { container } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)

@@ -122,9 +122,8 @@ class DayPeriod extends Component<PeriodProps> {
 }
 
 interface MonthProps {
-  readonly path?: string
-  readonly month?: number
-  readonly year?: number
+  readonly month: number
+  readonly year: number
   readonly periods?: RecursivePartial<Periods>
   readonly name: string
   readonly signature: string
@@ -147,16 +146,15 @@ const Day = styled('div')`
 `
 
 export const Month: FunctionalComponent<MonthProps> = ({ periods = {}, name, signature, month, year, onPeriodChange }) => {
-  const defaultDate = new Date()
-  const defaultMonth = defaultDate.getMonth() + 1
-  const defaultYear = defaultDate.getFullYear()
-  const displayDate = new Date(year || defaultYear, (month || defaultMonth) - 1)
+  const currentDate = new Date()
+  const displayYear = year || currentDate.getFullYear()
+  const displayMonthIndex = month - 1 || currentDate.getMonth()
+  const displayDate = new Date(displayYear, displayMonthIndex)
   const periodKey = format(displayDate, `YYYY-MM`)
-  const periodData = mergeDeepRight(defaultMonthData(year || defaultYear, month || defaultMonth), periods[periodKey] || {})
+  const periodData = mergeDeepRight(defaultMonthData(displayYear, displayMonthIndex + 1), periods[periodKey] || {})
 
   return (
     <Main>
-      <h1>{format(displayDate, 'MMMM YYYY')}</h1>
       {Object.entries(periodData)
         .map(([key, day]) => (
           <Day key={`day-${key}`}>

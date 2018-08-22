@@ -1,8 +1,9 @@
 import { h, Component } from 'preact'
 import styled, { css } from 'preact-emotion'
+import { format } from 'date-fns'
 import { withProps } from './HOC'
 
-const homeLink = css`
+const Link = styled('a')`
   display: inline-block;
   height: 56px;
   line-height: 56px;
@@ -84,9 +85,11 @@ const SignatureInput = withProps({
 `)
 
 interface HeaderProps {
-  name: string
-  onNameChange: (name: string) => void
-  onSignatureChange: (dataUrl: string) => void
+  readonly name: string
+  readonly month: number
+  readonly year: number
+  readonly onNameChange: (name: string) => void
+  readonly onSignatureChange: (dataUrl: string) => void
 }
 
 export class Header extends Component<HeaderProps> {
@@ -107,11 +110,16 @@ export class Header extends Component<HeaderProps> {
     }
   }
 
-  render ({ name }: HeaderProps) {
+  render ({ name, month, year }: HeaderProps) {
+    const currentDate = new Date()
+    const displayYear = year || currentDate.getFullYear()
+    const displayMonthIndex = month - 1 || currentDate.getMonth()
+    const displayDate = new Date(displayYear, displayMonthIndex)
+
     return (
       <HeaderBar>
         <Title>
-          <a className={homeLink} href='/'>Irregular Apocalypse</a>
+          <Link href='/'>{format(displayDate, 'MMMM YYYY')}</Link>
         </Title>
         <NameInput placeholder='Your name' value={name} onInput={this.handleNameInput} />
         <SignatureLabel>

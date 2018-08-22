@@ -7,21 +7,21 @@ describe('Header', () => {
 
   const noop = () => { /* noop */ }
   
-  it('renders title', () => {
-    const { getByText } = render(<Header name='' onNameChange={noop} onSignatureChange={noop} />)
-    expect(getByText('Irregular Apocalypse')).toBeTruthy()
+  it('renders month name and year in the title', () => {
+    const { getByText } = render(<Header name='' month={12} year={2012} onNameChange={noop} onSignatureChange={noop} />)
+    expect(getByText('December 2012')).toBeTruthy()
   })
 
   it('sets the default name', () => {
     const name = 'Test Name'
-    const { getByPlaceholderText } = render(<Header name={name} onNameChange={noop} onSignatureChange={noop} />)
+    const { getByPlaceholderText } = render(<Header name={name} month={12} year={2012} onNameChange={noop} onSignatureChange={noop} />)
     const field = getByPlaceholderText(/your name/i) as HTMLInputElement
     expect(field.value).toBe(name)
   })
 
   it('handles name field changes', () => {
     const fn = jest.fn()
-    const { getByPlaceholderText } = render(<Header name='' onNameChange={fn} onSignatureChange={noop} />)
+    const { getByPlaceholderText } = render(<Header name='' month={12} year={2012} onNameChange={fn} onSignatureChange={noop} />)
     const field = getByPlaceholderText(/your name/i) as HTMLInputElement
     const name = 'Test Name'
     field.value = name
@@ -32,7 +32,7 @@ describe('Header', () => {
   xit('handles signature field changes', () => {
     // FIXME: How to test file inputs?
     const fn = jest.fn()
-    const { getByLabelText } = render(<Header name='' onNameChange={noop} onSignatureChange={fn} />)
+    const { getByLabelText } = render(<Header name='' month={12} year={2012} onNameChange={noop} onSignatureChange={fn} />)
     const field = getByLabelText(/signature/i) as HTMLInputElement
     const value = new File([], 'signature.png')
     fireEvent.change(field, { target: { value } })
