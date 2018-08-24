@@ -5,7 +5,7 @@ import { Footer } from './Footer'
 describe('Footer', () => {
   afterEach(cleanup)
 
-  xit('renders signature line', () => {
+  it('renders signature line', () => {
     const { getByText } = render(<Footer />)
     expect(getByText('Employer Signature')).toBeTruthy()
   })

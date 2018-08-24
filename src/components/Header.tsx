@@ -33,7 +33,12 @@ const HeaderBar = styled('header')`
   z-index: 50;
 
   @media print {
-    display: none;
+    box-shadow: none;
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 1;
+    height: auto;
+    position: relative;
   }
 `
 
@@ -45,6 +50,12 @@ const Title = styled('h1')`
   line-height: 56px;
   font-weight: 400;
   color: #fff;
+
+  @media print {
+    grid-column: 1;
+    grid-row: 1;
+    line-height: 1;
+  }
 `
 
 const NameInput = withProps({
@@ -56,6 +67,13 @@ const NameInput = withProps({
   font-size: 1rem;
   padding: .25rem;
   font-size: .9rem;
+
+  @media print {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0;
+    border: 0;
+  }
 `)
 
 const SignatureLabel = styled('label')`
@@ -74,6 +92,10 @@ const SignatureLabel = styled('label')`
   &:hover {
     background-color: #fff;
     color: #673ab7;
+  }
+
+  @media print {
+    display: none;
   }
 `
 
