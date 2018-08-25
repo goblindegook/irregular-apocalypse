@@ -77,6 +77,13 @@ describe('Month', () => {
     expect(img).toBeNull()
   })
 
+  it('does not render time fields when checkbox is unchecked', () => {
+    const { getByLabelText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const checkbox = getByLabelText(/sun/i)
+    const fields = checkbox.parentElement!.querySelectorAll('input[type=text]')
+    expect(fields.length).toBe(0)
+  })
+
   it('checks periods with checked=true', () => {
     const date = new Date('2018-08-04 09:00:00')
     const periods = { '2018-08': { 4: { am: { starts: date, ends: date, checked: true } } } }

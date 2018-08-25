@@ -144,23 +144,25 @@ const DayPeriod = (props: PeriodProps) => (
     <MonthDay>{format(props.starts, 'D')}</MonthDay>
     <WeekDay>{format(props.starts, 'ddd')}</WeekDay>
     {props.checked && <Signature alt={props.name} src={props.signature} />}
-    <Times>
-      <Time
-        name='starts'
-        placeholder='Start time'
-        value={format(props.starts, 'H:mm')}
-        onChange={handleTimeChange(props)}
-        onClick={preventDefault}
-      />
-      –
-      <Time
-        name='ends'
-        placeholder='End time'
-        value={format(props.ends, 'H:mm')}
-        onChange={handleTimeChange(props)}
-        onClick={preventDefault}
-      />
-    </Times>
+    {props.checked &&
+      <Times>
+        <Time
+          name='starts'
+          placeholder='Start time'
+          value={format(props.starts, 'H:mm')}
+          onChange={handleTimeChange(props)}
+          onClick={preventDefault}
+        />
+        –
+        <Time
+          name='ends'
+          placeholder='End time'
+          value={format(props.ends, 'H:mm')}
+          onChange={handleTimeChange(props)}
+          onClick={preventDefault}
+        />
+      </Times>
+    }
   </PeriodWrapper>
 )
 
