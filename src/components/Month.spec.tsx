@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { cleanup, fireEvent, debounceRenderingOff, render } from 'preact-testing-library'
+import { cleanup, fireEvent, render } from 'preact-testing-library'
 import { Month } from './Month'
 import { Period } from '../calendar'
 
@@ -31,14 +31,16 @@ describe('Month', () => {
       expect(container.querySelectorAll('input[type=checkbox]').length).toBe(58)
     })
 
-    it('renders 31 morning labels for August 2018', () => {
-      const { getAllByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
-      expect(getAllByLabelText(/9\:00–13\:00/i).length).toBe(31)
+    it('renders start time fields with defaults for morning and afternoon', () => {
+      const { getAllByPlaceholderText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+      const fields = getAllByPlaceholderText(/start time/i) as HTMLInputElement[]
+      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['9:00', '14:00']))
     })
 
-    it('renders 31 afternoon labels for August 2018', () => {
-      const { getAllByLabelText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
-      expect(getAllByLabelText(/14\:00–17\:30/i).length).toBe(31)
+    it('renders end time fields with defaults for morning and afternoon', () => {
+      const { getAllByPlaceholderText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+      const fields = getAllByPlaceholderText(/end time/i) as HTMLInputElement[]
+      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['13:00', '17:30']))
     })
   })
 
@@ -97,5 +99,71 @@ describe('Month', () => {
     const checbox = getByLabelText(/mon/i) as HTMLInputElement
     fireEvent.click(checbox)
     expect(fn.mock.calls[0][0]).toMatchObject({ checked: !checbox.value })
+  })
+
+  it('invokes callback when start time field is changed with 24-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/start time/i) as HTMLInputElement
+    const value = '10:15'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 10, 15) })
+  })
+
+  it('invokes callback when start time field is changed with 12-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/start time/i) as HTMLInputElement
+    const value = '1:15pm'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 13, 15) })
+  })
+
+  it('invokes callback when start time field is changed with partial 12-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/start time/i) as HTMLInputElement
+    const value = '3pm'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 15, 0) })
+  })
+
+  it('invokes callback when end time field is changed with 24-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/end time/i) as HTMLInputElement
+    const value = '17:55'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 17, 55) })
+  })
+
+  it('invokes callback when end time field is changed with 12-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/end time/i) as HTMLInputElement
+    const value = '2:34am'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 2, 34) })
+  })
+
+  it('invokes callback when end time field is changed with partial 12-hour format times', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const field = getByPlaceholderText(/end time/i) as HTMLInputElement
+    const value = '3pm'
+    field.value = value
+    fireEvent.input(field)
+    fireEvent.change(field, { target: { value } })
+    expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 15, 0) })
   })
 })

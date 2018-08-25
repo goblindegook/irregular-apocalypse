@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import styled from 'preact-emotion'
-import { format } from 'date-fns'
+import { format, getTime } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
 import { defaultMonthData, Period, Periods } from '../calendar'
 import { withProps } from './HOC'
@@ -23,7 +23,7 @@ const PeriodWrapper = styled('label')`
 
   @media print {
     grid-template-rows: 1rem;
-    grid-template-columns: 2rem 4rem 6rem auto;
+    grid-template-columns: 2rem 4rem 9rem auto;
     padding: .25rem;
   }
 `
@@ -93,9 +93,23 @@ const Times = styled('span')`
     grid-row: 1;
     align-self: center;
     justify-self: center;
-    padding: 1rem;
   }
 `
+
+const Time = withProps({
+  type: 'text'
+})(styled('input')`
+  font-size: .8rem;
+  width: 3rem;
+  text-align: right;
+  margin: 0 .5rem;
+
+  @media print {
+    border: 0;
+    text-align: center;
+    background-color: transparent;
+  }
+`)
 
 class DayPeriod extends Component<PeriodProps> {
 
@@ -107,6 +121,27 @@ class DayPeriod extends Component<PeriodProps> {
     })
   }
 
+  handleTimeChange = async (e: Event) => {
+    const name: 'starts' | 'ends' = (e.target as any).name as 'starts' | 'ends'
+    const value = (e.target as any).value as string || ''
+    const time = this.props[name]
+    const matches = value.match(/(\d+)[:\.]?(\d+)?(am|pm)?/i)
+
+    if (matches) {
+      time.setHours(
+        parseInt(matches[1], 10) + (/pm/.test(matches[3] || '') ? 12 : 0),
+        parseInt(matches[2], 10) || 0
+      )
+
+      await this.props.onChange({
+        starts: this.props.starts,
+        ends: this.props.ends,
+        checked: this.props.checked,
+        [name]: time
+      })
+    }
+  }
+
   render ({ name, signature, starts, ends, checked, onChange }: PeriodProps) {
     // FIXME: Only display times for checked periods.
     return (
@@ -115,7 +150,21 @@ class DayPeriod extends Component<PeriodProps> {
         <MonthDay>{format(starts, 'D')}</MonthDay>
         <WeekDay>{format(starts, 'ddd')}</WeekDay>
         {checked && <Signature alt={name} src={signature} />}
-        <Times>{format(starts, 'H:mm')}–{format(ends, 'H:mm')}</Times>
+        <Times>
+          <Time
+            name='starts'
+            placeholder='Start time'
+            value={format(starts, 'H:mm')}
+            onChange={this.handleTimeChange}
+          />
+          –
+          <Time
+            name='ends'
+            placeholder='End time'
+            value={format(ends, 'H:mm')}
+            onChange={this.handleTimeChange}
+          />
+        </Times>
       </PeriodWrapper>
     )
   }

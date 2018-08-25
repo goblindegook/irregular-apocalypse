@@ -19,6 +19,10 @@ const Link = styled('a')`
   &:active {
     background: rgba(0, 0, 0, 0.2);
   }
+
+  @media print {
+    color: black;
+  }
 `
 
 const HeaderBar = styled('header')`
@@ -33,12 +37,14 @@ const HeaderBar = styled('header')`
   z-index: 50;
 
   @media print {
+    color: black;
     box-shadow: none;
     display: grid;
     grid-template-columns: 2;
     grid-template-rows: 1;
     height: auto;
     position: relative;
+    background-color: transparent;
   }
 `
 
@@ -69,10 +75,12 @@ const NameInput = withProps({
   font-size: .9rem;
 
   @media print {
+    background-color: transparent;
     grid-column: 2;
     grid-row: 1;
     padding: 0;
     border: 0;
+    text-align: right;
   }
 `)
 
