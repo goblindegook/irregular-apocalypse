@@ -166,4 +166,14 @@ describe('Month', () => {
     fireEvent.change(field, { target: { value } })
     expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 15, 0) })
   })
+
+  it('does not invoke callback when fields are clicked', () => {
+    const fn = jest.fn()
+    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
+    const startTime = getByPlaceholderText(/start time/i) as HTMLInputElement
+    fireEvent.click(startTime)
+    const endTime = getByPlaceholderText(/end time/i) as HTMLInputElement
+    fireEvent.click(endTime)
+    expect(fn).not.toHaveBeenCalled()
+  })
 })

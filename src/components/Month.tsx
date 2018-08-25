@@ -111,64 +111,58 @@ const Time = withProps({
   }
 `)
 
-class DayPeriod extends Component<PeriodProps> {
+function preventDefault (e: Event): void {
+  e.preventDefault()
+}
 
-  handleClick = async (e: MouseEvent) => {
-    await this.props.onChange({
-      starts: this.props.starts,
-      ends: this.props.ends,
-      checked: !this.props.checked
-    })
-  }
-
-  handleTimeChange = async (e: Event) => {
-    const name: 'starts' | 'ends' = (e.target as any).name as 'starts' | 'ends'
+function handleTimeChange ({ starts, ends, checked, onChange }: PeriodProps): (e: Event) => Promise<void> {
+  return async e => {
+    const name = (e.target as any).name as string
     const value = (e.target as any).value as string || ''
-    const time = this.props[name]
     const matches = value.match(/(\d+)[:\.]?(\d+)?(am|pm)?/i)
 
     if (matches) {
-      time.setHours(
+      (name === 'starts' ? starts : ends).setHours(
         parseInt(matches[1], 10) + (/pm/.test(matches[3] || '') ? 12 : 0),
         parseInt(matches[2], 10) || 0
       )
 
-      await this.props.onChange({
-        starts: this.props.starts,
-        ends: this.props.ends,
-        checked: this.props.checked,
-        [name]: time
-      })
+      await onChange({ starts, ends, checked })
     }
   }
+}
 
-  render ({ name, signature, starts, ends, checked, onChange }: PeriodProps) {
-    // FIXME: Only display times for checked periods.
-    return (
-      <PeriodWrapper>
-        <Checkbox checked={checked} onClick={this.handleClick} />
-        <MonthDay>{format(starts, 'D')}</MonthDay>
-        <WeekDay>{format(starts, 'ddd')}</WeekDay>
-        {checked && <Signature alt={name} src={signature} />}
-        <Times>
-          <Time
-            name='starts'
-            placeholder='Start time'
-            value={format(starts, 'H:mm')}
-            onChange={this.handleTimeChange}
-          />
-          –
-          <Time
-            name='ends'
-            placeholder='End time'
-            value={format(ends, 'H:mm')}
-            onChange={this.handleTimeChange}
-          />
-        </Times>
-      </PeriodWrapper>
-    )
+function handleClick ({ starts, ends, checked, onChange }: PeriodProps): (e: MouseEvent) => Promise<void> {
+  return async e => {
+    await onChange({ starts, ends, checked: !checked })
   }
 }
+
+const DayPeriod = (props: PeriodProps) => (
+  <PeriodWrapper>
+    <Checkbox checked={props.checked} onClick={handleClick(props)} />
+    <MonthDay>{format(props.starts, 'D')}</MonthDay>
+    <WeekDay>{format(props.starts, 'ddd')}</WeekDay>
+    {props.checked && <Signature alt={props.name} src={props.signature} />}
+    <Times>
+      <Time
+        name='starts'
+        placeholder='Start time'
+        value={format(props.starts, 'H:mm')}
+        onChange={handleTimeChange(props)}
+        onClick={preventDefault}
+      />
+      –
+      <Time
+        name='ends'
+        placeholder='End time'
+        value={format(props.ends, 'H:mm')}
+        onChange={handleTimeChange(props)}
+        onClick={preventDefault}
+      />
+    </Times>
+  </PeriodWrapper>
+)
 
 interface MonthProps {
   readonly month: number
