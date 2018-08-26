@@ -13,6 +13,6 @@ describe('Persistence', () => {
     cy.reload(true)
 
     cy.get('input[type=text]').first().should('have.value', name)
-    cy.get('input[type=checkbox]').first().should('not.have.checked')
+    cy.get('input[type=checkbox]').first().should('not.be.checked')
   })
 })
