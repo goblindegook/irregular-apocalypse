@@ -24,7 +24,7 @@ const PeriodWrapper = styled('label')`
   @media print {
     grid-template-rows: 1rem;
     grid-template-columns: 2rem 4rem 9rem auto;
-    padding: .25rem;
+    padding: .2rem;
   }
 `
 
