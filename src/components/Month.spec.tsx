@@ -86,16 +86,26 @@ describe('Month', () => {
 
   it('checks periods with checked=true', () => {
     const date = new Date('2018-08-04 09:00:00')
-    const periods = { '2018-08': { 4: { am: { starts: date, ends: date, checked: true } } } }
-    const { getByLabelText } = render(<Month periods={periods} name='' signature='' month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const data = {
+      4: {
+        am: { starts: date, ends: date, checked: true },
+        pm: { starts: date, ends: date, checked: false }
+      }
+    }
+    const { getByLabelText } = render(<Month data={data} name='' signature='' month={8} year={2018} onPeriodChange={ON_CHANGE} />)
     const checkbox = getByLabelText(/sat/i) as HTMLInputElement
     expect(checkbox.checked).toBeTruthy()
   })
 
   it('unchecks periods with checked=false', () => {
     const date = new Date('2018-08-01 09:00:00')
-    const periods = { '2018-08': { 1: { am: { starts: date, ends: date, checked: false } } } }
-    const { getByLabelText } = render(<Month periods={periods} name='' signature='' month={8} year={2018} onPeriodChange={ON_CHANGE} />)
+    const data = {
+      1: {
+        am: { starts: date, ends: date, checked: false },
+        pm: { starts: date, ends: date, checked: true }
+      }
+    }
+    const { getByLabelText } = render(<Month data={data} name='' signature='' month={8} year={2018} onPeriodChange={ON_CHANGE} />)
     const checkbox = getByLabelText(/wed/i) as HTMLInputElement
     expect(checkbox.checked).toBeFalsy()
   })

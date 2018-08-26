@@ -1,4 +1,4 @@
-import { getDaysInMonth, isWeekend } from 'date-fns'
+import { getDaysInMonth, isWeekend, format } from 'date-fns'
 import { range } from 'ramda'
 
 export type Period = {
@@ -12,7 +12,7 @@ type Day = {
   readonly pm: Period
 }
 
-type Month = {
+export type Month = {
   readonly [day: string]: Day
 }
 
@@ -48,4 +48,21 @@ function addKeys (month: Day[]): Month {
 
 export function defaultMonthData (year: number, month: number): Month {
   return addKeys(monthData(year, month))
+}
+
+export function currentMonth (): { month: number, year: number } {
+  const date = new Date()
+  return {
+    month: date.getMonth() + 1,
+    year: date.getFullYear()
+  }
+}
+
+export function monthName (year: number, month: number): string {
+  const currentDate = new Date()
+  const displayYear = year || currentDate.getFullYear()
+  const displayMonthIndex = month - 1 || currentDate.getMonth()
+  const displayDate = new Date(displayYear, displayMonthIndex)
+
+  return format(displayDate, 'MMMM YYYY')
 }

@@ -1,6 +1,14 @@
 import { property, integer } from 'jsverify'
 import { all } from 'ramda'
-import { defaultMonthData } from './calendar'
+import { currentMonth, defaultMonthData } from './calendar'
+
+describe('defaultMonth()', () => {
+  it('returns the month number and year', () => {
+    const month = new Date().getMonth() + 1
+    const year = new Date().getFullYear()
+    expect(currentMonth()).toEqual({ month, year })
+  })
+})
 
 describe('defaultMonthData()', () => {
   it('returns 31 daily records for August 2018', () => {

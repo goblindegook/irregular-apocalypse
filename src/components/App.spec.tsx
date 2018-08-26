@@ -20,14 +20,21 @@ describe('App', () => {
     expect(getByText('May 2018')).toBeTruthy()
   })
 
-  it('sets the name', () => {
+  it('includes the name in the title', () => {
     debounceRenderingOff()
-    const { getAllByAltText, getByPlaceholderText } = render(<App />)
+    render(<App />)
+    route('/2018/05')
+    expect(document.title).toContain('May 2018')
+  })
+
+  it('includes the name in the title', () => {
+    debounceRenderingOff()
+    const { getByPlaceholderText } = render(<App />)
     const field = getByPlaceholderText(/your name/i) as HTMLInputElement
     const name = 'Test Name'
     field.value = name
     fireEvent.input(field)
-    expect(getAllByAltText(name).length).toBeGreaterThan(1)
+    expect(document.title).toContain(name)
   })
 
   xit('sets the signature', () => {

@@ -1,8 +1,8 @@
-import { h, Component } from 'preact'
+import { h } from 'preact'
 import styled from 'preact-emotion'
-import { format, getTime } from 'date-fns'
+import { format } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
-import { defaultMonthData, Period, Periods } from '../calendar'
+import { defaultMonthData, Period, Month as MonthData } from '../calendar'
 import { withProps } from './HOC'
 
 interface PeriodProps {
@@ -169,7 +169,7 @@ const DayPeriod = (props: PeriodProps) => (
 interface MonthProps {
   readonly month: number
   readonly year: number
-  readonly periods?: RecursivePartial<Periods>
+  readonly data?: MonthData;
   readonly name: string
   readonly signature: string
   readonly onPeriodChange: (period: Period) => Promise<void>
@@ -190,17 +190,12 @@ const Day = styled('div')`
   grid-template-rows: auto;
 `
 
-export const Month = ({ periods = {}, name, signature, month, year, onPeriodChange }: MonthProps) => {
-  const currentDate = new Date()
-  const displayYear = year || currentDate.getFullYear()
-  const displayMonthIndex = month - 1 || currentDate.getMonth()
-  const displayDate = new Date(displayYear, displayMonthIndex)
-  const periodKey = format(displayDate, `YYYY-MM`)
-  const periodData = mergeDeepRight(defaultMonthData(displayYear, displayMonthIndex + 1), periods[periodKey] || {})
+export const Month = ({ data = {}, name, signature, month, year, onPeriodChange }: MonthProps) => {
+  const monthData = mergeDeepRight(defaultMonthData(year, month), data)
 
   return (
     <Main>
-      {Object.entries(periodData)
+      {Object.entries(monthData)
         .map(([key, day]) => (
           <Day key={`day-${key}`}>
             <DayPeriod {...day.am} name={name} signature={signature} onChange={onPeriodChange} />

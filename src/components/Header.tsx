@@ -1,7 +1,7 @@
 import { h, Component } from 'preact'
-import styled, { css } from 'preact-emotion'
-import { format } from 'date-fns'
+import styled from 'preact-emotion'
 import { withProps } from './HOC'
+import { monthName } from '../calendar'
 
 const Link = styled('a')`
   display: inline-block;
@@ -141,15 +141,10 @@ export class Header extends Component<HeaderProps> {
   }
 
   render ({ name, month, year }: HeaderProps) {
-    const currentDate = new Date()
-    const displayYear = year || currentDate.getFullYear()
-    const displayMonthIndex = month - 1 || currentDate.getMonth()
-    const displayDate = new Date(displayYear, displayMonthIndex)
-
     return (
       <HeaderBar>
         <Title>
-          <Link href='/'>{format(displayDate, 'MMMM YYYY')}</Link>
+          <Link href='/'>{monthName(year, month)}</Link>
         </Title>
         <NameInput placeholder='Your name' value={name} onInput={this.handleNameInput} />
         <SignatureLabel>
