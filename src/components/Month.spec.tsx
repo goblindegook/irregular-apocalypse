@@ -34,7 +34,7 @@ describe('Month', () => {
     it('renders start time fields with defaults for morning and afternoon', () => {
       const { getAllByPlaceholderText } = render(<Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={ON_CHANGE} />)
       const fields = getAllByPlaceholderText(/start time/i) as HTMLInputElement[]
-      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['9:00', '14:00']))
+      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['09:00', '14:00']))
     })
 
     it('renders end time fields with defaults for morning and afternoon', () => {
@@ -118,7 +118,7 @@ describe('Month', () => {
     expect(fn.mock.calls[0][0]).toMatchObject({ checked: !checbox.value })
   })
 
-  it('invokes callback when start time field is changed with 24-hour format times', () => {
+  it('invokes callback when start time field is changed', () => {
     const fn = jest.fn()
     const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
     const field = getByPlaceholderText(/start time/i) as HTMLInputElement
@@ -129,29 +129,7 @@ describe('Month', () => {
     expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 10, 15) })
   })
 
-  it('invokes callback when start time field is changed with 12-hour format times', () => {
-    const fn = jest.fn()
-    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const field = getByPlaceholderText(/start time/i) as HTMLInputElement
-    const value = '1:15pm'
-    field.value = value
-    fireEvent.input(field)
-    fireEvent.change(field, { target: { value } })
-    expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 13, 15) })
-  })
-
-  it('invokes callback when start time field is changed with partial 12-hour format times', () => {
-    const fn = jest.fn()
-    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const field = getByPlaceholderText(/start time/i) as HTMLInputElement
-    const value = '3pm'
-    field.value = value
-    fireEvent.input(field)
-    fireEvent.change(field, { target: { value } })
-    expect(fn.mock.calls[0][0]).toMatchObject({ starts: new Date(2018, 7, 1, 15, 0) })
-  })
-
-  it('invokes callback when end time field is changed with 24-hour format times', () => {
+  it('invokes callback when end time field is changed', () => {
     const fn = jest.fn()
     const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
     const field = getByPlaceholderText(/end time/i) as HTMLInputElement
@@ -160,28 +138,6 @@ describe('Month', () => {
     fireEvent.input(field)
     fireEvent.change(field, { target: { value } })
     expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 17, 55) })
-  })
-
-  it('invokes callback when end time field is changed with 12-hour format times', () => {
-    const fn = jest.fn()
-    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const field = getByPlaceholderText(/end time/i) as HTMLInputElement
-    const value = '2:34am'
-    field.value = value
-    fireEvent.input(field)
-    fireEvent.change(field, { target: { value } })
-    expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 2, 34) })
-  })
-
-  it('invokes callback when end time field is changed with partial 12-hour format times', () => {
-    const fn = jest.fn()
-    const { getByPlaceholderText } = render(<Month name='' signature='' month={8} year={2018} onPeriodChange={fn} />)
-    const field = getByPlaceholderText(/end time/i) as HTMLInputElement
-    const value = '3pm'
-    field.value = value
-    fireEvent.input(field)
-    fireEvent.change(field, { target: { value } })
-    expect(fn.mock.calls[0][0]).toMatchObject({ ends: new Date(2018, 7, 1, 15, 0) })
   })
 
   it('does not invoke callback when fields are clicked', () => {

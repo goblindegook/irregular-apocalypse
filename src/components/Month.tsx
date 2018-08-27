@@ -23,8 +23,10 @@ const PeriodWrapper = styled('label')`
 
   @media print {
     grid-template-rows: 1rem;
-    grid-template-columns: 2rem 4rem 9rem auto;
+    grid-template-columns: 2rem 3rem 12rem auto;
     padding: .2rem;
+    border-left: 0;
+    border-right: 0;
   }
 `
 
@@ -57,10 +59,9 @@ const MonthDay = styled('span')`
 
 const WeekDay = styled('span')`
   font-size: .8rem;
-  align-self: center;
-  justify-self: center;
   grid-column: 2;
   grid-row: 2;
+  text-align: center;
 
   @media print {
     font-size: .6rem;
@@ -97,10 +98,9 @@ const Times = styled('span')`
 `
 
 const Time = withProps({
-  type: 'text'
+  type: 'time'
 })(styled('input')`
   font-size: .8rem;
-  width: 3rem;
   text-align: right;
   margin: 0 .5rem;
 
@@ -119,12 +119,12 @@ function handleTimeChange ({ starts, ends, checked, onChange }: PeriodProps): (e
   return async e => {
     const name = (e.target as any).name as string
     const value = (e.target as any).value as string || ''
-    const matches = value.match(/(\d+)[:\.]?(\d+)?(am|pm)?/i)
+    const matches = value.match(/(\d+)(\:(\d+))?/i)
 
     if (matches) {
       (name === 'starts' ? starts : ends).setHours(
-        parseInt(matches[1], 10) + (/pm/.test(matches[3] || '') ? 12 : 0),
-        parseInt(matches[2], 10) || 0
+        parseInt(matches[1], 10) || 0,
+        parseInt(matches[3], 10) || 0
       )
 
       await onChange({ starts, ends, checked })
@@ -149,7 +149,7 @@ const DayPeriod = (props: PeriodProps) => (
         <Time
           name='starts'
           placeholder='Start time'
-          value={format(props.starts, 'H:mm')}
+          value={format(props.starts, 'HH:mm')}
           onChange={handleTimeChange(props)}
           onClick={preventDefault}
         />
@@ -157,7 +157,7 @@ const DayPeriod = (props: PeriodProps) => (
         <Time
           name='ends'
           placeholder='End time'
-          value={format(props.ends, 'H:mm')}
+          value={format(props.ends, 'HH:mm')}
           onChange={handleTimeChange(props)}
           onClick={preventDefault}
         />

@@ -32,7 +32,7 @@ const HeaderBar = styled('header')`
   width: 100%;
   height: 56px;
   padding: 0;
-  background: #673ab7;
+  background: #1795d4;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   z-index: 50;
 

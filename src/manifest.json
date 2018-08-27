@@ -1,11 +1,11 @@
 {
-  "name": "irregular-apocalypse",
-  "short_name": "irregular-apocalypse",
+  "name": "Irregular Apocalypse",
+  "short_name": "Irregular Apocalypse",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fff",
-  "theme_color": "#673ab8",
+  "theme_color": "#1795d4",
   "icons": [
     {
       "src": "/assets/icons/android-chrome-192x192.png",
