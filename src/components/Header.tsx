@@ -99,7 +99,7 @@ const SignatureLabel = styled('label')`
 
   &:hover {
     background-color: #fff;
-    color: #673ab7;
+    color: #1795d4;
   }
 
   @media print {
