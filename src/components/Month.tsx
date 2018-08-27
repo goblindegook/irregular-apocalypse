@@ -8,22 +8,23 @@ import { withProps } from './HOC'
 interface PeriodProps {
   readonly checked: boolean
   readonly name: string
+  readonly id: string
   readonly starts: Date
   readonly ends: Date
   readonly signature?: string
   readonly onChange: (period: Period) => Promise<void>
 }
 
-const PeriodWrapper = styled('label')`
+const PeriodWrapper = styled('div')`
   display: grid;
   grid-template-rows: 4rem 1rem;
-  grid-template-columns: 1rem 4rem auto;
+  grid-template-columns: 1rem 4rem 1fr;
   padding: 1rem;
   border: 1px solid #eee;
 
   @media print {
     grid-template-rows: 1rem;
-    grid-template-columns: 2rem 3rem 12rem auto;
+    grid-template-columns: 2rem 3rem auto 1fr;
     padding: .2rem;
     border-left: 0;
     border-right: 0;
@@ -42,7 +43,7 @@ const Checkbox = withProps({
   }
 `)
 
-const MonthDay = styled('span')`
+const MonthDay = styled('label')`
   grid-column: 2;
   grid-row: 1;
   align-self: center;
@@ -57,7 +58,7 @@ const MonthDay = styled('span')`
   }
 `
 
-const WeekDay = styled('span')`
+const WeekDay = styled('label')`
   font-size: .8rem;
   grid-column: 2;
   grid-row: 2;
@@ -70,11 +71,12 @@ const WeekDay = styled('span')`
   }
 `
 
-const Signature = styled('img')`
+const DottedLine = styled('label')`
   grid-row: 1;
   grid-column: 3;
   align-self: center;
   height: 4rem;
+  width: 100%;
 
   @media print {
     height: 1.5rem;
@@ -83,31 +85,44 @@ const Signature = styled('img')`
   }
 `
 
-const Times = styled('span')`
-  font-size: .8rem;
+const Signature = styled('img')`
+  height: 100%;
+  max-width: 100%;
+  width: auto;
+`
+
+const Times = styled('div')`
+  font-size: .85rem;
   grid-row: 2;
   grid-column: 3;
 
   @media print {
-    font-size: .6rem;
     grid-column: 3;
     grid-row: 1;
-    align-self: center;
-    justify-self: center;
   }
 `
 
 const Time = withProps({
   type: 'time'
 })(styled('input')`
-  font-size: .8rem;
-  text-align: right;
   margin: 0 .5rem;
+  max-width: 5rem;
+  text-align: center;
+
+  ::-ms-clear,
+  ::-webkit-clear-button {
+    display: none;
+  }
 
   @media print {
+    -moz-appearance: textfield;
     border: 0;
-    text-align: center;
+    margin: 0 0 0 .5rem;
     background-color: transparent;
+
+    ::-webkit-inner-spin-button {
+      display: none;
+    }
   }
 `)
 
@@ -140,10 +155,12 @@ function handleClick ({ starts, ends, checked, onChange }: PeriodProps): (e: Mou
 
 const DayPeriod = (props: PeriodProps) => (
   <PeriodWrapper>
-    <Checkbox checked={props.checked} onClick={handleClick(props)} />
-    <MonthDay>{format(props.starts, 'D')}</MonthDay>
-    <WeekDay>{format(props.starts, 'ddd')}</WeekDay>
-    {props.checked && <Signature alt={props.name} src={props.signature} />}
+    <Checkbox id={props.id} checked={props.checked} onClick={handleClick(props)} />
+    <MonthDay for={props.id}>{format(props.starts, 'D')}</MonthDay>
+    <WeekDay for={props.id}>{format(props.starts, 'ddd')}</WeekDay>
+    <DottedLine for={props.id}>
+      {props.checked ? <Signature alt={props.name} src={props.signature} /> : ''}
+    </DottedLine>
     {props.checked &&
       <Times>
         <Time
@@ -151,15 +168,13 @@ const DayPeriod = (props: PeriodProps) => (
           placeholder='Start time'
           value={format(props.starts, 'HH:mm')}
           onChange={handleTimeChange(props)}
-          onClick={preventDefault}
         />
-        –
+        —
         <Time
           name='ends'
           placeholder='End time'
           value={format(props.ends, 'HH:mm')}
           onChange={handleTimeChange(props)}
-          onClick={preventDefault}
         />
       </Times>
     }
@@ -175,7 +190,7 @@ interface MonthProps {
   readonly onPeriodChange: (period: Period) => Promise<void>
 }
 
-const Main = styled('main')`
+const Main = styled('ol')`
   margin-top: 56px;
   padding: 15px;
 
@@ -184,7 +199,7 @@ const Main = styled('main')`
   }
 `
 
-const Day = styled('div')`
+const Day = styled('li')`
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
@@ -198,8 +213,8 @@ export const Month = ({ data = {}, name, signature, month, year, onPeriodChange 
       {Object.entries(monthData)
         .map(([key, day]) => (
           <Day key={`day-${key}`}>
-            <DayPeriod {...day.am} name={name} signature={signature} onChange={onPeriodChange} />
-            <DayPeriod {...day.pm} name={name} signature={signature} onChange={onPeriodChange} />
+            <DayPeriod {...day.am} id={`day-${key}-am`} name={name} signature={signature} onChange={onPeriodChange} />
+            <DayPeriod {...day.pm} id={`day-${key}-pm`} name={name} signature={signature} onChange={onPeriodChange} />
           </Day>
         ))
       }
