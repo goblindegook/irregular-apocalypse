@@ -17,7 +17,7 @@ interface AppState {
   periods: Periods
 }
 
-function title (...fragments: string[]): string {
+function title(...fragments: string[]): string {
   return fragments.filter(c => c.length).join(' - ')
 }
 
@@ -26,7 +26,7 @@ export class App extends Component<{}, AppState> {
 
   store: LocalForage
 
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
@@ -36,7 +36,7 @@ export class App extends Component<{}, AppState> {
     }
 
     this.store = localforage.createInstance({
-      name: 'irregularApocalypse',
+      name: 'irregular-apocalypse',
       version: 1.0,
       storeName: 'timesheets'
     })
@@ -65,52 +65,59 @@ export class App extends Component<{}, AppState> {
       }
     }
 
-    this.setState(({ periods }: Partial<AppState>) => ({ periods: mergeDeepRight(periods, update) }))
+    this.setState(({ periods }: Partial<AppState>) => ({
+      periods: mergeDeepRight(periods, update)
+    }))
 
-    await this.store.setItem('periods', mergeDeepRight(this.state.periods, update))
+    await this.store.setItem(
+      'periods',
+      mergeDeepRight(this.state.periods, update)
+    )
   }
 
-  async componentDidMount () {
-    const name = await this.store.getItem('name') || ''
-    const signature = await this.store.getItem('signature') || ''
-    const periods = await this.store.getItem('periods') || {}
+  async componentDidMount() {
+    const name = (await this.store.getItem('name')) || ''
+    const signature = (await this.store.getItem('signature')) || ''
+    const periods = (await this.store.getItem('periods')) || {}
     this.setState(() => ({ name, periods, signature }))
   }
 
-  render ({}, { name, periods, signature }: AppState) {
+  render({}, { name, periods, signature }: AppState) {
     const current = currentMonth()
 
     return (
       <Router onChange={this.handleRouteChange}>
-        <Route path='/:yyyy?/:mm?'>
-          {[({ yyyy, mm }) => {
-            const year = parseInt(yyyy, 10) || current.year
-            const month = parseInt(mm, 10) || current.month
-            const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
-            const data = periods[periodKey]
-            
-            return (
-              <div>
-                <Helmet title={title(monthName(year, month), name)} />
-                <Header
-                  name={name}
-                  month={month}
-                  year={year}
-                  onNameChange={this.handleNameChange}
-                  onSignatureChange={this.handleSignatureChange}
-                />
-                <Month
-                  name={name}
-                  signature={signature}
-                  month={month}
-                  year={year}
-                  data={data}
-                  onPeriodChange={this.handlePeriodChange}
-                />
-                <Footer />
-              </div>
-            )
-          }]}
+        <Route path="/:yyyy?/:mm?">
+          {[
+            ({ yyyy, mm }) => {
+              const year = parseInt(yyyy, 10) || current.year
+              const month = parseInt(mm, 10) || current.month
+              const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
+              const data = periods[periodKey]
+
+              return (
+                <div>
+                  <Helmet title={title(monthName(year, month), name)} />
+                  <Header
+                    name={name}
+                    month={month}
+                    year={year}
+                    onNameChange={this.handleNameChange}
+                    onSignatureChange={this.handleSignatureChange}
+                  />
+                  <Month
+                    name={name}
+                    signature={signature}
+                    month={month}
+                    year={year}
+                    data={data}
+                    onPeriodChange={this.handlePeriodChange}
+                  />
+                  <Footer />
+                </div>
+              )
+            }
+          ]}
         </Route>
       </Router>
     )
