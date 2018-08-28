@@ -12,6 +12,16 @@ describe('Header', () => {
     expect(getByText('December 2012')).toBeTruthy()
   })
 
+  it('links to the previous month', () => {
+    const { getByTitle } = render(<Header name='' month={1} year={2018} onNameChange={noop} onSignatureChange={noop} />)
+    expect(getByTitle('Previous').getAttribute('href')).toBe('/2017/12')
+  })
+
+  it('links to the following month', () => {
+    const { getByTitle } = render(<Header name='' month={12} year={2017} onNameChange={noop} onSignatureChange={noop} />)
+    expect(getByTitle('Next').getAttribute('href')).toBe('/2018/01')
+  })
+
   it('sets the default name', () => {
     const name = 'Test Name'
     const { getByPlaceholderText } = render(<Header name={name} month={12} year={2012} onNameChange={noop} onSignatureChange={noop} />)
