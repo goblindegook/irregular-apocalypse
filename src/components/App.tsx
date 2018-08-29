@@ -8,6 +8,7 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { Month } from './Month'
 import { Route } from './HOC'
+const defaultSignature = require('../assets/signature.svg')
 
 const Helmet = require('preact-helmet')
 
@@ -107,7 +108,7 @@ export class App extends Component<{}, AppState> {
                   />
                   <Month
                     name={name}
-                    signature={signature}
+                    signature={signature || defaultSignature}
                     month={month}
                     year={year}
                     data={data}
