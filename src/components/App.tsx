@@ -78,7 +78,7 @@ export class App extends Component<{}, AppState> {
 
   async componentDidMount() {
     const name = (await this.store.getItem('name')) || ''
-    const signature = (await this.store.getItem('signature')) || ''
+    const signature = (await this.store.getItem('signature')) || defaultSignature
     const periods = (await this.store.getItem('periods')) || {}
     this.setState(() => ({ name, periods, signature }))
   }
@@ -108,7 +108,7 @@ export class App extends Component<{}, AppState> {
                   />
                   <Month
                     name={name}
-                    signature={signature || defaultSignature}
+                    signature={signature}
                     month={month}
                     year={year}
                     data={data}
