@@ -14,12 +14,14 @@
     "jest": "jest",
     "jest:watch": "jest --watch",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
     "linters": {
       "src/**/*.{js,ts,tsx,json,css,md}": [
         "prettier-standard",
+        "tslint",
         "git add"
       ]
     }
