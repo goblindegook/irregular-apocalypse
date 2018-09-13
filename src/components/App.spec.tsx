@@ -1,11 +1,6 @@
 import { h } from 'preact'
 import { route } from 'preact-router'
-import {
-  cleanup,
-  fireEvent,
-  debounceRenderingOff,
-  render
-} from 'preact-testing-library'
+import { cleanup, fireEvent, debounceRenderingOff, render } from 'preact-testing-library'
 import { format } from 'date-fns'
 import { App } from './App'
 

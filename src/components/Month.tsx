@@ -126,11 +126,11 @@ const Time = withProps({
   }
 `)
 
-function preventDefault (e: Event): void {
+function preventDefault(e: Event): void {
   e.preventDefault()
 }
 
-function handleTimeChange ({
+function handleTimeChange({
   starts,
   ends,
   checked,
@@ -152,7 +152,7 @@ function handleTimeChange ({
   }
 }
 
-function handleClick ({
+function handleClick({
   starts,
   ends,
   checked,
@@ -165,32 +165,24 @@ function handleClick ({
 
 const DayPeriod = (props: PeriodProps) => (
   <PeriodWrapper>
-    <Checkbox
-      id={props.id}
-      checked={props.checked}
-      onClick={handleClick(props)}
-    />
+    <Checkbox id={props.id} checked={props.checked} onClick={handleClick(props)} />
     <MonthDay for={props.id}>{format(props.starts, 'D')}</MonthDay>
     <WeekDay for={props.id}>{format(props.starts, 'ddd')}</WeekDay>
     <DottedLine for={props.id}>
-      {props.checked ? (
-        <Signature alt={props.name} src={props.signature} />
-      ) : (
-        ''
-      )}
+      {props.checked ? <Signature alt={props.name} src={props.signature} /> : ''}
     </DottedLine>
     {props.checked && (
       <Times>
         <Time
-          name='starts'
-          placeholder='Start time'
+          name="starts"
+          placeholder="Start time"
           value={format(props.starts, 'HH:mm')}
           onChange={handleTimeChange(props)}
         />
         —
         <Time
-          name='ends'
-          placeholder='End time'
+          name="ends"
+          placeholder="End time"
           value={format(props.ends, 'HH:mm')}
           onChange={handleTimeChange(props)}
         />

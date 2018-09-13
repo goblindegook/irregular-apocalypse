@@ -20,7 +20,7 @@ export type Periods = {
   [yearAndMonth: string]: Month
 }
 
-function monthData (year: number, month: number): Day[] {
+function monthData(year: number, month: number): Day[] {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
 
   return range(1, daysInMonth + 1).map(day => {
@@ -41,18 +41,15 @@ function monthData (year: number, month: number): Day[] {
   })
 }
 
-function addKeys (month: Day[]): Month {
-  return month.reduce<Month>(
-    (acc, day, idx) => ({ ...acc, [`${idx + 1}`]: day }),
-    {}
-  )
+function addKeys(month: Day[]): Month {
+  return month.reduce<Month>((acc, day, idx) => ({ ...acc, [`${idx + 1}`]: day }), {})
 }
 
-export function defaultMonthData (year: number, month: number): Month {
+export function defaultMonthData(year: number, month: number): Month {
   return addKeys(monthData(year, month))
 }
 
-export function currentMonth (): { month: number; year: number } {
+export function currentMonth(): { month: number; year: number } {
   const date = new Date()
   return {
     month: date.getMonth() + 1,
@@ -60,7 +57,7 @@ export function currentMonth (): { month: number; year: number } {
   }
 }
 
-export function monthName (year: number, month: number): string {
+export function monthName(year: number, month: number): string {
   const currentDate = new Date()
   const displayYear = year || currentDate.getFullYear()
   const displayMonthIndex = month ? month - 1 : currentDate.getMonth()

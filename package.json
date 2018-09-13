@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "if-env NODE_ENV=production && yarn -s serve || yarn -s dev",
+    "start": "if-env NODE_ENV=production && yarn -s serve || yarn -s watch",
     "build": "preact build",
     "serve": "preact build && preact serve",
-    "dev": "preact watch",
+    "watch": "preact watch",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier-standard 'src/**/*.{js,ts,tsx,json,css,md}'",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,json,css,md}'",
+    "pretest": "yarn lint",
     "test": "yarn jest && start-server-and-test start http://localhost:8080 cypress:run",
     "jest": "jest",
     "jest:watch": "jest --watch",
@@ -20,7 +21,7 @@
   "lint-staged": {
     "linters": {
       "src/**/*.{js,ts,tsx,json,css,md}": [
-        "prettier-standard",
+        "prettier --write",
         "tslint",
         "git add"
       ]
@@ -63,7 +64,7 @@
     "preact-cli": "^2.0.1",
     "preact-cli-plugin-typescript": "^0.2.2",
     "preact-testing-library": "^0.2.1",
-    "prettier-standard": "^8.0.0",
+    "prettier": "^1.14.2",
     "start-server-and-test": "^1.7.0",
     "ts-jest": "^23.1.3",
     "ts-loader": "^5.1.0",

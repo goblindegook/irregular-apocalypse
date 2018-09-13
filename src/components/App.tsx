@@ -25,7 +25,7 @@ export class App extends Component<{}, AppState> {
 
   store: LocalForage
 
-  constructor () {
+  constructor() {
     super()
 
     this.state = {
@@ -68,27 +68,23 @@ export class App extends Component<{}, AppState> {
       periods: mergeDeepRight(periods, update)
     }))
 
-    await this.store.setItem(
-      'periods',
-      mergeDeepRight(this.state.periods, update)
-    )
+    await this.store.setItem('periods', mergeDeepRight(this.state.periods, update))
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     const name = (await this.store.getItem('name')) || ''
-    const signature =
-      (await this.store.getItem('signature')) || defaultSignature
+    const signature = (await this.store.getItem('signature')) || defaultSignature
     const periods = (await this.store.getItem('periods')) || {}
     this.setState(() => ({ name, periods, signature }))
   }
 
-  render ({}, { name, periods, signature }: AppState) {
+  render({}, { name, periods, signature }: AppState) {
     const current = currentMonth()
 
     return (
       <Router onChange={this.handleRouteChange}>
         <Route
-          path='/:yyyy?/:mm?'
+          path="/:yyyy?/:mm?"
           render={({ yyyy, mm }) => {
             const year = parseInt(yyyy, 10) || current.year
             const month = parseInt(mm, 10) || current.month
@@ -96,11 +92,7 @@ export class App extends Component<{}, AppState> {
 
             return (
               <div>
-                <Helmet
-                  title={[monthName(year, month), name]
-                    .filter(c => c.length)
-                    .join(' - ')}
-                />
+                <Helmet title={[monthName(year, month), name].filter(c => c.length).join(' - ')} />
                 <Header
                   name={name}
                   month={month}

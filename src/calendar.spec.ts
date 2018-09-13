@@ -34,72 +34,41 @@ describe('defaultMonthData()', () => {
     (year, month) => Object.keys(defaultMonthData(year, month))[0] === '1'
   )
 
-  property(
-    'generates incremental keys',
-    integer(2000, 2100),
-    integer(1, 12),
-    (year, month) => {
-      const days = Object.keys(defaultMonthData(year, month)).map(v =>
-        parseInt(v, 10)
-      )
-      return all(([v, i]) => v === i + 1, days.map((v, i) => [v, i]))
-    }
-  )
+  property('generates incremental keys', integer(2000, 2100), integer(1, 12), (year, month) => {
+    const days = Object.keys(defaultMonthData(year, month)).map(v => parseInt(v, 10))
+    return all(([v, i]) => v === i + 1, days.map((v, i) => [v, i]))
+  })
 
-  function getTime (date: Date): [number, number] {
+  function getTime(date: Date): [number, number] {
     return [date.getHours(), date.getMinutes()]
   }
 
-  property(
-    'starts the AM period at 9:00',
-    integer(2000, 2100),
-    integer(1, 12),
-    (year, month) =>
-      all(
-        ([h, m]) => h === 9 && m === 0,
-        Object.values(defaultMonthData(year, month)).map(({ am }) =>
-          getTime(am.starts)
-        )
-      )
+  property('starts the AM period at 9:00', integer(2000, 2100), integer(1, 12), (year, month) =>
+    all(
+      ([h, m]) => h === 9 && m === 0,
+      Object.values(defaultMonthData(year, month)).map(({ am }) => getTime(am.starts))
+    )
   )
 
-  property(
-    'ends the AM period at 13:00',
-    integer(2000, 2100),
-    integer(1, 12),
-    (year, month) =>
-      all(
-        ([h, m]) => h === 13 && m === 0,
-        Object.values(defaultMonthData(year, month)).map(({ am }) =>
-          getTime(am.ends)
-        )
-      )
+  property('ends the AM period at 13:00', integer(2000, 2100), integer(1, 12), (year, month) =>
+    all(
+      ([h, m]) => h === 13 && m === 0,
+      Object.values(defaultMonthData(year, month)).map(({ am }) => getTime(am.ends))
+    )
   )
 
-  property(
-    'starts the PM period at 14:00',
-    integer(2000, 2100),
-    integer(1, 12),
-    (year, month) =>
-      all(
-        ([h, m]) => h === 14 && m === 0,
-        Object.values(defaultMonthData(year, month)).map(({ pm }) =>
-          getTime(pm.starts)
-        )
-      )
+  property('starts the PM period at 14:00', integer(2000, 2100), integer(1, 12), (year, month) =>
+    all(
+      ([h, m]) => h === 14 && m === 0,
+      Object.values(defaultMonthData(year, month)).map(({ pm }) => getTime(pm.starts))
+    )
   )
 
-  property(
-    'ends the PM period at 17:30',
-    integer(2000, 2100),
-    integer(1, 12),
-    (year, month) =>
-      all(
-        ([h, m]) => h === 17 && m === 30,
-        Object.values(defaultMonthData(year, month)).map(({ pm }) =>
-          getTime(pm.ends)
-        )
-      )
+  property('ends the PM period at 17:30', integer(2000, 2100), integer(1, 12), (year, month) =>
+    all(
+      ([h, m]) => h === 17 && m === 30,
+      Object.values(defaultMonthData(year, month)).map(({ pm }) => getTime(pm.ends))
+    )
   )
 })
 
