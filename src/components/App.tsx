@@ -10,18 +10,14 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { Month } from './Month'
 import { Route } from './HOC'
-const defaultSignature = require('../assets/signature.svg')
 
 const Helmet = require('preact-helmet')
+const defaultSignature = require('../assets/signature.svg')
 
 interface AppState {
   name: string
   signature: string
   periods: Periods
-}
-
-function title (...fragments: string[]): string {
-  return fragments.filter(c => c.length).join(' - ')
 }
 
 export class App extends Component<{}, AppState> {
@@ -97,11 +93,14 @@ export class App extends Component<{}, AppState> {
             const year = parseInt(yyyy, 10) || current.year
             const month = parseInt(mm, 10) || current.month
             const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
-            const data = periods[periodKey]
 
             return (
               <div>
-                <Helmet title={title(monthName(year, month), name)} />
+                <Helmet
+                  title={[monthName(year, month), name]
+                    .filter(c => c.length)
+                    .join(' - ')}
+                />
                 <Header
                   name={name}
                   month={month}
@@ -114,7 +113,7 @@ export class App extends Component<{}, AppState> {
                   signature={signature}
                   month={month}
                   year={year}
-                  data={data}
+                  data={periods[periodKey]}
                   onPeriodChange={this.handlePeriodChange}
                 />
                 <Footer />
