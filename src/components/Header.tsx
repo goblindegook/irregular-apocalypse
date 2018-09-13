@@ -124,7 +124,7 @@ const SignatureInput = withProps({
 `)
 
 interface HeaderProps {
-  readonly name: string
+  readonly name?: string
   readonly month: number
   readonly year: number
   readonly onNameChange: (name: string) => void
@@ -149,20 +149,20 @@ export class Header extends Component<HeaderProps> {
     }
   }
 
-  render({ name, month, year }: HeaderProps) {
+  render ({ name = '', month, year }: HeaderProps) {
     return (
       <HeaderBar>
-        <NavLink href={previous(year, month)} title="Previous">
+        <NavLink href={previous(year, month)} title='Previous'>
           ◀
         </NavLink>
-        <NavLink href={next(year, month)} title="Next">
+        <NavLink href={next(year, month)} title='Next'>
           ▶
         </NavLink>
         <Title>
-          <Link href="/">{monthName(year, month)}</Link>
+          <Link href='/'>{monthName(year, month)}</Link>
         </Title>
         <NameInput
-          placeholder="Your name"
+          placeholder='Your name'
           value={name}
           onInput={this.handleNameInput}
         />
@@ -175,10 +175,10 @@ export class Header extends Component<HeaderProps> {
   }
 }
 
-function next(year: number, month: number): string {
+function next (year: number, month: number): string {
   return format(addMonths(new Date(year, month - 1), 1), '/YYYY/MM')
 }
 
-function previous(year: number, month: number): string {
+function previous (year: number, month: number): string {
   return format(subMonths(new Date(year, month - 1), 1), '/YYYY/MM')
 }

@@ -3,7 +3,7 @@ import { cleanup, render } from 'preact-testing-library'
 import { Footer } from './Footer'
 
 describe('Footer', () => {
-  afterEach(cleanup)
+  beforeEach(cleanup)
 
   it('renders signature line', () => {
     const { getByText } = render(<Footer />)
