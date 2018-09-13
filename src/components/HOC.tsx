@@ -11,13 +11,13 @@ type RouteParams = {
   [x: string]: string
 }
 
-type RouteProps = RoutableProps & {
-  children: [(params: RouteParams) => VNode]
-  matches?: RouteParams
+type RouteProps < T > = RoutableProps & {
+  matches?: T
+  render: (props: T) => VNode
 }
 
-export const Route = ({ children, matches = {} }: RouteProps) =>
-  children[0](matches)
+export const Route = ({ matches = {}, render }: RouteProps<RouteParams>) =>
+  render(matches)
 
 export function withProps<T = {}> (props: T) {
   return function<P> (
