@@ -9,7 +9,7 @@
     "serve": "preact build && preact serve",
     "watch": "preact watch",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{js,ts,tsx,json,css,md}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "pretest": "yarn lint",
     "test": "yarn jest && start-server-and-test start http://localhost:8080 cypress:run",
     "jest": "jest",

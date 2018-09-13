@@ -8,7 +8,7 @@ const SignatureLine = styled('div')`
     border-bottom: 1px solid #000;
     display: block;
     float: right;
-    font-size: .8rem;
+    font-size: 0.8rem;
     margin: 2rem 2rem 0;
     padding-bottom: 2rem;
     text-align: center;
