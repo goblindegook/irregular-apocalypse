@@ -6,7 +6,7 @@ describe('Application storage', () => {
 
   it('persists user input', () => {
     const name = 'TEST NAME'
-    cy.visit('http://localhost:8080/2018/08')
+    cy.visit('/2018/08')
 
     cy.get('input[type=text]')
       .first()
@@ -49,20 +49,22 @@ describe('Application storage', () => {
           })
           .trigger('change', { force: true })
           .then(() => Cypress.Blob.blobToBase64String(blob))
-          .then(base64 => {
-            cy.get('img')
+          .then(base64 =>
+            cy
+              .get('img')
               .first()
               .should('have.attr', 'src')
               .and('contain', base64)
-          })
+          )
           .then(() => cy.reload(true))
           .then(() => Cypress.Blob.blobToBase64String(blob))
-          .then(base64 => {
-            cy.get('img')
+          .then(base64 =>
+            cy
+              .get('img')
               .first()
               .should('have.attr', 'src')
               .and('contain', base64)
-          })
+          )
       )
   })
 })
