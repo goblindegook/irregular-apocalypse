@@ -37,17 +37,6 @@ describe('App', () => {
     expect(document.title).toContain(name)
   })
 
-  xit('sets the signature', () => {
-    // FIXME: How to test file inputs?
-    debounceRenderingOff()
-    const fn = jest.fn()
-    const { container, getByLabelText } = render(<App />)
-    const field = getByLabelText(/signature/i) as HTMLInputElement
-    const value = new File([], 'signature.png')
-    fireEvent.change(field, { target: { value } })
-    expect(container.querySelectorAll('img').length).toBeGreaterThan(0)
-  })
-
   it('clears signature when period is unchecked', () => {
     debounceRenderingOff()
     const { getByLabelText } = render(<App />)
