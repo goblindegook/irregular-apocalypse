@@ -8,7 +8,7 @@
     "build": "preact build",
     "serve": "preact build && preact serve",
     "watch": "preact watch",
-    "lint": "tslint '{cypress,src}/**/*.{ts,tsx}'",
+    "lint": "tslint --project tsconfig.tslint.json '{cypress,src}/**/*.{ts,tsx}'",
     "format": "prettier --write '{cypress,src}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "pretest": "yarn lint",
     "test": "yarn jest && start-server-and-test start http://localhost:8080 cypress:run",
@@ -20,9 +20,13 @@
   },
   "lint-staged": {
     "linters": {
-      "{cypress,src}/**/*.{js,ts,tsx,json,css,md}": [
+      "{cypress,src}/**/*.{ts,tsx}": [
         "prettier --write",
-        "tslint",
+        "tslint --project tsconfig.tslint.json",
+        "git add"
+      ],
+      "{cypress,src}/**/*.{js,json,css,md}": [
+        "prettier --write",
         "git add"
       ]
     }
