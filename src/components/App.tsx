@@ -9,7 +9,7 @@ import { Period, Periods, currentMonth, monthName } from '../calendar'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Month } from './Month'
-import { Route } from './HOC'
+import { Route } from '../HOC'
 
 const Helmet = require('preact-helmet')
 const defaultSignature = require('../assets/signature.svg')

@@ -1,6 +1,6 @@
 import { h, Component } from 'preact'
 import styled from 'preact-emotion'
-import { withProps } from './HOC'
+import { withProps } from '../HOC'
 import { monthName } from '../calendar'
 import { format, addMonths, subMonths } from 'date-fns'
 

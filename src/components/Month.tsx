@@ -3,7 +3,7 @@ import styled from 'preact-emotion'
 import { format } from 'date-fns'
 import { mergeDeepRight } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
-import { withProps } from './HOC'
+import { withProps } from '../HOC'
 
 interface PeriodProps {
   readonly checked: boolean
