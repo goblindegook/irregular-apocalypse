@@ -55,11 +55,14 @@
     ]
   },
   "devDependencies": {
-    "@cypress/webpack-preprocessor": "^2.0.1",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@cypress/webpack-preprocessor": "^4.0.2",
     "@types/jest": "^23.3.1",
     "@types/ramda": "^0.25.36",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
+    "babel-loader": "^8.0.4",
     "cypress": "^3.1.1",
     "dom-testing-library": "^3.1.0",
     "fast-check": "^1.7.1",
@@ -79,7 +82,8 @@
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.6.0",
     "tslint-config-standard": "^8.0.1",
-    "tslint-react": "^3.3.3"
+    "tslint-react": "^3.3.3",
+    "webpack": "^4.27.1"
   },
   "dependencies": {
     "date-fns": "^1.29.0",
