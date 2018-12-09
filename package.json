@@ -89,6 +89,6 @@
     "preact-emotion": "^9.2.6",
     "preact-helmet": "^4.0.0-alpha-3",
     "preact-router": "^2.5.7",
-    "ramda": "^0.25.0"
+    "ramda": "^0.26.1"
   }
 }
