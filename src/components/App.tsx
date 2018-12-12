@@ -23,23 +23,17 @@ interface AppState {
 export class App extends Component<{}, AppState> {
   currentUrl = ''
 
-  store: LocalForage
-
-  constructor() {
-    super()
-
-    this.state = {
-      name: '',
-      periods: {},
-      signature: ''
-    }
-
-    this.store = localforage.createInstance({
-      name: 'irregular-apocalypse',
-      version: 1.0,
-      storeName: 'timesheets'
-    })
+  state = {
+    name: '',
+    periods: {},
+    signature: ''
   }
+
+  store = localforage.createInstance({
+    name: 'irregular-apocalypse',
+    version: 1.0,
+    storeName: 'timesheets'
+  })
 
   handleRouteChange = (e: RouterOnChangeArgs) => {
     this.currentUrl = e.url
@@ -50,7 +44,7 @@ export class App extends Component<{}, AppState> {
     await this.store.setItem('name', name)
   }
 
-  handleSignatureChange = async (signature: string) => {
+  handleSignatureChange = async (signature: string | ArrayBuffer | null) => {
     this.setState(() => ({ signature }))
     await this.store.setItem('signature', signature)
   }

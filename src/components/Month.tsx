@@ -137,17 +137,15 @@ function handleTimeChange({
   onChange
 }: PeriodProps): (e: Event) => Promise<void> {
   return async e => {
-    const name = (e.target as any).name as string
-    const value = ((e.target as any).value as string) || ''
-    const matches = value.match(/(\d+)(\:(\d+))?/i)
+    if (e.target) {
+      const target = e.target as HTMLInputElement
+      const matches = target.value.match(/(\d+)(\:(\d+))?/i)
 
-    if (matches) {
-      ;(name === 'starts' ? starts : ends).setHours(
-        parseInt(matches[1], 10) || 0,
-        parseInt(matches[3], 10) || 0
-      )
-
-      await onChange({ starts, ends, checked })
+      if (matches) {
+        const date = target.name === 'starts' ? starts : ends
+        date.setHours(parseInt(matches[1], 10) || 0, parseInt(matches[3], 10) || 0)
+        await onChange({ starts, ends, checked })
+      }
     }
   }
 }

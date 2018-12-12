@@ -128,7 +128,7 @@ interface HeaderProps {
   readonly month: number
   readonly year: number
   readonly onNameChange: (name: string) => void
-  readonly onSignatureChange: (dataUrl: string) => void
+  readonly onSignatureChange: (dataUrl: string | ArrayBuffer | null) => void
 }
 
 export class Header extends Component<HeaderProps> {
@@ -141,7 +141,7 @@ export class Header extends Component<HeaderProps> {
     const reader = new FileReader()
 
     reader.onloadend = () => {
-      this.props.onSignatureChange(reader.result as string)
+      this.props.onSignatureChange(reader.result)
     }
 
     if (file) {
