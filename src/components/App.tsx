@@ -40,12 +40,12 @@ export class App extends Component<{}, AppState> {
   }
 
   handleNameChange = async (name: string) => {
-    this.setState(() => ({ name }))
+    this.setState({ name })
     await this.store.setItem('name', name)
   }
 
-  handleSignatureChange = async (signature: string | ArrayBuffer | null) => {
-    this.setState(() => ({ signature }))
+  handleSignatureChange = async (signature: string) => {
+    this.setState({ signature })
     await this.store.setItem('signature', signature)
   }
 
