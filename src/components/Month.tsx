@@ -35,6 +35,7 @@ const Checkbox = withProps({
   type: 'checkbox'
 })(styled('input')`
   align-self: center;
+  justify-self: start;
   grid-row: 1;
   grid-column: 1 / span 2;
 
