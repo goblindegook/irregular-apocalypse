@@ -21,8 +21,6 @@ interface AppState {
 }
 
 export class App extends Component<{}, AppState> {
-  currentUrl = ''
-
   state = {
     name: '',
     periods: {},
@@ -34,10 +32,6 @@ export class App extends Component<{}, AppState> {
     version: 1.0,
     storeName: 'timesheets'
   })
-
-  handleRouteChange = (e: RouterOnChangeArgs) => {
-    this.currentUrl = e.url
-  }
 
   handleNameChange = async (name: string) => {
     this.setState({ name })
@@ -76,7 +70,7 @@ export class App extends Component<{}, AppState> {
     const current = currentMonth()
 
     return (
-      <Router onChange={this.handleRouteChange}>
+      <Router>
         <Route
           path="/:yyyy?/:mm?"
           render={({ yyyy, mm }) => {

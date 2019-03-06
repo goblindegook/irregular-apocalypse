@@ -1,4 +1,4 @@
-const preactCliTypeScript = require('preact-cli-plugin-typescript')
+import { resolve } from 'path'
 
 /**
  * Function that mutates original webpack config.
@@ -9,5 +9,11 @@ const preactCliTypeScript = require('preact-cli-plugin-typescript')
  * @param {WebpackConfigHelpers} helpers Object with useful helpers when working with config.
  **/
 export default function(config, env, helpers) {
-  preactCliTypeScript(config)
+  config.module.loaders.push({
+    enforce: 'pre',
+    test: /\.tsx?$/,
+    loader: 'ts-loader'
+  })
+
+  config.resolve.alias['preact-cli-entrypoint'] = resolve(process.cwd(), 'src', 'index')
 }
