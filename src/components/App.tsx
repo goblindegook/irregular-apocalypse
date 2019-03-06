@@ -1,8 +1,8 @@
 /* tslint:disable:jsx-no-lambda */
 
 import { h, Component } from 'preact'
-import { Router, RouterOnChangeArgs } from 'preact-router'
-import * as localforage from 'localforage'
+import { Router } from 'preact-router'
+import localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'
 import { format } from 'date-fns'
 import { Period, Periods, currentMonth, monthName } from '../calendar'
@@ -60,9 +60,9 @@ export class App extends Component<{}, AppState> {
   }
 
   async componentDidMount() {
-    const name = (await this.store.getItem('name')) || ''
-    const signature = (await this.store.getItem('signature')) || defaultSignature
-    const periods = (await this.store.getItem('periods')) || {}
+    const name = (await this.store.getItem<string>('name')) || ''
+    const signature = (await this.store.getItem<string>('signature')) || defaultSignature
+    const periods = (await this.store.getItem<Periods>('periods')) || {}
     this.setState(() => ({ name, periods, signature }))
   }
 
