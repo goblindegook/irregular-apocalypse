@@ -15,7 +15,7 @@ interface PeriodProps {
   readonly onChange: (period: Period) => Promise<void>
 }
 
-const PeriodWrapper = styled('div')`
+const PeriodWrapper = styled('label')`
   display: grid;
   grid-template-rows: 4rem 1rem;
   grid-template-columns: 1rem 4rem 1fr;
@@ -163,7 +163,7 @@ function handleClick({
 }
 
 const DayPeriod = (props: PeriodProps) => (
-  <PeriodWrapper>
+  <PeriodWrapper for={props.id}>
     <Checkbox id={props.id} checked={props.checked} onClick={handleClick(props)} />
     <MonthDay for={props.id}>{format(props.starts, 'D')}</MonthDay>
     <WeekDay for={props.id}>{format(props.starts, 'ddd')}</WeekDay>
