@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import styled from 'preact-emotion'
 import { format } from 'date-fns'
-import { mergeDeepRight } from 'ramda'
+import { mergeDeepLeft } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
 import { withProps } from '../HOC'
 
@@ -222,7 +222,7 @@ export const Month = ({
   year,
   onPeriodChange
 }: MonthProps) => {
-  const monthData = mergeDeepRight(defaultMonthData(year, month), data)
+  const monthData: MonthData = mergeDeepLeft(data, defaultMonthData(year, month))
 
   return (
     <Main>
