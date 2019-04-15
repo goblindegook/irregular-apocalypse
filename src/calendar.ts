@@ -1,24 +1,24 @@
 import { getDaysInMonth, isWeekend, format } from 'date-fns'
 import { range } from 'ramda'
 
-export type Period = {
-  readonly starts: Date
-  readonly ends: Date
-  readonly checked: boolean
-}
+export type Period = Readonly<{
+  starts: Date
+  ends: Date
+  checked: boolean
+}>
 
-type Day = {
-  readonly am: Period
-  readonly pm: Period
-}
+type Day = Readonly<{
+  am: Period
+  pm: Period
+}>
 
-export type Month = {
-  readonly [day: string]: Day
-}
+export type Month = Readonly<{
+  [day: string]: Day
+}>
 
-export type Periods = {
+export type Periods = Readonly<{
   [yearAndMonth: string]: Month
-}
+}>
 
 function monthData(year: number, month: number): Day[] {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
@@ -41,7 +41,7 @@ function monthData(year: number, month: number): Day[] {
   })
 }
 
-function addKeys(month: Day[]): Month {
+function addKeys(month: readonly Day[]): Month {
   return month.reduce<Month>((acc, day, idx) => ({ ...acc, [`${idx + 1}`]: day }), {})
 }
 

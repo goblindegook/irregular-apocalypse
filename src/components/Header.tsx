@@ -123,13 +123,13 @@ const SignatureInput = withProps({
   display: none;
 `)
 
-interface HeaderProps {
-  readonly name?: string
-  readonly month: number
-  readonly year: number
-  readonly onNameChange: (name: string) => void
-  readonly onSignatureChange: (dataUrl: string) => void
-}
+type HeaderProps = Readonly<{
+  name?: string
+  month: number
+  year: number
+  onNameChange: (name: string) => void
+  onSignatureChange: (dataUrl: string) => void
+}>
 
 export class Header extends Component<HeaderProps> {
   handleNameInput = (event: any) => {

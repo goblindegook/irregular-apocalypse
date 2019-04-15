@@ -5,15 +5,15 @@ import { mergeDeepLeft } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
 import { withProps } from '../HOC'
 
-interface PeriodProps {
-  readonly checked: boolean
-  readonly name: string
-  readonly id: string
-  readonly starts: Date
-  readonly ends: Date
-  readonly signature?: string
-  readonly onChange: (period: Period) => Promise<void>
-}
+type PeriodProps = Readonly<{
+  checked: boolean
+  name: string
+  id: string
+  starts: Date
+  ends: Date
+  signature?: string
+  onChange: (period: Period) => Promise<void>
+}>
 
 const PeriodWrapper = styled('div')`
   display: grid;
@@ -190,14 +190,14 @@ const DayPeriod = (props: PeriodProps) => (
   </PeriodWrapper>
 )
 
-interface MonthProps {
-  readonly month: number
-  readonly year: number
-  readonly data?: MonthData
-  readonly name?: string
-  readonly signature?: string
-  readonly onPeriodChange: (period: Period) => Promise<void>
-}
+type MonthProps = Readonly<{
+  month: number
+  year: number
+  data?: MonthData
+  name?: string
+  signature?: string
+  onPeriodChange: (period: Period) => Promise<void>
+}>
 
 const Main = styled('ol')`
   margin-top: 56px;
