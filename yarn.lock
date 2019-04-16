@@ -985,10 +985,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.10.5.tgz#6831006b2c87441d69e79b37ae9bc03246dfb379"
   integrity sha512-RYkagUUbxQBss46ElbEa+j4q4X3GR12QwB7a/PM5hmVuVkYoW1jENT1+taspKUv8ibwW8cw+kRFbOaTc/Key3w==
 
-"@types/ramda@^0.25.36":
-  version "0.25.51"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.51.tgz#d5421d0e190c56c64c112a761a85782fc971409d"
-  integrity sha512-xcmtfHIgF9SYjhGdsZR1nQslxG4hu0cIpFfLQ4CWdw3KzHvl7ki1AzFLQUkbDTG42ZN3ZsQfdRzXRlkAvbIy5Q==
+"@types/ramda@^0.26.6":
+  version "0.26.6"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.6.tgz#1aaf5060da8ebb99529420b6eb997c50f74c218e"
+  integrity sha512-AmTHEkGo/EEufYY7MRqlgI0HLsLiAnc02pKOTVzE2D9IHf6yH2Xz71ompfEnduuaFGplYrtIOFOUOLs0AbMj9Q==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
