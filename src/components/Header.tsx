@@ -123,7 +123,7 @@ const SignatureInput = withProps({
   display: none;
 `)
 
-type HeaderProps = Readonly<{
+export type HeaderProps = Readonly<{
   name?: string
   month: number
   year: number
