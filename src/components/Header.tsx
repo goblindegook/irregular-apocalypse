@@ -1,6 +1,5 @@
 import { h, Component } from 'preact'
 import styled from 'preact-emotion'
-import { withProps } from '../HOC'
 import { monthName } from '../calendar'
 import { format, addMonths, subMonths } from 'date-fns'
 
@@ -73,9 +72,7 @@ const Title = styled('h1')`
   }
 `
 
-const NameInput = withProps({
-  type: 'text'
-})(styled('input')`
+const NameInput = styled('input')`
   float: right;
   height: 26px;
   margin: 1rem;
@@ -91,7 +88,7 @@ const NameInput = withProps({
     border: 0;
     text-align: right;
   }
-`)
+`
 
 const SignatureLabel = styled('label')`
   color: #fff;
@@ -116,12 +113,9 @@ const SignatureLabel = styled('label')`
   }
 `
 
-const SignatureInput = withProps({
-  accept: 'image/png, image/jpeg',
-  type: 'file'
-})(styled('input')`
+const SignatureInput = styled('input')`
   display: none;
-`)
+`
 
 export type HeaderProps = Readonly<{
   name?: string
@@ -161,10 +155,19 @@ export class Header extends Component<HeaderProps> {
         <Title>
           <Link href="/">{monthName(year, month)}</Link>
         </Title>
-        <NameInput placeholder="Your name" value={name} onInput={this.handleNameInput} />
+        <NameInput
+          type="text"
+          placeholder="Your name"
+          value={name}
+          onInput={this.handleNameInput}
+        />
         <SignatureLabel>
           Set Signature
-          <SignatureInput onChange={this.handleSignatureChange} />
+          <SignatureInput
+            accept="image/png, image/jpeg"
+            type="file"
+            onChange={this.handleSignatureChange}
+          />
         </SignatureLabel>
       </HeaderBar>
     )

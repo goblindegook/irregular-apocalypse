@@ -29,12 +29,14 @@ describe('Header', () => {
 
   it('links to the previous month', () => {
     const { getByTitle } = renderHeader({ year: 2018, month: 1 })
-    expect(getByTitle('Previous').getAttribute('href')).toBe('/2017/12')
+    const link = getByTitle('Previous') as HTMLAnchorElement
+    expect(link.getAttribute('href')).toBe('/2017/12')
   })
 
   it('links to the following month', () => {
     const { getByTitle } = renderHeader({ year: 2017, month: 12 })
-    expect(getByTitle('Next').getAttribute('href')).toBe('/2018/01')
+    const link = getByTitle('Next') as HTMLAnchorElement
+    expect(link.getAttribute('href')).toBe('/2018/01')
   })
 
   it('sets the default name', () => {

@@ -3,7 +3,6 @@ import styled from 'preact-emotion'
 import { format } from 'date-fns'
 import { mergeDeepLeft } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
-import { withProps } from '../HOC'
 
 type PeriodProps = Readonly<{
   checked: boolean
@@ -31,9 +30,7 @@ const PeriodWrapper = styled('div')`
   }
 `
 
-const Checkbox = withProps({
-  type: 'checkbox'
-})(styled('input')`
+const Checkbox = styled('input')`
   align-self: center;
   justify-self: start;
   grid-row: 1;
@@ -42,7 +39,7 @@ const Checkbox = withProps({
   @media print {
     display: none;
   }
-`)
+`
 
 const MonthDay = styled('label')`
   grid-column: 2;
@@ -103,9 +100,7 @@ const Times = styled('div')`
   }
 `
 
-const Time = withProps({
-  type: 'time'
-})(styled('input')`
+const TimeInput = styled('input')`
   margin: 0 0.5rem;
   max-width: 5rem;
   text-align: center;
@@ -125,7 +120,7 @@ const Time = withProps({
       display: none;
     }
   }
-`)
+`
 
 function preventDefault(e: Event): void {
   e.preventDefault()
@@ -164,7 +159,7 @@ function handleClick({
 
 const DayPeriod = (props: PeriodProps) => (
   <PeriodWrapper>
-    <Checkbox id={props.id} checked={props.checked} onClick={handleClick(props)} />
+    <Checkbox id={props.id} type="checkbox" checked={props.checked} onClick={handleClick(props)} />
     <MonthDay for={props.id}>{format(props.starts, 'D')}</MonthDay>
     <WeekDay for={props.id}>{format(props.starts, 'ddd')}</WeekDay>
     <DottedLine for={props.id}>
@@ -172,14 +167,16 @@ const DayPeriod = (props: PeriodProps) => (
     </DottedLine>
     {props.checked && (
       <Times>
-        <Time
+        <TimeInput
+          type="time"
           name="starts"
           placeholder="Start time"
           value={format(props.starts, 'HH:mm')}
           onChange={handleTimeChange(props)}
         />
         —
-        <Time
+        <TimeInput
+          type="time"
           name="ends"
           placeholder="End time"
           value={format(props.ends, 'HH:mm')}

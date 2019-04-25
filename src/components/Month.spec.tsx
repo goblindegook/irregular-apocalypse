@@ -1,7 +1,6 @@
 import { h } from 'preact'
 import { cleanup, fireEvent, render } from 'preact-testing-library'
 import { Month } from './Month'
-import { Period } from '../calendar'
 
 describe('Month', () => {
   const NOOP = async () => {
@@ -72,7 +71,7 @@ describe('Month', () => {
     const { getByLabelText } = render(
       <Month name={NAME} signature={SIGNATURE} month={8} year={2018} onPeriodChange={NOOP} />
     )
-    const checkbox = getByLabelText(/mon/i)
+    const checkbox = getByLabelText(/mon/i) as HTMLInputElement
     const img = checkbox.parentElement!.querySelector('img')
     expect(img!.getAttribute('alt')).toEqual(NAME)
     expect(img!.getAttribute('src')).toEqual(SIGNATURE)
@@ -80,14 +79,14 @@ describe('Month', () => {
 
   it('does not render signature when checkbox is unchecked', () => {
     const { getByLabelText } = render(<Month month={8} year={2018} onPeriodChange={NOOP} />)
-    const checkbox = getByLabelText(/sun/i)
+    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).toBeNull()
   })
 
   it('does not render time fields when checkbox is unchecked', () => {
     const { getByLabelText } = render(<Month month={8} year={2018} onPeriodChange={NOOP} />)
-    const checkbox = getByLabelText(/sun/i)
+    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
     const fields = checkbox.parentElement!.querySelectorAll('input[type=text]')
     expect(fields.length).toBe(0)
   })

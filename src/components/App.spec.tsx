@@ -40,7 +40,7 @@ describe('App', () => {
   it('clears signature when period is unchecked', () => {
     debounceRenderingOff()
     const { getByLabelText } = render(<App />)
-    const checkbox = getByLabelText(/mon/i)
+    const checkbox = getByLabelText(/mon/i) as HTMLInputElement
     fireEvent.click(checkbox)
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).toBeNull()
@@ -49,7 +49,7 @@ describe('App', () => {
   it('adds signature when period is checked', () => {
     debounceRenderingOff()
     const { getByLabelText } = render(<App />)
-    const checkbox = getByLabelText(/sun/i)
+    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
     fireEvent.click(checkbox)
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).not.toBeNull()
