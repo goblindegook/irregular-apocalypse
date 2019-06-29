@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+
+html,
+body {
+  @apply font-sans antialiased bg-gray-100 text-gray-900;
+}
+
+.c-Header-Bar {
+  @apply fixed top-0 right-0 left-0 z-10 h-12 shadow-md p-1;
+  display: grid;
+  grid-template-columns: 2rem 2rem auto 30% 20%;
+  grid-rows: 1;
+  grid-column-gap: 0.25rem;
+  align-items: center;
+  background-color: theme('color.blue');
+}
+
+@screen sm {
+  .c-Header-Bar {
+    grid-template-columns: 3rem 3rem auto 12rem 8rem;
+  }
+}
+
+.c-Header-ArrowLink {
+  @apply text-gray-400 no-underline text-lg text-center;
+}
+
+.c-Header-ArrowLink:hover,
+.c-Header-ArrowLink:active {
+  @apply text-white;
+}
+
+@screen sm {
+  .c-Header-ArrowLink {
+    @apply text-2xl;
+  }
+}
+
+.c-Header-Title {
+  @apply align-middle text-lg;
+}
+
+@screen sm {
+  .c-Header-Title {
+    @apply align-middle text-2xl;
+  }
+}
+
+.c-Header-Link {
+  @apply text-gray-100 inline-block no-underline;
+}
+
+.c-Header-Link:hover,
+.c-Header-Link:active {
+  @apply text-white;
+}
+
+.c-Header-NameInput {
+  @apply border-white border-solid border float-right p-1 text-xs;
+}
+
+@screen sm {
+  .c-Header-NameInput {
+    @apply text-sm;
+  }
+}
+
+.c-Header-SignatureLabel {
+  @apply border border-solid border-white cursor-pointer float-right font-bold text-white p-1 text-xs text-center;
+}
+
+.c-Header-SignatureLabel:hover {
+  @apply bg-white;
+  color: theme('color.blue');
+}
+
+@screen sm {
+  .c-Header-SignatureLabel {
+    @apply text-sm;
+  }
+}
+
+.c-Header-SignatureInput,
+.c-Footer-SignatureLine {
+  @apply hidden;
+}
+
+.c-Month-PeriodWrapper {
+  @apply border border-gray-200 p-4;
+  display: grid;
+  grid-template-rows: 4rem 1rem;
+  grid-template-columns: 1rem 4rem 1fr;
+}
+
+.c-Month-Checkbox {
+  align-self: center;
+  justify-self: start;
+  grid-row: 1;
+  grid-column: 1 / span 2;
+}
+
+.c-Month-MonthDay {
+  @apply text-3xl;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.c-Month-WeekDay {
+  @apply text-sm text-center;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.c-Month-DottedLine {
+  @apply h-16 w-full;
+  grid-row: 1;
+  grid-column: 3;
+  align-self: center;
+}
+
+.c-Month-Signature {
+  @apply h-full w-auto max-w-full;
+}
+
+.c-Month-Times {
+  @apply text-sm;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.c-Month-TimeInput {
+  @apply text-center w-20 ml-1 mr-1;
+}
+
+.c-Month-TimeInput::-ms-clear,
+.c-Month-TimeInput::-webkit-clear-button {
+  @apply hidden;
+}
+
+.c-Month-Month {
+  @apply p-4 mt-12;
+}
+
+.c-Month-Day {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+
+@screen sm {
+  .c-Month-Day {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media print {
+  .c-Header-Bar {
+    @apply text-black relative h-auto bg-transparent shadow-none p-4;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1;
+  }
+
+  .c-Header-NameInput {
+    @apply text-black bg-transparent p-0 border-0 text-right;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .c-Header-Title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .c-Header-Link {
+    @apply text-black;
+  }
+
+  .c-Footer-SignatureLine {
+    @apply block border-b m-8 float-right text-sm pb-8 text-center w-1/5 border-black;
+  }
+
+  .c-Month-PeriodWrapper {
+    @apply p-1 h-6 border-l-0 border-r-0;
+    grid-template-rows: 1rem;
+    grid-template-columns: 2rem 3rem auto 1fr;
+    align-content: center;
+  }
+
+  .c-Month-MonthDay {
+    @apply text-xl;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: right;
+  }
+
+  .c-Month-WeekDay {
+    @apply text-sm;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .c-Month-DottedLine {
+    @apply h-8;
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  .c-Month-Times {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .c-Month-TimeInput {
+    @apply border-0 bg-transparent ml-1 mr-1;
+    -moz-appearance: textfield;
+  }
+
+  .c-Month-Month {
+    @apply mt-0;
+  }
+
+  .c-Header-ArrowLink,
+  .c-Header-SignatureLabel,
+  .c-Month-Checkbox,
+  .c-Month-TimeInput::-webkit-inner-spin-button {
+    @apply hidden;
+  }
+}
+
+@tailwind utilities;
