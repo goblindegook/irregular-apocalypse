@@ -104,25 +104,27 @@ export const Month = ({
   const monthData: MonthData = mergeDeepLeft(data, defaultMonthData(year, month))
 
   return (
-    <ol class="c-Month-Month">
-      {Object.entries(monthData).map(([key, day]) => (
-        <li class="c-Month-Day" key={`day-${key}`}>
-          <DayPeriod
-            {...day.am}
-            id={`day-${key}-am`}
-            name={name}
-            signature={signature}
-            onChange={onPeriodChange}
-          />
-          <DayPeriod
-            {...day.pm}
-            id={`day-${key}-pm`}
-            name={name}
-            signature={signature}
-            onChange={onPeriodChange}
-          />
-        </li>
-      ))}
-    </ol>
+    <main>
+      <ol class="c-Month-Month">
+        {Object.entries(monthData).map(([key, day]) => (
+          <li class="c-Month-Day" key={`day-${key}`}>
+            <DayPeriod
+              {...day.am}
+              id={`day-${key}-am`}
+              name={name}
+              signature={signature}
+              onChange={onPeriodChange}
+            />
+            <DayPeriod
+              {...day.pm}
+              id={`day-${key}-pm`}
+              name={name}
+              signature={signature}
+              onChange={onPeriodChange}
+            />
+          </li>
+        ))}
+      </ol>
+    </main>
   )
 }

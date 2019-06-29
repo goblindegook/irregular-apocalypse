@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact'
+import { h } from 'preact'
 import { Router } from 'preact-router'
 import localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'
@@ -21,7 +21,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
   const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
 
   return (
-    <Fragment>
+    <div>
       <Helmet title={[monthName(year, month), name].filter(c => c.length).join(' - ')} />
       <Header
         name={name}
@@ -49,7 +49,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
         }}
       />
       <Footer />
-    </Fragment>
+    </div>
   )
 }
 
