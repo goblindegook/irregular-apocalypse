@@ -196,6 +196,10 @@ body {
     justify-self: right;
   }
 
+  .c-Month-Day {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .c-Month-WeekDay {
     @apply text-sm;
     grid-column: 2;
