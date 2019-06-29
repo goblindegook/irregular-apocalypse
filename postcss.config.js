@@ -2,6 +2,7 @@ const purgecss = require('@fullhuman/postcss-purgecss')
 
 const purgecssOptions = {
   content: ['./src/**/*.html', './src/**/*.tsx'],
+  whitelist: ['body', 'html', 'main', 'img', 'button', 'input', '[type="checkbox"]'],
   defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
 }
 
