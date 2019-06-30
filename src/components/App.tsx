@@ -19,7 +19,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
   const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
-  const monthData = mergeDeepRight(defaultMonthData(year, month), periods[periodKey])
+  const monthData = mergeDeepRight(defaultMonthData(year, month), periods[periodKey] || {})
 
   if (storeError) {
     console.error('Error with LocalStorage', storeError)
