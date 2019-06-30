@@ -14,11 +14,15 @@ const Helmet = require('preact-helmet')
 const defaultSignature = require('../assets/signature.svg')
 
 const Main = ({ store, month, year }: { store: LocalForage; month: number; year: number }) => {
-  const [name, setName] = useStateStore(store, 'name', '')
+  const [name, setName, storeError] = useStateStore(store, 'name', '')
   const [signature, setSignature] = useStateStore(store, 'signature', defaultSignature)
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
   const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
+
+  if (storeError) {
+    console.error('Error with LocalStorage', storeError)
+  }
 
   return (
     <div>

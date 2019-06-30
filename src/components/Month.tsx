@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { format } from 'date-fns'
+import { format, setHours, setMinutes } from 'date-fns'
 import { mergeDeepLeft } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
 
@@ -17,16 +17,25 @@ function preventDefault(e: Event): void {
   e.preventDefault()
 }
 
+function setTime(date: Date, hours: number, minutes: number): Date {
+  return setMinutes(setHours(date, hours), minutes)
+}
+
 function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e: Event) => void {
   return e => {
     if (e.target) {
       const target = e.target as HTMLInputElement
-      const matches = target.value.match(/(\d+)(\:(\d+))?/i)
+      const matches = target.value.match(/(\d+)\:?(\d+)?/i)
 
       if (matches) {
-        const date = target.name === 'starts' ? starts : ends
-        date.setHours(parseInt(matches[1], 10) || 0, parseInt(matches[3], 10) || 0)
-        onChange({ starts, ends, checked })
+        const hours = parseInt(matches[1], 10) || 0
+        const minutes = parseInt(matches[2], 10) || 0
+
+        onChange({
+          starts: target.name === 'starts' ? setTime(starts, hours, minutes) : starts,
+          ends: target.name === 'ends' ? setTime(ends, hours, minutes) : ends,
+          checked
+        })
       }
     }
   }

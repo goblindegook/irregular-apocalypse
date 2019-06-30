@@ -134,9 +134,11 @@ describe('Month', () => {
     const { getByPlaceholderText } = render(<Month month={8} year={2018} onPeriodChange={fn} />)
     const field = getByPlaceholderText(/start time/i) as HTMLInputElement
     const value = '10:15'
+
     field.value = value
     fireEvent.input(field)
     fireEvent.change(field, { target: { value } })
+
     expect(fn.mock.calls[0][0]).toMatchObject({
       starts: new Date(2018, 7, 1, 10, 15)
     })
@@ -147,9 +149,11 @@ describe('Month', () => {
     const { getByPlaceholderText } = render(<Month month={8} year={2018} onPeriodChange={fn} />)
     const field = getByPlaceholderText(/end time/i) as HTMLInputElement
     const value = '17:55'
+
     field.value = value
     fireEvent.input(field)
     fireEvent.change(field, { target: { value } })
+
     expect(fn.mock.calls[0][0]).toMatchObject({
       ends: new Date(2018, 7, 1, 17, 55)
     })

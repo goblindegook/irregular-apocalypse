@@ -1,13 +1,32 @@
 import { useState, useEffect, useRef, StateUpdater } from 'preact/hooks'
-import equals from 'ramda/es/equals'
+import { equals } from 'ramda'
 
 export function useStateStore<T>(
   store: LocalForage,
   key: string,
   initialState: T | (() => T)
-): [T, StateUpdater<T>] {
+): [T, StateUpdater<T>, Error?] {
   const [state, setState] = useState<T>(initialState)
+  const [error, setError] = useState<Error | undefined>(undefined)
   const ref = useRef<T>(state)
+
+  useEffect(() => {
+    // tslint:disable-next-line:no-floating-promises
+    ;(async () => {
+      try {
+        const storedValue = await store.getItem<T>(key)
+
+        if (storedValue !== null) {
+          ref.current = storedValue
+          setState(storedValue)
+        }
+
+        setError(undefined)
+      } catch (e) {
+        setError(e)
+      }
+    })()
+  }, [store, key, setState, setError, ref])
 
   useEffect(() => {
     // tslint:disable-next-line:no-floating-promises
@@ -15,25 +34,14 @@ export function useStateStore<T>(
       try {
         if (!equals(ref.current, state)) {
           await store.setItem(key, state)
-          ref.current = state
+          setError(undefined)
         }
+        ref.current = state
       } catch (e) {
-        console.error(e)
+        setError(e)
       }
     })()
-  }, [store, state])
+  }, [store, key, state, setError, ref, equals])
 
-  useEffect(() => {
-    // tslint:disable-next-line:no-floating-promises
-    ;(async () => {
-      try {
-        const storedState = await store.getItem<T>(key)
-        setState(storedState)
-      } catch (e) {
-        console.error(e)
-      }
-    })()
-  }, [store])
-
-  return [state, setState]
+  return [state, setState, error]
 }
