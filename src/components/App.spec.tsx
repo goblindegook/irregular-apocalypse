@@ -37,6 +37,38 @@ describe('App', () => {
     expect(document.title).toContain(name)
   })
 
+  describe('default values', () => {
+    it('renders start time fields with defaults for morning and afternoon', () => {
+      const { getAllByPlaceholderText } = render(<App />)
+      const fields = getAllByPlaceholderText(/start time/i) as HTMLInputElement[]
+      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['09:00', '14:00']))
+    })
+
+    it('renders end time fields with defaults for morning and afternoon', () => {
+      const { getAllByPlaceholderText } = render(<App />)
+      const fields = getAllByPlaceholderText(/end time/i) as HTMLInputElement[]
+      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['13:00', '17:30']))
+    })
+
+    it('checks working days by default', () => {
+      const { getByLabelText } = render(<App />)
+      const checkbox = getByLabelText(/fri/i) as HTMLInputElement
+      expect(checkbox.checked).toBe(true)
+    })
+
+    it('does not check Saturdays by default', () => {
+      const { getByLabelText } = render(<App />)
+      const checkbox = getByLabelText(/sat/i) as HTMLInputElement
+      expect(checkbox.checked).toBe(false)
+    })
+
+    it('does not check Sundays by default', () => {
+      const { getByLabelText } = render(<App />)
+      const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+      expect(checkbox.checked).toBe(false)
+    })
+  })
+
   it('clears signature when period is unchecked', () => {
     debounceRenderingOff()
     const { getByLabelText } = render(<App />)

@@ -24,13 +24,33 @@ function addKeys(month: readonly Day[]): Month {
   return month.reduce<Month>((acc, day, idx) => ({ ...acc, [`${idx + 1}`]: day }), {})
 }
 
-export function defaultMonthData(year: number, month: number): Month {
+export function buildMonth(year: number, month: number): Month {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
-
   return addKeys(
     range(1, daysInMonth + 1).map(day => {
       const date = new Date(year, month - 1, day)
-      // FIXME: Move default times and checked state out.
+
+      return {
+        am: {
+          starts: date,
+          ends: date,
+          checked: false
+        },
+        pm: {
+          starts: date,
+          ends: date,
+          checked: false
+        }
+      }
+    })
+  )
+}
+
+export function defaultMonthData(year: number, month: number): Month {
+  const daysInMonth = getDaysInMonth(new Date(year, month - 1))
+  return addKeys(
+    range(1, daysInMonth + 1).map(day => {
+      const date = new Date(year, month - 1, day)
       const checked = !isWeekend(date)
       return {
         am: {

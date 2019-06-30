@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { format } from 'date-fns'
 import { mergeDeepLeft } from 'ramda'
-import { defaultMonthData, Period, Month as MonthData } from '../calendar'
+import { Period, Month as MonthData, buildMonth } from '../calendar'
 
 type PeriodProps = Readonly<{
   checked: boolean
@@ -58,19 +58,19 @@ const DayPeriod = (props: PeriodProps) => (
       checked={props.checked}
       onClick={handleClick(props)}
     />
+
     <label class="c-Month-MonthDay" for={props.id}>
       {format(props.starts, 'D')}
     </label>
+
     <label class="c-Month-WeekDay" for={props.id}>
       {format(props.starts, 'ddd')}
     </label>
+
     <label class="c-Month-DottedLine" for={props.id}>
-      {props.checked ? (
-        <img class="c-Month-Signature" alt={props.name} src={props.signature} />
-      ) : (
-        ''
-      )}
+      {props.checked && <img class="c-Month-Signature" alt={props.name} src={props.signature} />}
     </label>
+
     {props.checked && (
       <div class="c-Month-Times">
         <input
@@ -95,13 +95,13 @@ const DayPeriod = (props: PeriodProps) => (
   </div>
 )
 
-type MonthProps = Readonly<{
+export type MonthProps = Readonly<{
   month: number
   year: number
   data?: MonthData
   name?: string
   signature?: string
-  onPeriodChange: (period: Period) => void
+  onChange: (period: Period) => void
 }>
 
 export const Month = ({
@@ -110,9 +110,9 @@ export const Month = ({
   signature = '',
   month,
   year,
-  onPeriodChange
+  onChange
 }: MonthProps) => {
-  const monthData: MonthData = mergeDeepLeft(data, defaultMonthData(year, month))
+  const monthData: MonthData = mergeDeepLeft(data, buildMonth(year, month))
 
   return (
     <main>
@@ -124,14 +124,14 @@ export const Month = ({
               id={`day-${key}-am`}
               name={name}
               signature={signature}
-              onChange={onPeriodChange}
+              onChange={onChange}
             />
             <DayPeriod
               {...day.pm}
               id={`day-${key}-pm`}
               name={name}
               signature={signature}
-              onChange={onPeriodChange}
+              onChange={onChange}
             />
           </li>
         ))}
