@@ -1,5 +1,5 @@
 import { h } from 'preact'
-import { format, setHours, setMinutes } from 'date-fns'
+import { format } from 'date-fns'
 import { mergeDeepLeft } from 'ramda'
 import { defaultMonthData, Period, Month as MonthData } from '../calendar'
 
@@ -18,7 +18,9 @@ function preventDefault(e: Event): void {
 }
 
 function setTime(date: Date, hours: number, minutes: number): Date {
-  return setMinutes(setHours(date, hours), minutes)
+  const newDate = new Date(date)
+  newDate.setHours(hours, minutes)
+  return newDate
 }
 
 function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e: Event) => void {
