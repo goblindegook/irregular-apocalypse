@@ -3,7 +3,7 @@ import { Router } from 'preact-router'
 import localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'
 import { format } from 'date-fns'
-import { Periods, currentMonth, monthName, defaultMonthData } from '../calendar'
+import { Periods, currentMonth, monthName, workingDays, holidays } from '../calendar'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { Month } from './Month'
@@ -19,7 +19,10 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
   const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
-  const monthData = mergeDeepRight(defaultMonthData(year, month), periods[periodKey] || {})
+  const monthData = mergeDeepRight(
+    mergeDeepRight(workingDays(year, month), holidays(year, month)),
+    periods[periodKey] || {}
+  )
 
   if (storeError) {
     console.error('Error with LocalStorage', storeError)

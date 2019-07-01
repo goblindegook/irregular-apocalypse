@@ -1,4 +1,4 @@
-import { getDaysInMonth, isWeekend, format } from 'date-fns'
+import { getDaysInMonth, isWeekend, format, subDays, addDays } from 'date-fns'
 import { range } from 'ramda'
 
 export type Period = Readonly<{
@@ -29,24 +29,15 @@ export function buildMonth(year: number, month: number): Month {
   return addKeys(
     range(1, daysInMonth + 1).map(day => {
       const date = new Date(year, month - 1, day)
-
       return {
-        am: {
-          starts: date,
-          ends: date,
-          checked: false
-        },
-        pm: {
-          starts: date,
-          ends: date,
-          checked: false
-        }
+        am: { starts: date, ends: date, checked: false },
+        pm: { starts: date, ends: date, checked: false }
       }
     })
   )
 }
 
-export function defaultMonthData(year: number, month: number): Month {
+export function workingDays(year: number, month: number): Month {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
   return addKeys(
     range(1, daysInMonth + 1).map(day => {
@@ -66,6 +57,53 @@ export function defaultMonthData(year: number, month: number): Month {
       }
     })
   )
+}
+
+function computus(year: number): Date {
+  const c = Math.floor(year / 100)
+  const g = year % 19
+  const h = (c - (c >> 2) - Math.floor((8 * c + 13) / 25) + 19 * g + 15) % 30
+  const i = Math.floor(h / 28)
+  const j = h - i * (1 - i * Math.floor(29 / (h + 1)) * Math.floor((21 - g) / 11))
+  const k = (year + (year >> 2) + j + 2 - c + (c >> 2)) % 7
+  const l = j - k
+  const month = 3 + Math.floor((l + 40) / 44)
+  const day = l + 28 - 31 * (month >> 2)
+
+  return new Date(year, month - 1, day)
+}
+
+export function holidays(year: number, month: number): Month {
+  const easter = computus(year)
+  const goodFriday = subDays(easter, 2)
+  const corpusChristi = addDays(easter, 60)
+
+  return [
+    [1, 1],
+    [4, 25],
+    [5, 1],
+    [6, 10],
+    [8, 15],
+    [10, 5],
+    [11, 1],
+    [12, 1],
+    [12, 8],
+    [12, 25],
+    [easter.getMonth() + 1, easter.getDate()],
+    [goodFriday.getMonth() + 1, goodFriday.getDate()],
+    [corpusChristi.getMonth() + 1, corpusChristi.getDate()]
+  ]
+    .filter(([holidayMonth]) => holidayMonth === month)
+    .reduce((acc, [_, day]) => {
+      const date = new Date(year, month - 1, day)
+      return {
+        ...acc,
+        [`${date.getDate()}`]: {
+          am: { starts: date, ends: date, checked: false },
+          pm: { starts: date, ends: date, checked: false }
+        }
+      }
+    }, {})
 }
 
 export function currentMonth(): { month: number; year: number } {

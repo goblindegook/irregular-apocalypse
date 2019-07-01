@@ -67,6 +67,13 @@ describe('App', () => {
       const checkbox = getByLabelText(/sun/i) as HTMLInputElement
       expect(checkbox.checked).toBe(false)
     })
+
+    it('does not check holidays by default', () => {
+      const { getByLabelText } = render(<App />)
+      route('/2019/01')
+      const checkbox = getByLabelText(/tue/i) as HTMLInputElement
+      expect(checkbox.checked).toBe(false)
+    })
   })
 
   it('clears signature when period is unchecked', () => {
