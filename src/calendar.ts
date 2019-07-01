@@ -98,9 +98,17 @@ export function holidays(year: number, month: number): Month {
       const date = new Date(year, month - 1, day)
       return {
         ...acc,
-        [`${date.getDate()}`]: {
-          am: { starts: date, ends: date, checked: false },
-          pm: { starts: date, ends: date, checked: false }
+        [date.getDate()]: {
+          am: {
+            starts: new Date(date.setHours(9, 0)),
+            ends: new Date(date.setHours(13, 0)),
+            checked: false
+          },
+          pm: {
+            starts: new Date(date.setHours(14, 0)),
+            ends: new Date(date.setHours(17, 30)),
+            checked: false
+          }
         }
       }
     }, {})
