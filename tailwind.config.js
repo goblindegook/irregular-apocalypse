@@ -3,7 +3,11 @@ module.exports = {
     color: {
       blue: '#1795d4'
     },
-    extend: {}
+    extend: {
+      screens: {
+        print: { raw: 'print' }
+      }
+    }
   },
   variants: {},
   plugins: []

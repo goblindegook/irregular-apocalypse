@@ -22,17 +22,15 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "{cypress,src}/**/*.{ts,tsx}": [
-        "prettier --write",
-        "tslint --project tsconfig.tslint.json",
-        "git add"
-      ],
-      "{cypress,src}/**/*.{js,json,css,md}": [
-        "prettier --write",
-        "git add"
-      ]
-    }
+    "{cypress,src}/**/*.{ts,tsx}": [
+      "prettier --write",
+      "tslint --project tsconfig.tslint.json",
+      "git add"
+    ],
+    "{cypress,src}/**/*.{js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "jest": {
     "preset": "ts-jest",
@@ -46,17 +44,17 @@
     "@cypress/webpack-preprocessor": "^4.0.2",
     "@fullhuman/postcss-purgecss": "^1.2.0",
     "@types/jest": "^24.0.9",
-    "@types/ramda": "^0.26.6",
+    "@types/ramda": "^0.26.14",
     "autoprefixer": "^9.6.0",
     "cssnano": "^4.1.10",
     "cypress": "^3.1.1",
     "dom-testing-library": "^4.0.1",
     "fast-check": "^1.7.1",
-    "husky": "^2.1.0",
+    "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^24.1.0",
-    "lint-staged": "^8.0.4",
+    "lint-staged": "^9.0.0",
     "postcss-loader": "^3.0.0",
     "preact-cli": "^3.0.0-rc.2",
     "preact-render-to-string": "^5.0.4",
