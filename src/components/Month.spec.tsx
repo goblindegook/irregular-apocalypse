@@ -57,9 +57,10 @@ describe('Month', () => {
     const { getByLabelText } = renderMonth({ month: 8, year: 2018, name, signature, data })
 
     const checkbox = getByLabelText(/wed/i) as HTMLInputElement
-    const img = checkbox.parentElement!.querySelector('img')
-    expect(img!.getAttribute('alt')).toEqual(name)
-    expect(img!.getAttribute('src')).toEqual(signature)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const img = checkbox.parentElement!.querySelector('img')!
+    expect(img.getAttribute('alt')).toEqual(name)
+    expect(img.getAttribute('src')).toEqual(signature)
   })
 
   it('does not render signature when checkbox is unchecked', () => {
@@ -70,6 +71,7 @@ describe('Month', () => {
     const { getByLabelText } = renderMonth({ month: 8, year: 2018, signature, data })
 
     const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).toBeNull()
   })
@@ -77,6 +79,7 @@ describe('Month', () => {
   it('does not render time fields when checkbox is unchecked', () => {
     const { getByLabelText } = renderMonth({ month: 8, year: 2018 })
     const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fields = checkbox.parentElement!.querySelectorAll('input[type=text]')
     expect(fields.length).toBe(0)
   })

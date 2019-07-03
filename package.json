@@ -7,7 +7,7 @@
     "start": "if-env NODE_ENV=production && yarn -s watch || yarn -s watch",
     "build": "NODE_ENV=production preact build",
     "watch": "preact watch",
-    "lint": "tslint --project tsconfig.tslint.json '{cypress,src}/**/*.{ts,tsx}'",
+    "lint": "eslint '{cypress,src}/**/*.{ts,tsx}'",
     "format": "prettier --write '{cypress,src}/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "pretest": "yarn lint",
     "test": "yarn jest && start-server-and-test start http://localhost:8080 cypress:run",
@@ -24,7 +24,7 @@
   "lint-staged": {
     "{cypress,src}/**/*.{ts,tsx}": [
       "prettier --write",
-      "tslint --project tsconfig.tslint.json",
+      "eslint",
       "git add"
     ],
     "{cypress,src}/**/*.{js,json,css,md}": [
@@ -45,6 +45,18 @@
     "@fullhuman/postcss-purgecss": "^1.2.0",
     "@types/jest": "^24.0.9",
     "@types/ramda": "^0.26.14",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-standard": "^4.0.0",
     "autoprefixer": "^9.6.0",
     "cssnano": "^4.1.10",
     "cypress": "^3.1.1",
@@ -63,10 +75,6 @@
     "start-server-and-test": "^1.7.0",
     "ts-jest": "^24.0.0",
     "ts-loader": "^6.0.4",
-    "tslint": "^5.9.1",
-    "tslint-config-prettier": "^1.6.0",
-    "tslint-config-standard": "^8.0.1",
-    "tslint-react": "^4.0.0",
     "typescript": "^3.3.3333"
   },
   "dependencies": {

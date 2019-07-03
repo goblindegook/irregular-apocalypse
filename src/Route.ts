@@ -1,7 +1,7 @@
 import { VNode } from 'preact'
 import { RoutableProps } from 'preact-router'
 
-type RouteParams = {
+interface RouteParams {
   [x: string]: string
 }
 

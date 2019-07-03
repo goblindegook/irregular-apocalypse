@@ -13,10 +13,6 @@ type PeriodProps = Readonly<{
   onChange: (period: Period) => void
 }>
 
-function preventDefault(e: Event): void {
-  e.preventDefault()
-}
-
 function setTime(date: Date, hours: number, minutes: number): Date {
   const newDate = new Date(date)
   newDate.setHours(hours, minutes)
@@ -27,7 +23,7 @@ function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e:
   return e => {
     if (e.target) {
       const target = e.target as HTMLInputElement
-      const matches = target.value.match(/(\d+)\:?(\d+)?/i)
+      const matches = target.value.match(/(\d+):?(\d+)?/i)
 
       if (matches) {
         const hours = parseInt(matches[1], 10) || 0
@@ -44,7 +40,7 @@ function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e:
 }
 
 function handleClick({ starts, ends, checked, onChange }: PeriodProps): (e: MouseEvent) => void {
-  return e => {
+  return () => {
     onChange({ starts, ends, checked: !checked })
   }
 }

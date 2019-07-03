@@ -1,6 +1,14 @@
-import { h, Component } from 'preact'
+import { h } from 'preact'
 import { monthName } from '../calendar'
 import { format, addMonths, subMonths } from 'date-fns'
+
+function next(year: number, month: number): string {
+  return format(addMonths(new Date(year, month - 1), 1), '/YYYY/MM')
+}
+
+function previous(year: number, month: number): string {
+  return format(subMonths(new Date(year, month - 1), 1), '/YYYY/MM')
+}
 
 export type HeaderProps = Readonly<{
   name?: string
@@ -60,11 +68,3 @@ export const Header = ({
     </label>
   </header>
 )
-
-function next(year: number, month: number): string {
-  return format(addMonths(new Date(year, month - 1), 1), '/YYYY/MM')
-}
-
-function previous(year: number, month: number): string {
-  return format(subMonths(new Date(year, month - 1), 1), '/YYYY/MM')
-}

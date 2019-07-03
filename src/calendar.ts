@@ -94,7 +94,7 @@ export function holidays(year: number, month: number): Month {
     [corpusChristi.getMonth() + 1, corpusChristi.getDate()]
   ]
     .filter(([holidayMonth]) => holidayMonth === month)
-    .reduce((acc, [_, day]) => {
+    .reduce((acc, [, day]) => {
       const date = new Date(year, month - 1, day)
       return {
         ...acc,

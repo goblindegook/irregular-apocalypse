@@ -1,0 +1,89 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier/standard",
+    "prettier/@typescript-eslint",
+    "prettier/react",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/export": "off",
+    "no-array-constructor": "off",
+    "react/prop-types": "off",
+    "react/no-unknown-property": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.{ts,tsx}"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "no-restricted-globals": [
+          "error",
+          {
+            "name": "fit",
+            "message": "Use it instead."
+          },
+          {
+            "name": "fdescribe",
+            "message": "Use describe instead."
+          }
+        ],
+        "no-restricted-properties": [
+          "error",
+          {
+            "object": "describe",
+            "property": "only",
+            "message": "Use describe instead."
+          },
+          {
+            "object": "it",
+            "property": "only",
+            "message": "Use it instead."
+          },
+          {
+            "object": "test",
+            "property": "only",
+            "message": "Use test instead."
+          }
+        ]
+      }
+    },
+    {
+      "files": ["cypress/**/*.ts"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "Cypress": "readonly",
+        "cy": "readonly"
+      }
+    }
+  ],
+  "settings": {
+    "react": {
+      "pragma": "h"
+    }
+  }
+}

@@ -81,6 +81,7 @@ describe('App', () => {
     const { getByLabelText } = render(<App />)
     const checkbox = getByLabelText(/mon/i) as HTMLInputElement
     fireEvent.click(checkbox)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).toBeNull()
   })
@@ -90,6 +91,7 @@ describe('App', () => {
     const { getByLabelText } = render(<App />)
     const checkbox = getByLabelText(/sun/i) as HTMLInputElement
     fireEvent.click(checkbox)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).not.toBeNull()
   })

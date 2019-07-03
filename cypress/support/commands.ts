@@ -8,7 +8,7 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-type AddFileOptions = {
+interface AddFileOptions {
   blob: Blob
   filename: string
 }

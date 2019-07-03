@@ -41,7 +41,7 @@ export function useStateStore<T>(
         setError(e)
       }
     })()
-  }, [store, key, state, setError, ref, equals])
+  }, [store, key, state, setError, ref])
 
   return [state, setState, error]
 }
