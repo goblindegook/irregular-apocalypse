@@ -7,13 +7,15 @@
     "prettier/standard",
     "prettier/@typescript-eslint",
     "prettier/react",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
   ],
-  "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks"],
+  "plugins": ["@typescript-eslint", "prettier", "react", "react-hooks", "cypress"],
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "cypress/globals": true
   },
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -68,16 +70,6 @@
             "message": "Use test instead."
           }
         ]
-      }
-    },
-    {
-      "files": ["cypress/**/*.ts"],
-      "env": {
-        "mocha": true
-      },
-      "globals": {
-        "Cypress": "readonly",
-        "cy": "readonly"
       }
     }
   ],
