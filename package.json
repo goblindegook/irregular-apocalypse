@@ -79,6 +79,7 @@
     "typescript": "^3.3.3333"
   },
   "dependencies": {
+    "@pacote/computus": "^1.0.0",
     "date-fns": "^1.29.0",
     "localforage": "^1.7.2",
     "preact": "^10.0.0-beta.3",

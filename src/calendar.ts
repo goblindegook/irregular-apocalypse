@@ -1,4 +1,5 @@
 import { getDaysInMonth, isWeekend, format, subDays, addDays } from 'date-fns'
+import { gregorian } from '@pacote/computus'
 import { range } from 'ramda'
 
 export type Period = Readonly<{
@@ -59,22 +60,8 @@ export function workingDays(year: number, month: number): Month {
   )
 }
 
-function computus(year: number): Date {
-  const c = Math.floor(year / 100)
-  const g = year % 19
-  const h = (c - (c >> 2) - Math.floor((8 * c + 13) / 25) + 19 * g + 15) % 30
-  const i = Math.floor(h / 28)
-  const j = h - i * (1 - i * Math.floor(29 / (h + 1)) * Math.floor((21 - g) / 11))
-  const k = (year + (year >> 2) + j + 2 - c + (c >> 2)) % 7
-  const l = j - k
-  const month = 3 + Math.floor((l + 40) / 44)
-  const day = l + 28 - 31 * (month >> 2)
-
-  return new Date(year, month - 1, day)
-}
-
 export function holidays(year: number, month: number): Month {
-  const easter = computus(year)
+  const easter = gregorian(year)
   const goodFriday = subDays(easter, 2)
   const corpusChristi = addDays(easter, 60)
 
