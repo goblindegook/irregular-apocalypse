@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { cleanup, render, fireEvent } from 'preact-testing-library'
 import { Header, HeaderProps } from './Header'
 

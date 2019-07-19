@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { cleanup, render } from 'preact-testing-library'
 import { Footer } from './Footer'
 

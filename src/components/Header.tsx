@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { monthName } from '../calendar'
 import { format, addMonths, subMonths } from 'date-fns'
 

@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 
 export const Footer = () => (
   <footer>

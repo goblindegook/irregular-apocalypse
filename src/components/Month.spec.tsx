@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { cleanup, fireEvent, render } from 'preact-testing-library'
 import { Month, MonthProps } from './Month'
 

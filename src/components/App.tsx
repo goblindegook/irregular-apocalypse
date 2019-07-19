@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { Router } from 'preact-router'
 import localforage from 'localforage'
 import { mergeDeepRight } from 'ramda'

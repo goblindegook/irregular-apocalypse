@@ -1,4 +1,4 @@
-import { h } from 'preact'
+import { createElement } from 'preact'
 import { format } from 'date-fns'
 import { mergeDeepLeft } from 'ramda'
 import { Period, Month as MonthData, buildMonth } from '../calendar'
