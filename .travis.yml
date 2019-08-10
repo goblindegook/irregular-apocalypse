@@ -3,6 +3,8 @@ node_js:
   - 'stable'
   - '8'
   - '10'
+services:
+  - xvfb
 before_script:
   - 'yarn'
 cache:
