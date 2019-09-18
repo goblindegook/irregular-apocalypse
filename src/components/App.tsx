@@ -15,12 +15,16 @@ import { useStateStore } from '../hooks'
 const Helmet = require('preact-helmet')
 const defaultSignature = require('../assets/signature.svg')
 
+function formatPeriodKey(date: Date): string {
+  return format(date, `yyyy-MM`)
+}
+
 const Main = ({ store, month, year }: { store: LocalForage; month: number; year: number }) => {
   const [name, setName, storeError] = useStateStore(store, 'name', '')
   const [signature, setSignature] = useStateStore(store, 'signature', defaultSignature)
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
-  const periodKey = format(new Date(year, month - 1), `YYYY-MM`)
+  const periodKey = formatPeriodKey(new Date(year, month - 1))
   const monthData = mergeDeepRight(
     mergeDeepRight(workingDays(year, month), holidays(year, month)),
     periods[periodKey] || {}
@@ -48,9 +52,9 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
         data={monthData}
         onChange={period => {
           const update = {
-            [format(period.starts, 'YYYY-MM')]: {
-              [format(period.starts, 'D')]: {
-                [format(period.starts, 'a')]: period
+            [formatPeriodKey(period.starts)]: {
+              [format(period.starts, 'd')]: {
+                [format(period.starts, 'a').toLowerCase()]: period
               }
             }
           }

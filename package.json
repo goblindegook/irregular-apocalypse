@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@pacote/computus": "^1.0.0",
-    "date-fns": "1",
+    "date-fns": "^2.2.1",
     "localforage": "^1.7.2",
     "preact": "^10.0.0-beta.3",
     "preact-helmet": "^4.0.0-alpha-3",

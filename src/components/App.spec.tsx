@@ -11,7 +11,7 @@ describe('App', () => {
     const date = new Date()
     const { getByText } = render(<App />)
     route('')
-    expect(getByText(format(date, 'MMMM YYYY'))).toBeTruthy()
+    expect(getByText(format(date, 'MMMM yyyy'))).toBeTruthy()
   })
 
   it('routes month view', () => {

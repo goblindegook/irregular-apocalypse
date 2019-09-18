@@ -56,11 +56,11 @@ const DayPeriod = (props: PeriodProps) => (
     />
 
     <label class="c-Month-MonthDay" for={props.id}>
-      {format(props.starts, 'D')}
+      {format(props.starts, 'd')}
     </label>
 
     <label class="c-Month-WeekDay" for={props.id}>
-      {format(props.starts, 'ddd')}
+      {format(props.starts, 'iii')}
     </label>
 
     <label class="c-Month-DottedLine" for={props.id}>

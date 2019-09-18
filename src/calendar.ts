@@ -115,5 +115,5 @@ export function monthName(year: number, month: number): string {
   const displayMonthIndex = month ? month - 1 : currentDate.getMonth()
   const displayDate = new Date(displayYear, displayMonthIndex)
 
-  return format(displayDate, 'MMMM YYYY')
+  return format(displayDate, 'MMMM yyyy')
 }

@@ -2,12 +2,16 @@ import { createElement } from 'preact'
 import { monthName } from '../calendar'
 import { format, addMonths, subMonths } from 'date-fns'
 
+function formatPath(date: Date): string {
+  return format(date, '/yyyy/MM')
+}
+
 function next(year: number, month: number): string {
-  return format(addMonths(new Date(year, month - 1), 1), '/YYYY/MM')
+  return formatPath(addMonths(new Date(year, month - 1), 1))
 }
 
 function previous(year: number, month: number): string {
-  return format(subMonths(new Date(year, month - 1), 1), '/YYYY/MM')
+  return formatPath(subMonths(new Date(year, month - 1), 1))
 }
 
 export type HeaderProps = Readonly<{
