@@ -25,7 +25,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
   const periodKey = formatPeriodKey(new Date(year, month - 1))
-  const monthData = mergeDeepRight(
+  const monthData = mergeDeepRight<any, any>(
     mergeDeepRight(workingDays(year, month), holidays(year, month)),
     periods[periodKey] || {}
   )
@@ -59,7 +59,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
             }
           }
 
-          setPeriods(mergeDeepRight(periods, update))
+          setPeriods(mergeDeepRight<any, any>(periods, update))
         }}
       />
       <Footer />

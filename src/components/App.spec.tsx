@@ -1,35 +1,38 @@
 import { createElement } from 'preact'
 import { route } from 'preact-router'
-import { cleanup, fireEvent, debounceRenderingOff, render } from 'preact-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/preact'
 import { format } from 'date-fns'
 import { App } from './App'
+import { extend } from '../test/helpers'
+
+function renderApp() {
+  return extend(render(<App />))
+}
 
 describe('App', () => {
   beforeEach(cleanup)
 
   it('routes default view', () => {
     const date = new Date()
-    const { getByText } = render(<App />)
+    const { getByText } = renderApp()
     route('')
     expect(getByText(format(date, 'MMMM yyyy'))).toBeTruthy()
   })
 
   it('routes month view', () => {
-    const { getByText } = render(<App />)
+    const { getByText } = renderApp()
     route('/2018/05')
     expect(getByText('May 2018')).toBeTruthy()
   })
 
   it('includes the name in the title', () => {
-    debounceRenderingOff()
     render(<App />)
     route('/2018/05')
     expect(document.title).toContain('May 2018')
   })
 
   it('includes the name in the title', () => {
-    debounceRenderingOff()
-    const { getByPlaceholderText } = render(<App />)
+    const { getByPlaceholderText } = renderApp()
     const field = getByPlaceholderText(/your name/i) as HTMLInputElement
     const name = 'Test Name'
     field.value = name
@@ -39,47 +42,46 @@ describe('App', () => {
 
   describe('default values', () => {
     it('renders start time fields with defaults for morning and afternoon', () => {
-      const { getAllByPlaceholderText } = render(<App />)
+      const { getAllByPlaceholderText } = renderApp()
       const fields = getAllByPlaceholderText(/start time/i) as HTMLInputElement[]
       expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['09:00', '14:00']))
     })
 
     it('renders end time fields with defaults for morning and afternoon', () => {
-      const { getAllByPlaceholderText } = render(<App />)
+      const { getAllByPlaceholderText } = renderApp()
       const fields = getAllByPlaceholderText(/end time/i) as HTMLInputElement[]
       expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['13:00', '17:30']))
     })
 
     it('checks working days by default', () => {
-      const { getByLabelText } = render(<App />)
-      const checkbox = getByLabelText(/fri/i) as HTMLInputElement
+      const { getFirstByLabelText } = renderApp()
+      const checkbox = getFirstByLabelText<HTMLInputElement>(/fri/i)
       expect(checkbox.checked).toBe(true)
     })
 
     it('does not check Saturdays by default', () => {
-      const { getByLabelText } = render(<App />)
-      const checkbox = getByLabelText(/sat/i) as HTMLInputElement
+      const { getFirstByLabelText } = renderApp()
+      const checkbox = getFirstByLabelText<HTMLInputElement>(/sat/i)
       expect(checkbox.checked).toBe(false)
     })
 
     it('does not check Sundays by default', () => {
-      const { getByLabelText } = render(<App />)
-      const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+      const { getFirstByLabelText } = renderApp()
+      const checkbox = getFirstByLabelText<HTMLInputElement>(/sun/i)
       expect(checkbox.checked).toBe(false)
     })
 
     it('does not check holidays by default', () => {
-      const { getByLabelText } = render(<App />)
+      const { getFirstByLabelText } = renderApp()
       route('/2019/01')
-      const checkbox = getByLabelText(/tue/i) as HTMLInputElement
+      const checkbox = getFirstByLabelText<HTMLInputElement>(/tue/i)
       expect(checkbox.checked).toBe(false)
     })
   })
 
   it('clears signature when period is unchecked', () => {
-    debounceRenderingOff()
-    const { getByLabelText } = render(<App />)
-    const checkbox = getByLabelText(/mon/i) as HTMLInputElement
+    const { getFirstByLabelText } = renderApp()
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/mon/i)
     fireEvent.click(checkbox)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')
@@ -87,9 +89,8 @@ describe('App', () => {
   })
 
   it('adds signature when period is checked', () => {
-    debounceRenderingOff()
-    const { getByLabelText } = render(<App />)
-    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    const { getFirstByLabelText } = renderApp()
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/sun/i)
     fireEvent.click(checkbox)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')

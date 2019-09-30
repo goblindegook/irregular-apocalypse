@@ -1,6 +1,7 @@
 import { createElement } from 'preact'
-import { cleanup, fireEvent, render } from 'preact-testing-library'
+import { cleanup, fireEvent, render } from '@testing-library/preact'
 import { Month, MonthProps } from './Month'
+import { extend } from '../test/helpers'
 
 function createDay(date: Date, [am, pm]: [boolean, boolean]) {
   return {
@@ -10,16 +11,18 @@ function createDay(date: Date, [am, pm]: [boolean, boolean]) {
 }
 
 function renderMonth(props: Partial<MonthProps> = {}) {
-  return render(
-    <Month
-      data={{}}
-      month={8}
-      name={'Test Name'}
-      onChange={jest.fn()}
-      signature={'https://test/signature.png'}
-      year={2018}
-      {...props}
-    />
+  return extend(
+    render(
+      <Month
+        data={{}}
+        month={8}
+        name={'Test Name'}
+        onChange={jest.fn()}
+        signature={'https://test/signature.png'}
+        year={2018}
+        {...props}
+      />
+    )
   )
 }
 
@@ -54,9 +57,9 @@ describe('Month', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [true, false]) }
 
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, name, signature, data })
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, name, signature, data })
 
-    const checkbox = getByLabelText(/wed/i) as HTMLInputElement
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/wed/i)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')!
     expect(img.getAttribute('alt')).toEqual(name)
@@ -68,17 +71,17 @@ describe('Month', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [true, false]) }
 
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, signature, data })
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, signature, data })
 
-    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/sun/i)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const img = checkbox.parentElement!.querySelector('img')
     expect(img).toBeNull()
   })
 
   it('does not render time fields when checkbox is unchecked', () => {
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018 })
-    const checkbox = getByLabelText(/sun/i) as HTMLInputElement
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018 })
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/sun/i)
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const fields = checkbox.parentElement!.querySelectorAll('input[type=text]')
     expect(fields.length).toBe(0)
@@ -87,16 +90,16 @@ describe('Month', () => {
   it('checks periods with checked=true', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [true, false]) }
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, data })
-    const checkbox = getByLabelText(/wed/i) as HTMLInputElement
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, data })
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/wed/i)
     expect(checkbox.checked).toBeTruthy()
   })
 
   it('unchecks periods with checked=false', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [false, false]) }
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, data })
-    const checkbox = getByLabelText(/wed/i) as HTMLInputElement
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, data })
+    const checkbox = getFirstByLabelText<HTMLInputElement>(/wed/i)
     expect(checkbox.checked).toBeFalsy()
   })
 
@@ -105,9 +108,9 @@ describe('Month', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [false, false]) }
 
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, data, onChange })
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, data, onChange })
 
-    fireEvent.click(getByLabelText(/wed/i) as HTMLInputElement)
+    fireEvent.click(getFirstByLabelText<HTMLInputElement>(/wed/i))
     expect(onChange.mock.calls[0][0]).toMatchObject({ checked: true })
   })
 
@@ -116,9 +119,9 @@ describe('Month', () => {
     const date = new Date('2018-08-01 09:00:00')
     const data = { 1: createDay(date, [true, false]) }
 
-    const { getByLabelText } = renderMonth({ month: 8, year: 2018, data, onChange })
+    const { getFirstByLabelText } = renderMonth({ month: 8, year: 2018, data, onChange })
 
-    fireEvent.click(getByLabelText(/wed/i) as HTMLInputElement)
+    fireEvent.click(getFirstByLabelText<HTMLInputElement>(/wed/i))
     expect(onChange.mock.calls[0][0]).toMatchObject({ checked: false })
   })
 

@@ -108,7 +108,7 @@ export const Month = ({
   year,
   onChange
 }: MonthProps) => {
-  const monthData: MonthData = mergeDeepLeft(data, buildMonth(year, month))
+  const monthData: MonthData = mergeDeepLeft<any, any>(data, buildMonth(year, month))
 
   return (
     <main>

@@ -1,5 +1,5 @@
 import { createElement } from 'preact'
-import { cleanup, render, fireEvent } from 'preact-testing-library'
+import { cleanup, render, fireEvent } from '@testing-library/preact'
 import { Header, HeaderProps } from './Header'
 
 function renderHeader({
