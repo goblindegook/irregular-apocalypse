@@ -19,10 +19,10 @@ describe('App', () => {
     expect(getByText(format(date, 'MMMM yyyy'))).toBeTruthy()
   })
 
-  it('routes month view', () => {
-    const { getByText } = renderApp()
+  it('routes month view', async () => {
+    const { findByText } = renderApp()
     route('/2018/05')
-    expect(getByText('May 2018')).toBeTruthy()
+    expect(await findByText('May 2018')).toBeTruthy()
   })
 
   it('includes the name in the title', () => {
