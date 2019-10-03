@@ -21,7 +21,7 @@ function formatPeriodKey(date: Date): string {
 
 const Main = ({ store, month, year }: { store: LocalForage; month: number; year: number }) => {
   const [name, setName, storeError] = useStateStore(store, 'name', '')
-  const [signature, setSignature] = useStateStore(store, 'signature', defaultSignature)
+  const [signature, setSignature] = useStateStore<string>(store, 'signature', defaultSignature)
   const [periods, setPeriods] = useStateStore<Periods>(store, 'periods', {})
 
   const periodKey = formatPeriodKey(new Date(year, month - 1))
