@@ -26,7 +26,7 @@ export function useStateStore<T>(
         setError(e)
       }
     })()
-  }, [store, key, setState, setError, ref])
+  }, [key, store])
 
   useEffect(() => {
     // tslint:disable-next-line:no-floating-promises
@@ -41,7 +41,7 @@ export function useStateStore<T>(
         setError(e)
       }
     })()
-  }, [store, key, state, setError, ref])
+  }, [key, state, store])
 
   return [state, setState, error]
 }
