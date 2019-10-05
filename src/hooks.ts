@@ -11,7 +11,6 @@ export function useStateStore<T>(
   const ref = useRef<T>(state)
 
   useEffect(() => {
-    // tslint:disable-next-line:no-floating-promises
     ;(async () => {
       try {
         const storedValue = await store.getItem<T>(key)
@@ -29,7 +28,6 @@ export function useStateStore<T>(
   }, [key, store])
 
   useEffect(() => {
-    // tslint:disable-next-line:no-floating-promises
     ;(async () => {
       try {
         if (!equals(ref.current, state)) {
