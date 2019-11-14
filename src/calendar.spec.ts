@@ -47,7 +47,10 @@ describe('workingDays()', () => {
     assert(
       property(integer(2000, 2100), integer(1, 12), (year, month) => {
         const days = Object.keys(workingDays(year, month)).map(v => parseInt(v, 10))
-        return all(([v, i]) => v === i + 1, days.map((v, i) => [v, i]))
+        return all(
+          ([v, i]) => v === i + 1,
+          days.map((v, i) => [v, i])
+        )
       })
     )
   })
