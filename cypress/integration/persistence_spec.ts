@@ -57,6 +57,7 @@ describe('Application storage', () => {
           .trigger('change', { force: true })
           .then(() => Cypress.Blob.blobToBase64String(blob))
           .then(base64 => elementAttributeContains('img', 'src', base64))
+          .wait(50)
           .then(() => cy.reload(true))
           .then(() => Cypress.Blob.blobToBase64String(blob))
           .then(base64 => elementAttributeContains('img', 'src', base64))
