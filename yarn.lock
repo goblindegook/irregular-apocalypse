@@ -4408,10 +4408,10 @@ fast-async@^6.3.7:
     nodent-compiler "^3.2.10"
     nodent-runtime ">=3.2.1"
 
-fast-check@1.18.1:
-  version "1.18.1"
-  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-1.18.1.tgz#64568dd417bca4c7c93d1705868d8e46fa7a3fdf"
-  integrity sha512-b2EOdqujCBzMC78WhqYMXMRzWUKC8cXuPAgt6UOZtU5QTHk2NpUMZDfQeMqHNDZYPZUQyZdHtZqQgq43lBCoIg==
+fast-check@1.20.0:
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-1.20.0.tgz#85b3cb461171bbb8e239383af6c1af08576c26ee"
+  integrity sha512-MgTViuH0+j5Z7M9sJNZ1oUmwL3ps+gQmY/0UuGCZMqO+9qEncNZKNsyqMN0razPX0TvXRqKVzIlsVt9O7zWPow==
   dependencies:
     pure-rand "^1.7.0"
     tslib "^1.10.0"
