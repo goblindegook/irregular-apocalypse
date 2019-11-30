@@ -71,7 +71,7 @@
     "identity-obj-proxy": "3.0.0",
     "if-env": "1.0.4",
     "jest": "24.9.0",
-    "lint-staged": "9.4.3",
+    "lint-staged": "9.5.0",
     "postcss-loader": "3.0.0",
     "preact-cli": "3.0.0-rc.6",
     "preact-cli-plugin-netlify": "1.5.0",
