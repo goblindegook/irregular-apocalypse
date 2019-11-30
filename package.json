@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@pacote/computus": "1.2.0",
-    "date-fns": "2.7.0",
+    "date-fns": "2.8.1",
     "localforage": "1.7.3",
     "preact": "10.0.5",
     "preact-helmet": "4.0.0-alpha-3",
