@@ -75,7 +75,7 @@
     "postcss-loader": "3.0.0",
     "preact-cli": "3.0.0-rc.6",
     "preact-cli-plugin-netlify": "1.5.0",
-    "preact-render-to-string": "5.1.1",
+    "preact-render-to-string": "5.1.2",
     "prettier": "1.19.1",
     "start-server-and-test": "1.10.6",
     "ts-jest": "24.2.0",
