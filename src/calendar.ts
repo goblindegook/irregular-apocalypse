@@ -28,11 +28,11 @@ function addKeys(month: readonly Day[]): Month {
 export function buildMonth(year: number, month: number): Month {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
   return addKeys(
-    range(1, daysInMonth + 1).map(day => {
+    range(1, daysInMonth + 1).map((day) => {
       const date = new Date(year, month - 1, day)
       return {
         am: { starts: date, ends: date, checked: false },
-        pm: { starts: date, ends: date, checked: false }
+        pm: { starts: date, ends: date, checked: false },
       }
     })
   )
@@ -41,20 +41,20 @@ export function buildMonth(year: number, month: number): Month {
 export function workingDays(year: number, month: number): Month {
   const daysInMonth = getDaysInMonth(new Date(year, month - 1))
   return addKeys(
-    range(1, daysInMonth + 1).map(day => {
+    range(1, daysInMonth + 1).map((day) => {
       const date = new Date(year, month - 1, day)
       const checked = !isWeekend(date)
       return {
         am: {
           starts: new Date(date.setHours(9, 0)),
           ends: new Date(date.setHours(13, 0)),
-          checked
+          checked,
         },
         pm: {
           starts: new Date(date.setHours(14, 0)),
           ends: new Date(date.setHours(17, 30)),
-          checked
-        }
+          checked,
+        },
       }
     })
   )
@@ -78,7 +78,7 @@ export function holidays(year: number, month: number): Month {
     [12, 25],
     [easter.getMonth() + 1, easter.getDate()],
     [goodFriday.getMonth() + 1, goodFriday.getDate()],
-    [corpusChristi.getMonth() + 1, corpusChristi.getDate()]
+    [corpusChristi.getMonth() + 1, corpusChristi.getDate()],
   ]
     .filter(([holidayMonth]) => holidayMonth === month)
     .reduce((acc, [, day]) => {
@@ -89,14 +89,14 @@ export function holidays(year: number, month: number): Month {
           am: {
             starts: new Date(date.setHours(9, 0)),
             ends: new Date(date.setHours(13, 0)),
-            checked: false
+            checked: false,
           },
           pm: {
             starts: new Date(date.setHours(14, 0)),
             ends: new Date(date.setHours(17, 30)),
-            checked: false
-          }
-        }
+            checked: false,
+          },
+        },
       }
     }, {})
 }
@@ -105,7 +105,7 @@ export function currentMonth(): { month: number; year: number } {
   const date = new Date()
   return {
     month: date.getMonth() + 1,
-    year: date.getFullYear()
+    year: date.getFullYear(),
   }
 }
 

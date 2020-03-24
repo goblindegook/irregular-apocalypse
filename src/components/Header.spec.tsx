@@ -6,7 +6,7 @@ function renderHeader({
   name,
   year = 2019,
   month = 4,
-  onNameChange = jest.fn()
+  onNameChange = jest.fn(),
 }: Partial<HeaderProps>) {
   return render(
     <Header

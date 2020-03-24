@@ -20,7 +20,7 @@ function setTime(date: Date, hours: number, minutes: number): Date {
 }
 
 function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e: Event) => void {
-  return e => {
+  return (e) => {
     if (e.target) {
       const target = e.target as HTMLInputElement
       const matches = target.value.match(/(\d+):?(\d+)?/i)
@@ -32,7 +32,7 @@ function handleTimeChange({ starts, ends, checked, onChange }: PeriodProps): (e:
         onChange({
           starts: target.name === 'starts' ? setTime(starts, hours, minutes) : starts,
           ends: target.name === 'ends' ? setTime(ends, hours, minutes) : ends,
-          checked
+          checked,
         })
       }
     }
@@ -106,7 +106,7 @@ export const Month = ({
   signature = '',
   month,
   year,
-  onChange
+  onChange,
 }: MonthProps) => {
   const monthData: MonthData = mergeDeepLeft<any, any>(data, buildMonth(year, month))
 

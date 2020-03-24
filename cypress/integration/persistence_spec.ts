@@ -9,10 +9,7 @@ function addFileBlob(blob: Blob, filename: string) {
 }
 
 function elementAttributeContains(selector: string, attribute: string, contents: string) {
-  cy.get(selector)
-    .first()
-    .should('have.attr', attribute)
-    .and('contain', contents)
+  cy.get(selector).first().should('have.attr', attribute).and('contain', contents)
 }
 
 describe('Application storage', () => {
@@ -25,21 +22,15 @@ describe('Application storage', () => {
     const name = 'TEST NAME'
     cy.visit('/2018/08')
 
-    cy.get('input[type=text]')
-      .clear()
-      .type(name)
+    cy.get('input[type=text]').clear().type(name)
 
-    cy.get('input[type=checkbox]')
-      .first()
-      .uncheck()
+    cy.get('input[type=checkbox]').first().uncheck()
 
     cy.reload(true)
 
     cy.get('input[type=text]').should('have.value', name)
 
-    cy.get('input[type=checkbox]')
-      .first()
-      .should('not.be.checked')
+    cy.get('input[type=checkbox]').first().should('not.be.checked')
   })
 
   it('persists image uploads', () => {
@@ -49,18 +40,19 @@ describe('Application storage', () => {
 
     return cy
       .fixture<BinaryType>(SIGNATURE, 'binary')
-      .then(fixture => Cypress.Blob.binaryStringToBlob(fixture, 'image/jpeg'))
-      .then(blob =>
+      .then((fixture) => Cypress.Blob.binaryStringToBlob(fixture, 'image/jpeg'))
+      .then((blob) =>
+        // eslint-disable-next-line cypress/no-unnecessary-waiting
         cy
           .get<HTMLInputElement>('input[type=file]')
           .then(addFileBlob(blob, SIGNATURE))
           .trigger('change', { force: true })
           .then(() => Cypress.Blob.blobToBase64String(blob))
-          .then(base64 => elementAttributeContains('img', 'src', base64))
+          .then((base64) => elementAttributeContains('img', 'src', base64))
           .wait(50)
           .then(() => cy.reload(true))
           .then(() => Cypress.Blob.blobToBase64String(blob))
-          .then(base64 => elementAttributeContains('img', 'src', base64))
+          .then((base64) => elementAttributeContains('img', 'src', base64))
       )
   })
 })

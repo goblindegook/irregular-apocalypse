@@ -5,6 +5,6 @@ export function extend(renderResult: RenderResult) {
     ...renderResult,
     getFirstByLabelText<E extends HTMLElement>(id: Matcher, options?: SelectorMatcherOptions) {
       return renderResult.getAllByLabelText(id, options)[0] as E
-    }
+    },
   }
 }

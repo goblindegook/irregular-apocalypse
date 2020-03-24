@@ -6,7 +6,7 @@ import { extend } from '../test/helpers'
 function createDay(date: Date, [am, pm]: [boolean, boolean]) {
   return {
     am: { starts: date, ends: date, checked: am },
-    pm: { starts: date, ends: date, checked: pm }
+    pm: { starts: date, ends: date, checked: pm },
   }
 }
 
@@ -142,7 +142,7 @@ describe('Month', () => {
     expect(onChange).toHaveBeenCalledWith({
       starts: new Date(2018, 7, 1, 8, 15),
       ends: date,
-      checked: true
+      checked: true,
     })
   })
 
@@ -163,7 +163,7 @@ describe('Month', () => {
     expect(onChange).toHaveBeenCalledWith({
       starts: date,
       ends: new Date(2018, 7, 1, 12, 55),
-      checked: true
+      checked: true,
     })
   })
 })

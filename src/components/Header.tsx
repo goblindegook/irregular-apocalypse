@@ -27,7 +27,7 @@ export const Header = ({
   month,
   year,
   onNameChange,
-  onSignatureChange
+  onSignatureChange,
 }: HeaderProps) => (
   <header class="c-Header-Bar">
     <a class="c-Header-ArrowLink" href={previous(year, month)} title="Previous">

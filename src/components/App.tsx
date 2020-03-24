@@ -36,7 +36,7 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
 
   return (
     <div>
-      <Helmet title={[monthName(year, month), name].filter(c => c.length).join(' - ')} />
+      <Helmet title={[monthName(year, month), name].filter((c) => c.length).join(' - ')} />
       <Header
         name={name}
         month={month}
@@ -50,13 +50,13 @@ const Main = ({ store, month, year }: { store: LocalForage; month: number; year:
         month={month}
         year={year}
         data={monthData}
-        onChange={period => {
+        onChange={(period) => {
           const update = {
             [formatPeriodKey(period.starts)]: {
               [format(period.starts, 'd')]: {
-                [format(period.starts, 'a').toLowerCase()]: period
-              }
-            }
+                [format(period.starts, 'a').toLowerCase()]: period,
+              },
+            },
           }
 
           setPeriods(mergeDeepRight<any, any>(periods, update))
@@ -73,7 +73,7 @@ export const App = () => {
   const store = localforage.createInstance({
     name: 'irregular-apocalypse',
     version: 1.0,
-    storeName: 'timesheets'
+    storeName: 'timesheets',
   })
 
   return (

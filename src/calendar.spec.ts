@@ -46,7 +46,7 @@ describe('workingDays()', () => {
   it('generates incremental keys', () => {
     assert(
       property(integer(2000, 2100), integer(1, 12), (year, month) => {
-        const days = Object.keys(workingDays(year, month)).map(v => parseInt(v, 10))
+        const days = Object.keys(workingDays(year, month)).map((v) => parseInt(v, 10))
         return all(
           ([v, i]) => v === i + 1,
           days.map((v, i) => [v, i])
@@ -115,10 +115,10 @@ describe('Portuguese holidays()', () => {
     [11, 1],
     [12, 1],
     [12, 8],
-    [12, 25]
+    [12, 25],
   ])('%d/%d', (month, day) => {
     assert(
-      property(integer(2018, 2028), year => {
+      property(integer(2018, 2028), (year) => {
         const data = holidays(year, month)
         return !data[day].am.checked && !data[day].pm.checked
       })

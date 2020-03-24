@@ -44,13 +44,13 @@ describe('App', () => {
     it('renders start time fields with defaults for morning and afternoon', () => {
       const { getAllByPlaceholderText } = renderApp()
       const fields = getAllByPlaceholderText(/start time/i) as HTMLInputElement[]
-      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['09:00', '14:00']))
+      expect(fields.map((f) => f.value)).toEqual(expect.arrayContaining(['09:00', '14:00']))
     })
 
     it('renders end time fields with defaults for morning and afternoon', () => {
       const { getAllByPlaceholderText } = renderApp()
       const fields = getAllByPlaceholderText(/end time/i) as HTMLInputElement[]
-      expect(fields.map(f => f.value)).toEqual(expect.arrayContaining(['13:00', '17:30']))
+      expect(fields.map((f) => f.value)).toEqual(expect.arrayContaining(['13:00', '17:30']))
     })
 
     it('checks working days by default', () => {
